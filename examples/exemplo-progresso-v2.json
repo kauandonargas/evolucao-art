@@ -1,0 +1,53 @@
+{
+  "schema": "evolucao-art.import/v2",
+  "packageId": "exemplo-modos-progresso-v2",
+  "name": "Exemplo de metas flexíveis",
+  "foundations": [
+    {
+      "key": "luz",
+      "name": "Luz",
+      "complexity": 1,
+      "focusKeys": [
+        "luz-sombra"
+      ]
+    }
+  ],
+  "focuses": [
+    {
+      "key": "luz-sombra",
+      "title": "Separação de luz e sombra",
+      "concept": "Distinguir as massas de luz e sombra.",
+      "microSkill": "Antes dos detalhes, identifique os dois grupos de valores."
+    }
+  ],
+  "exercises": [
+    {
+      "key": "prtp",
+      "title": "Luz em formas simples",
+      "area": "painting",
+      "foundationKey": "luz",
+      "focusKeys": [
+        "luz-sombra"
+      ],
+      "difficulty": "easy",
+      "withReference": 3,
+      "withoutReference": 6,
+      "progressMode": "prtp"
+    },
+    {
+      "key": "folhas",
+      "title": "Caixas - folhas de estudo",
+      "area": "drawing",
+      "foundationKey": "luz",
+      "focusKeys": [
+        "luz-sombra"
+      ],
+      "difficulty": "easy",
+      "withReference": 0,
+      "withoutReference": 0,
+      "progressMode": "sheets",
+      "sheetTarget": 20,
+      "sheetDone": 10
+    }
+  ]
+}

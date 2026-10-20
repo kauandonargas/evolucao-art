@@ -760,7 +760,7 @@ const EvolucaoImport = (() => {
     root:['schema','packageId','name','foundations','focuses','exercises'],
     foundation:['key','name','master','courseUrl','complexity','focusKeys'],
     focus:['key','title','concept','microSkill','courseUrl'],
-    exercise:['key','title','area','foundationKey','focusKeys','difficulty','withReference','withoutReference','instructions']
+    exercise:['key','title','area','foundationKey','focusKeys','difficulty','withReference','withoutReference','instructions','progressMode','sheetTarget','sheetDone']
   };
   const keyPattern = /^[a-z0-9][a-z0-9_-]{0,63}$/;
   const MAX = 1000;
@@ -778,8 +778,8 @@ const EvolucaoImport = (() => {
   function validate(input){
     const obj=typeof input==='string'?JSON.parse(input):input;
     if(!plain(obj))error('O pacote deve ser um objeto JSON.');
-    keysOnly(obj,'root','pacote');if(obj.schema!==schema)error(`Formato não reconhecido. Use "schema": "${schema}".`);
-    const result={schema,packageId:key(obj.packageId,'packageId'),name:str(obj.name,'name',120)};
+    keysOnly(obj,'root','pacote');if(![schema,'evolucao-art.import/v2'].includes(obj.schema))error(`Formato não reconhecido. Use "schema": "${schema}" ou "evolucao-art.import/v2".`);
+    const result={schema:obj.schema,packageId:key(obj.packageId,'packageId'),name:str(obj.name,'name',120)};
     let total=0;
     for(const type of ['foundations','focuses','exercises']){
       const vals=array(obj[type],type);total+=vals.length;if(vals.length>MAX)error(`${type}: máximo ${MAX} itens.`);
@@ -800,8 +800,18 @@ const EvolucaoImport = (() => {
         const area=str(item.area,`${w}.area`,20);if(!['drawing','painting'].includes(area))error(`${w}.area: use drawing ou painting.`);
         const difficulty=str(item.difficulty,`${w}.difficulty`,20);if(!['easy','medium','hard'].includes(difficulty))error(`${w}.difficulty: use easy, medium ou hard.`);
         const focusKeys=linkKeys(item.focusKeys,`${w}.focusKeys`);if(!focusKeys.length)error(`${w}.focusKeys: vincule pelo menos um Foco.`);
+        const progressMode=str(item.progressMode??'standard',`${w}.progressMode`,20);
+        if(!['standard','prtp','sheets'].includes(progressMode))error(`${w}.progressMode: use standard, prtp ou sheets.`);
+        const withReference=integer(item.withReference,`${w}.withReference`,0,500,0);
+        const withoutReference=integer(item.withoutReference,`${w}.withoutReference`,0,500,0);
+        const sheetTarget=integer(item.sheetTarget,`${w}.sheetTarget`,0,500,0);
+        const sheetDone=integer(item.sheetDone,`${w}.sheetDone`,0,500,0);
+        if(obj.schema===schema && progressMode!=='standard')error(`${w}: use esquema v2 para os modos de progresso extras.`);
+        if(progressMode==='prtp' && (withReference!==3||withoutReference!==6))error(`${w}: PRTP exige 3 estudos de referência e 6 de imaginação, com alternativa de 9 só de imaginação.`);
+        if(progressMode==='sheets'&&(sheetTarget<1||sheetDone>sheetTarget||withReference!==0||withoutReference!==0))error(`${w}: metas em folhas devem definir sheetTarget >= sheetDone, sem exigir modalidade.`);
+        if(progressMode!=='sheets' && (sheetTarget!==0||sheetDone!==0))error(`${w}: sheetTarget/sheetDone só se aplicam ao modo sheets.`);
         return {key:k,title:str(item.title,`${w}.title`,160),area,foundationKey:str(item.foundationKey,`${w}.foundationKey`,160),focusKeys,difficulty,
-          withReference:integer(item.withReference,`${w}.withReference`,0,500,0),withoutReference:integer(item.withoutReference,`${w}.withoutReference`,0,500,0),
+          withReference,withoutReference,progressMode,sheetTarget,sheetDone,
           instructions:str(item.instructions??'',`${w}.instructions`,6000,false)};
       });
     }
@@ -880,7 +890,7 @@ const EvolucaoImport = (() => {
     for(const e of doc.exercises){const importRef=ref('exercises',e),all=[...state.exercises.drawing,...state.exercises.painting];if(all.some(x=>x.importRef===importRef))continue;
       if((state.exercises[e.area]||[]).some(x=>folded(x.title)===folded(e.title)))error(`Conflito inesperado no exercício "${e.title}".`);
       state.exercises[e.area].push({id:id('ex'),title:e.title,difficulty:e.difficulty,foundationId:findRef('foundations',e.foundationKey),focusIds:e.focusKeys.map(k=>findRef('focuses',k)),refTarget:e.withReference,noRefTarget:e.withoutReference,
-        instructions:e.instructions,entries:[],ratings:[],importRef});
+        instructions:e.instructions,progressMode:e.progressMode||'standard',sheetTarget:e.sheetTarget||0,sheetDone:e.sheetDone||0,entries:[],ratings:[],importRef});
     }
     return state;
   }
@@ -2106,7 +2116,7 @@ EA.importPage=function(){return `<div class="ea-import-page">${pageHead('Treino'
  <section class="ea-import-box"><label for="eaImportData">Pacote preparado para o Evolução Art (.json)</label>
  <textarea id="eaImportData" spellcheck="false" placeholder="Cole aqui o conteúdo JSON que eu preparar, ou selecione um arquivo .json.">${esc(EA.importDraft)}</textarea>
  <div class="ea-import-toolbar"><label class="ea-import-upload">Escolher arquivo JSON<input id="eaImportFile" type="file" accept="application/json,.json" onchange="EA.loadImportFile(this.files[0])"></label><button class="btn" type="button" onclick="EA.previewImport()">Verificar e visualizar</button></div>
- <p class="ea-import-info">O aplicativo não interpreta texto livre. Você pode me mandar seu sistema em linguagem natural; eu o converto para este formato. A importação não altera avaliações nem remove registros existentes.</p></section>
+ <p class="ea-import-info">O aplicativo não interpreta texto livre. Você pode me mandar seu sistema para conversão. O formato v2 também preserva metas em folhas e o PRTP com alternativa de imaginação. A importação não altera avaliações anteriores.</p></section>
  <section class="ea-import-box" id="eaImportResult" aria-live="polite"><p>Uma prévia aparecerá aqui antes de qualquer alteração.</p></section></div>`};
 EA.loadImportFile=async function(file){
  if(!file)return;
@@ -2185,6 +2195,44 @@ saveFocus=async function(fid){
  return eaBatchPriorSaveFocus(fid);
 };
 /* END EA_BATCH_UI_v1 */
+
+/* BEGIN EA_IMPORT_PROGRESS_v2: preserve PRTP alternatives and separate sheet targets. */
+const eaPriorCountsImported=exCounts;
+exCounts=function(ex){
+ const old=eaPriorCountsImported(ex);
+ const ref=(ex.entries||[]).filter(x=>x.type==='ref').length;
+ const noRef=(ex.entries||[]).filter(x=>x.type==='noref').length;
+ if(ex.progressMode==='prtp'){
+  const mixed=Math.min(ref/3,1)*3+Math.min(noRef/6,1)*6;
+  const imagination=Math.min(noRef/9,1)*9;
+  return {...old,ref,noRef,total:9,complete:Math.min(9,Math.max(mixed,imagination)),done:(ref>=3&&noRef>=6)||noRef>=9};
+ }
+ if(ex.progressMode==='sheets'){
+  const target=Math.max(1,Number(ex.sheetTarget)||1);
+  const oldCount=Math.max(0,Number(ex.sheetDone)||0);
+  const actual=oldCount+(ex.entries||[]).length;
+  return {...old,ref,noRef,total:target,complete:Math.min(target,actual),done:actual>=target,sheetCount:actual};
+ }
+ return old;
+};
+const eaBeforeImportedProgressView=exerciseView;
+exerciseView=function(kind,exid){
+ let html=eaBeforeImportedProgressView(kind,exid);
+ const ex=state.exercises?.[kind]?.find(x=>x.id===exid);
+ if(!ex||!['prtp','sheets'].includes(ex.progressMode))return html;
+ const c=exCounts(ex);
+ const note=ex.progressMode==='prtp'
+  ?`<span class="status-chip">${c.ref} com referência · ${c.noRef} imaginação</span><span class="status-chip">3 + 6 ou 9 só imaginação</span>`
+  :`<span class="status-chip ${c.done?'complete':''}">${c.sheetCount} / ${ex.sheetTarget} folhas</span><span class="status-chip">${ex.sheetDone||0} folhas anteriores informadas</span>`;
+ html=html.replace(/<div class="exercise-status">[\s\S]*?<\/div>/,`<div class="exercise-status">${difficultyChip(ex.difficulty)}${note}${c.done?'<span class="status-chip complete">Concluído</span>':''}</div>`);
+ if(ex.progressMode==='sheets'){
+  const counts=[`${c.ref} estudo(s)`,`${c.noRef} estudo(s)`];let pos=0;
+  html=html.replace(/<span class="zone-count">[^<]*<\/span>/g,()=>`<span class="zone-count">${counts[Math.min(pos++,1)]}</span>`);
+ }
+ return html;
+};
+/* END EA_IMPORT_PROGRESS_v2 */
+
 
 EA.installAudio();
 render();

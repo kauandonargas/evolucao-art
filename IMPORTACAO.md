@@ -1,36 +1,55 @@
-# Importação de sistemas no Evolução Art
+# Importar sistemas de estudo — Evolução Art
 
-O objetivo é cadastrar conjuntos de práticas sem inserir cada item manualmente. Você pode enviar o material a um assistente em texto livre (listas, esquemas, apostilas ou fotografias legíveis) e receber um pacote **JSON** no formato `evolucao-art.import/v1`. O próprio aplicativo **não utiliza IA e não interpreta texto livre**: ele valida e importa apenas o JSON já estruturado.
+O aplicativo aceita pacotes JSON com fundamentos, Focos e exercícios. Converta seus materiais de estudo para o formato de importação e revise a prévia antes de gravar. O aplicativo **não interpreta texto livre** automaticamente.
 
-## Como usar
+## Uso
 
-1. Envie o seu sistema em linguagem natural e descreva, se possível, os exercícios, dificuldades, metas e micro-habilidades. Não precisa converter nada manualmente.
-2. Receba um `.json` preparado para o aplicativo. Revise com o assistente qualquer informação ambígua antes da importação.
-3. No aplicativo, abra **Treino → Importar sistema de estudos…**.
-4. Selecione o `.json` ou cole seu conteúdo. Clique em **Verificar e visualizar**.
-5. Confira as quantidades e possíveis conflitos. Só então confirme em **Importar**.
+1. Abra **Treino → Importar sistema de estudos…**.
+2. Selecione um JSON ou cole o conteúdo.
+3. Clique em **Verificar e visualizar**.
+4. Confirme depois de revisar vínculos, duplicações e quantidades.
 
-O processo cria os vínculos entre Focos, fundamentos e exercícios. O nome do mestre, se houver, fica no fundamento associado ao Estudo de Mestres.
+O importador não inventa avaliações, nem sobrescreve cadastros anteriores. Itens já importados com a mesma identidade de pacote são preservados; títulos iguais de origem diferente produzem conflito explícito.
 
-## Campos aceitos (versão 1)
+## Formatos
 
-| Entidade | Campos |
+- `evolucao-art.import/v1`: compatível com os pacotes antigos.
+- `evolucao-art.import/v2`: acrescenta metas alternativas PRTP e cronogramas por folhas.
+
+O pacote contém `schema`, `packageId`, `name`, `foundations`, `focuses`, `exercises`. Chaves devem ser identificadores estáveis, em minúsculas, sem espaços.
+
+| Item | Campos aceitos |
 | --- | --- |
-| Pacote | `schema`, `packageId`, `name`, `foundations`, `focuses`, `exercises` |
-| Fundamento | `key`, `name`, `master` (opcional), `courseUrl` (opcional), `complexity` (1, 2 ou 3), `focusKeys` (opcional) |
+| Fundamento | `key`, `name`, `master` (opcional), `courseUrl` (opcional), `complexity` (1–3), `focusKeys` |
 | Foco | `key`, `title`, `concept`, `microSkill`, `courseUrl` (opcional) |
-| Exercício | `key`, `title`, `area` (`drawing` ou `painting`), `foundationKey`, `focusKeys`, `difficulty` (`easy`, `medium` ou `hard`), `withReference` (número), `withoutReference` (número), `instructions` (opcional) |
+| Exercício | `key`, `title`, `area` (`drawing` ou `painting`), `foundationKey`, `focusKeys`, `difficulty` (`easy`, `medium`, `hard`), `withReference`, `withoutReference`, `instructions` |
+| Exercício v2 (opcionais) | `progressMode`, `sheetTarget`, `sheetDone` |
 
-`key` é um identificador estável em minúsculas, sem espaços. Um exercício pode fazer referência a vários Focos. As referências podem usar as chaves declaradas no mesmo pacote ou, para elementos já existentes no aplicativo, o nome exato do Foco/fundamento (desde que não seja ambíguo).
+Um exercício pode trabalhar diversos Focos. Fundamentos organizam a complexidade, mas **não possuem pontuação própria**. As avaliações de Focos e de exercícios permanecem independentes.
 
-Amostra ilustrativa: `examples/exemplo-sistema-luz.json`.
+## Regras de progresso adicionais da v2
 
-## Segurança e integridade
+### `progressMode: "prtp"`
 
-- Antes de importar, o app valida nomes, vínculos, níveis, URLs e campos. **Campos não suportados bloqueiam a importação em vez de serem ignorados silenciosamente.**
-- A prévia não grava nada. A confirmação faz uma atualização única dos metadados e mantém um backup do estado anterior em armazenamento local.
-- Pacotes repetidos não recriam os mesmos itens. Itens já importados **não são sobrescritos**, preservando edições, avaliações e histórico.
-- Títulos iguais criados sem a mesma identidade de importação são sinalizados como conflito para evitar mistura de conteúdo.
-- **Imagens de Focos não são importadas nesta versão.** Os Focos podem começar apenas com texto; adicione referências pela Biblioteca de Focos quando quiser.
-- O arquivo e o conteúdo importado ficam no dispositivo. O importador não envia dados ao GitHub ou a serviços externos.
-- A importação não cria automaticamente progressões avançadas, calendários de estudo, avaliações históricas ou tipos de atividade que não existam atualmente no Evolução Art. Se seu sistema contiver esses elementos, eles precisam ser discutidos antes da conversão para não se perderem.
+- `withReference: 3`, `withoutReference: 6`.
+- Considera concluído quando há **3 estudos com referência + 6 sem referência** ou **9 estudos somente de imaginação**.
+- Não cria avaliações e não impõe esses números a exercícios que não usam essa regra.
+- Trata-se de uma interpretação programada do método 3 estudos-base com duas tentativas de imaginação cada; confirme se corresponde ao método antes de adotá-lo.
+
+### `progressMode: "sheets"`
+
+- Define `sheetTarget` (quantas folhas pretende produzir) e `sheetDone` (folhas já informadas, se houver).
+- O progresso é **`sheetDone + número de estudos anexados`**, sem converter folhas antigas em imagens ou avaliações fictícias.
+- Os campos `withReference` e `withoutReference` devem ser zero; a modalidade das folhas é livre.
+- Pressupõe que cada estudo anexado corresponde a uma folha. Se isso não corresponder ao seu fluxo, adapte a regra antes de acompanhar o progresso.
+
+Exemplo genérico: `examples/exemplo-progresso-v2.json`.
+
+## Segurança e limitações
+
+- Arquivos JSON são validados antes de qualquer alteração; campos não reconhecidos são recusados.
+- Links externos aceitam somente HTTP ou HTTPS.
+- A importação mantém um backup dos metadados e não apaga históricos ou imagens.
+- Não importa anexos PDF, imagens, obras de mestres, calendários, progressões por desbloqueio ou notas históricas automaticamente.
+- Atividades e Focos importados podem ser editados depois.
+- O importador depende da versão Windows atualizada para o esquema v2; versões anteriores recusarão esse formato.
