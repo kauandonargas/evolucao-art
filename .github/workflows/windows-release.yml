@@ -36,7 +36,7 @@ jobs:
       - name: Gerar instalador NSIS e publicar atualização
         run: npx electron-builder --win nsis --x64 --publish always
         env:
-          GH_TOKEN: GITHUB_TOKEN_LITERAL
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
       - uses: actions/upload-artifact@v4
         with:
