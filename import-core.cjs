@@ -1,12 +1,11 @@
-'use strict';
 /* BEGIN EA_IMPORT_CORE_v1: shared by Node tests and the browser (embedded). */
 const EvolucaoImport = (() => {
-  const schema = 'evolucao-art.import/v1';
+  const schema = 'evolucao-art.import/v3';
   const fields = {
     root:['schema','packageId','name','foundations','focuses','exercises'],
     foundation:['key','name','master','courseUrl','complexity','focusKeys'],
     focus:['key','title','concept','microSkill','courseUrl'],
-    exercise:['key','title','area','foundationKey','focusKeys','difficulty','withReference','withoutReference','instructions','progressMode','sheetTarget','sheetDone']
+    exercise:['key','title','area','foundationKey','focusKeys','difficulty','withReference','withoutReference','instructions','sourceNotes','progressMode','sheetTarget','sheetDone']
   };
   const keyPattern = /^[a-z0-9][a-z0-9_-]{0,63}$/;
   const MAX = 1000;
@@ -24,7 +23,7 @@ const EvolucaoImport = (() => {
   function validate(input){
     const obj=typeof input==='string'?JSON.parse(input):input;
     if(!plain(obj))error('O pacote deve ser um objeto JSON.');
-    keysOnly(obj,'root','pacote');if(![schema,'evolucao-art.import/v2'].includes(obj.schema))error(`Formato não reconhecido. Use "schema": "${schema}" ou "evolucao-art.import/v2".`);
+    keysOnly(obj,'root','pacote');if(![schema,'evolucao-art.import/v1','evolucao-art.import/v2'].includes(obj.schema))error('Formato não reconhecido. Use evolucao-art.import/v1, v2 ou v3.');
     const result={schema:obj.schema,packageId:key(obj.packageId,'packageId'),name:str(obj.name,'name',120)};
     let total=0;
     for(const type of ['foundations','focuses','exercises']){
@@ -46,18 +45,26 @@ const EvolucaoImport = (() => {
         const area=str(item.area,`${w}.area`,20);if(!['drawing','painting'].includes(area))error(`${w}.area: use drawing ou painting.`);
         const difficulty=str(item.difficulty,`${w}.difficulty`,20);if(!['easy','medium','hard'].includes(difficulty))error(`${w}.difficulty: use easy, medium ou hard.`);
         const focusKeys=linkKeys(item.focusKeys,`${w}.focusKeys`);if(!focusKeys.length)error(`${w}.focusKeys: vincule pelo menos um Foco.`);
-        const progressMode=str(item.progressMode??'standard',`${w}.progressMode`,20);
-        if(!['standard','prtp','sheets'].includes(progressMode))error(`${w}.progressMode: use standard, prtp ou sheets.`);
+        // All study materials follow the SAME adaptive practice algorithm.
+        // v1/v2 quotas are preserved strictly as provenance, never completion rules.
         const withReference=integer(item.withReference,`${w}.withReference`,0,500,0);
         const withoutReference=integer(item.withoutReference,`${w}.withoutReference`,0,500,0);
         const sheetTarget=integer(item.sheetTarget,`${w}.sheetTarget`,0,500,0);
         const sheetDone=integer(item.sheetDone,`${w}.sheetDone`,0,500,0);
-        if(obj.schema===schema && progressMode!=='standard')error(`${w}: use esquema v2 para os modos de progresso extras.`);
-        if(progressMode==='prtp' && (withReference!==3||withoutReference!==6))error(`${w}: PRTP exige 3 estudos de referência e 6 de imaginação, com alternativa de 9 só de imaginação.`);
-        if(progressMode==='sheets'&&(sheetTarget<1||sheetDone>sheetTarget||withReference!==0||withoutReference!==0))error(`${w}: metas em folhas devem definir sheetTarget >= sheetDone, sem exigir modalidade.`);
-        if(progressMode!=='sheets' && (sheetTarget!==0||sheetDone!==0))error(`${w}: sheetTarget/sheetDone só se aplicam ao modo sheets.`);
+        const progressMode=str(item.progressMode??'standard',`${w}.progressMode`,20);
+        if(!['standard','prtp','sheets'].includes(progressMode))error(`${w}.progressMode: formato antigo não reconhecido.`);
+        if(sheetTarget&&sheetDone>sheetTarget)error(`${w}: folhas informadas excedem a meta de origem.`);
+        if(obj.schema===schema&&(item.progressMode!==undefined||item.sheetTarget!==undefined||item.sheetDone!==undefined))
+          error(`${w}: o formato v3 não aceita regras especiais de conclusão (progressMode/sheetTarget/sheetDone). Preserve-as em sourceNotes.`);
+        const sourceNotes=str(item.sourceNotes??'',`${w}.sourceNotes`,6000,false);
+        const origin=[];
+        if(obj.schema!==schema){
+          if(progressMode==='prtp')origin.push('Método de origem: PRTP; 3 execuções-base e 2 de imaginação para cada uma, ou somente imaginação. Não é requisito de conclusão do Evolução Art.');
+          if(progressMode==='sheets')origin.push(`Cronograma de origem: ${sheetTarget} folhas previstas; ${sheetDone} informadas como produzidas. Não representa sessão avaliada.`);
+          if(progressMode==='standard'&&(withReference||withoutReference))origin.push(`Metas de origem: ${withReference} com referência; ${withoutReference} sem referência. Não bloqueiam o treinamento.`);
+        }
         return {key:k,title:str(item.title,`${w}.title`,160),area,foundationKey:str(item.foundationKey,`${w}.foundationKey`,160),focusKeys,difficulty,
-          withReference,withoutReference,progressMode,sheetTarget,sheetDone,
+          withReference,withoutReference,sourceNotes:[sourceNotes,...origin].filter(Boolean).join('\n'),
           instructions:str(item.instructions??'',`${w}.instructions`,6000,false)};
       });
     }
@@ -135,8 +142,8 @@ const EvolucaoImport = (() => {
     for(const f of doc.foundations){const rec=state.foundations.find(x=>x.id===map.foundations.get(f.key));const ids=f.focusKeys.map(k=>findRef('focuses',k));rec.focusIds=[...new Set([...(rec.focusIds||[]),...ids])];}
     for(const e of doc.exercises){const importRef=ref('exercises',e),all=[...state.exercises.drawing,...state.exercises.painting];if(all.some(x=>x.importRef===importRef))continue;
       if((state.exercises[e.area]||[]).some(x=>folded(x.title)===folded(e.title)))error(`Conflito inesperado no exercício "${e.title}".`);
-      state.exercises[e.area].push({id:id('ex'),title:e.title,difficulty:e.difficulty,foundationId:findRef('foundations',e.foundationKey),focusIds:e.focusKeys.map(k=>findRef('focuses',k)),refTarget:e.withReference,noRefTarget:e.withoutReference,
-        instructions:e.instructions,progressMode:e.progressMode||'standard',sheetTarget:e.sheetTarget||0,sheetDone:e.sheetDone||0,entries:[],ratings:[],importRef});
+      state.exercises[e.area].push({id:id('ex'),title:e.title,difficulty:e.difficulty,foundationId:findRef('foundations',e.foundationKey),focusIds:e.focusKeys.map(k=>findRef('focuses',k)),refTarget:0,noRefTarget:0,
+        instructions:e.instructions,sourceNotes:e.sourceNotes||'',entries:[],ratings:[],importRef});
     }
     return state;
   }

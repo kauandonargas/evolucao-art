@@ -1,0 +1,37 @@
+{
+  "schema": "evolucao-art.import/v3",
+  "packageId": "exemplo-unificado-v3",
+  "name": "Exemplo de práticas",
+  "foundations": [
+    {
+      "key": "luz",
+      "name": "Luz",
+      "complexity": 1,
+      "focusKeys": [
+        "separar-luz-sombra"
+      ]
+    }
+  ],
+  "focuses": [
+    {
+      "key": "separar-luz-sombra",
+      "title": "Separar luz e sombra",
+      "concept": "Observe duas famílias.",
+      "microSkill": "Identifique as massas."
+    }
+  ],
+  "exercises": [
+    {
+      "key": "esfera",
+      "title": "Iluminação de esfera",
+      "area": "painting",
+      "foundationKey": "luz",
+      "focusKeys": [
+        "separar-luz-sombra"
+      ],
+      "difficulty": "easy",
+      "instructions": "Treine o volume e avalie a sessão.",
+      "sourceNotes": "Três repetições no plano antigo, sem obrigação atual."
+    }
+  ]
+}
