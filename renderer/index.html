@@ -759,10 +759,47 @@ textarea:focus-visible,select:focus-visible {outline:2px solid #f4f4f4!important
 .ea-ui4-exercise .exercise-workspace{min-height:0!important;height:auto!important;display:block!important}
 .ea-ui4-exercise .ea-ui4-workspace .exercise-zone{min-height:0!important;height:auto!important}
 .ea-ui4-exercise .ea-ui4-workspace .zone-gallery{min-height:130px!important;height:auto!important}
-.ea-ui4-home .home-center-grid{order:0!important}
-.ea-ui4-home .ea-ui4-launch{order:1!important}
-.ea-home-banner:not(.has-image){height:88px!important;min-height:0!important;background:#111!important;border-color:#292929!important}
-.ea-home-banner:not(.has-image) .ea-home-banner-empty{font-size:12px!important;color:#666!important}
+
+
+/* Context-first interface: content is primary; controls are progressive. */
+.ea-principle-stage{max-width:1000px;margin:clamp(28px,7vh,90px) auto 24px;display:grid;gap:22px}
+.ea-principle-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ea-principle-card{width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid #303030;padding:24px 0 38px;cursor:pointer;color:inherit}
+.ea-principle-card h1{font-family:inherit;font-weight:550;font-size:clamp(36px,5.7vw,76px);line-height:1.1;letter-spacing:-.045em;margin:0 0 22px}
+.ea-principle-card p{font-size:clamp(18px,2.4vw,28px);line-height:1.45;color:#d0d0d0;max-width:800px;margin:0}
+.ea-principle-card .ea-open-hint{font-size:12px;color:#888;margin-top:30px}
+.ea-principle-detail{max-width:1000px;margin:30px auto;display:grid;gap:22px}
+.ea-principle-detail h1{font-family:inherit;font-size:clamp(30px,4vw,52px);line-height:1.15;letter-spacing:-.035em}
+.ea-principle-detail .ea-detail-text{font-size:18px;line-height:1.75;max-width:760px;white-space:pre-wrap;color:#d1d1d1}
+.ea-principle-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}
+.ea-principle-gallery:empty{display:none}
+.ea-principle-gallery button{padding:0;background:transparent;border:0;cursor:pointer}
+.ea-principle-gallery img{width:100%;height:auto;max-height:520px;object-fit:contain;border-radius:8px}
+.ea-quiet{font-size:12px;color:#929292;background:transparent;border:0;cursor:pointer;padding:8px 4px}
+.ea-quiet:hover{color:white}
+.ea-reveal{margin-top:20px;border-top:1px solid #303030;padding-top:18px}
+.ea-reveal summary{cursor:pointer;color:#aaa;font-size:13px}
+.ea-reveal .focus-rating{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+.ea-foundation-clean{max-width:1100px;margin:auto}
+.ea-foundation-clean .ea-foundation-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:18px 0 34px}
+.ea-foundation-clean h1{font-family:inherit;font-size:clamp(30px,4vw,52px);letter-spacing:-.035em}
+.ea-foundation-clean .ea-work-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}
+.ea-foundation-clean .ea-work-gallery:empty{display:none}
+.ea-foundation-clean .ea-insights{display:grid;gap:12px;max-width:820px;margin:24px 0}
+.ea-foundation-clean .ea-secondary-tools{margin-top:28px;display:flex;gap:16px;flex-wrap:wrap}
+@media(max-width:600px){.ea-principle-stage{margin:24px auto}.ea-principle-card{padding:18px 0 28px}}
+/* EVOLUÇÃO ART — progressive-disclosure interface v13 */
+.ea-v13-container{max-width:1080px;margin:0 auto;padding:0 0 55px}.ea-v13-container h1{font:550 clamp(25px,3.2vw,36px)/1.22 Inter,system-ui,sans-serif;letter-spacing:-.03em;margin:0}.ea-v13-muted{color:#929292;font-size:13px;line-height:1.5}.ea-v13-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:0 0 28px}.ea-v13-link{border:0;background:transparent;color:#999;font-size:12px;padding:8px 2px;cursor:pointer}.ea-v13-link:hover,.ea-v13-link:focus-visible{color:#f2f2f2;text-decoration:underline}.ea-v13-chevron{font-size:18px;color:#777;flex-shrink:0;transition:transform .15s ease}.ea-v13-accordion[open]>.ea-v13-category-summary .ea-v13-chevron,.ea-v13-level[open]>.ea-v13-level-summary .ea-v13-chevron{transform:rotate(90deg)}.ea-v13-accordion,.ea-v13-level{border-bottom:1px solid #2d2d2d}.ea-v13-category-summary,.ea-v13-level-summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:15px;cursor:pointer;padding:22px 5px;min-height:77px}.ea-v13-category-summary::-webkit-details-marker,.ea-v13-level-summary::-webkit-details-marker{display:none}.ea-v13-cat-title{font-size:21px;font-weight:530;letter-spacing:-.025em;margin:0 0 3px}.ea-v13-category-summary:hover .ea-v13-cat-title,.ea-v13-level-summary:hover .ea-v13-level-title{color:#fff}.ea-v13-subtitle{font-size:12px;color:#929292;line-height:1.45;max-width:680px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.ea-v13-category-body{padding:0 0 24px 18px;border-left:1px solid #343434;margin-left:10px}.ea-v13-level{border-color:#292929}.ea-v13-level-summary{padding:15px 4px;min-height:60px}.ea-v13-level-title{font-weight:520;font-size:15px}.ea-v13-level-body{padding:5px 0 22px}.ea-v13-exercises{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.ea-v13-exercise{display:flex;align-items:center;text-align:left;gap:13px;width:100%;background:#191919;border:1px solid #303030;border-radius:10px;padding:16px 17px;min-height:83px;cursor:pointer;color:#ededed;transition:border-color .15s,background .15s}.ea-v13-exercise:hover,.ea-v13-exercise:focus-visible{border-color:#727272;background:#222}.ea-v13-exercise-name{font-size:14px;font-weight:500;line-height:1.4;flex:1;overflow-wrap:anywhere}.ea-v13-exercise-info{font-size:11px;color:#919191;margin-top:6px}.ea-v13-exercise-img{width:64px;height:61px;border-radius:5px;background:#242424;object-fit:cover;flex-shrink:0}.ea-v13-empty{padding:30px 0;color:#929292;font-size:14px}.ea-v13-summary-right{display:flex;align-items:center;gap:18px}.ea-v13-level-preview{font-size:11px;color:#8e8e8e}.ea-v13-category-summary:focus-visible,.ea-v13-level-summary:focus-visible{outline:1px solid #aaa;outline-offset:3px;border-radius:5px}.ea-v13-note{font-size:12px;color:#888;padding:16px 0}.ea-v13-quiet-new{margin-top:24px}.ea-v13-add-image{display:flex;align-items:center;justify-content:center;min-height:82px;margin:14px 0;border:1px dashed #454545;border-radius:10px;color:#999;background:#161616;cursor:pointer;font-size:13px}.ea-v13-add-image:hover{border-color:#aaa;color:white}.ea-v13-add-image input{display:none}.ea-v13-exercise .ea-v13-thumbnail{height:64px;width:66px;object-fit:cover;border-radius:6px;flex-shrink:0}.ea-v13-no-works{font-size:13px;color:#888;padding:24px 0}.ea-v13-complete{position:fixed;inset:0;z-index:100;background:rgba(13,13,13,.93);display:grid;place-items:center;animation:eaV13FadeIn .22s ease;pointer-events:none}.ea-v13-complete-content{text-align:center;animation:eaV13Pop .5s ease}.ea-v13-complete-symbol{width:68px;height:68px;border:1px solid #aaa;border-radius:50%;margin:0 auto 21px;display:grid;place-items:center;font-size:28px;color:#ededed}.ea-v13-complete-text{font-size:21px;font-weight:500}.ea-v13-complete-sub{color:#9a9a9a;font-size:12px;margin-top:8px}@keyframes eaV13FadeIn{from{opacity:0}to{opacity:1}}@keyframes eaV13Pop{from{transform:translateY(12px) scale(.97);opacity:.25}to{transform:none;opacity:1}}
+/* Gallery: artworks remain the primary visual; insight notes are secondary but readable. */
+.ea-v13-masters .ea-v13-category-body{margin:0;padding:4px 0 24px 0;border:0}.ea-v13-gallery-layout{display:grid;grid-template-columns:minmax(0,2.35fr) minmax(230px,1fr);gap:24px;align-items:start}.ea-v13-artwork-wall{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;align-items:start}.ea-v13-artwork-wall:empty{display:none}.ea-v13-art-tile{border:0;padding:0;background:none;border-radius:8px;overflow:hidden;cursor:zoom-in;text-align:left}.ea-v13-art-tile img{display:block;width:100%;height:auto;max-height:560px;object-fit:cover;border-radius:7px}.ea-v13-art-tile:nth-child(3n){grid-column:span 2}.ea-v13-art-tile:nth-child(3n) img{max-height:600px;object-fit:contain;background:#191919}.ea-v13-art-tile:hover img{filter:brightness(1.08)}.ea-v13-art-caption{font-size:11px;color:#aaa;margin:7px 3px 0;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.ea-v13-insights{display:grid;gap:10px;align-content:start}.ea-v13-insight{position:relative;width:100%;background:#202020;border:1px solid #383838;border-radius:9px;padding:17px 16px;min-height:84px}.ea-v13-insight-open{display:block;width:100%;text-align:left;background:none;border:0;color:#e7e7e7;font-size:14px;line-height:1.6;cursor:pointer;padding:0 9px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}.ea-v13-insight-open:hover{color:#fff}.ea-v13-insight-unfav{position:absolute;right:9px;top:8px;border:0;background:#2a2a2a;color:#b6b6b6;font-size:11px;border-radius:5px;opacity:0;cursor:pointer;padding:5px 7px}.ea-v13-insight:hover .ea-v13-insight-unfav,.ea-v13-insight:focus-within .ea-v13-insight-unfav{opacity:1}.ea-v13-insight-unfav:hover{color:white;background:#333}.ea-v13-insight-caption{color:#898989;font-size:11px;display:block;margin-bottom:9px}.ea-v13-empty-arts{display:grid;place-items:center;text-align:center;min-height:190px;border:1px dashed #363636;border-radius:8px;color:#888;padding:24px;font-size:13px;gap:8px}.ea-v13-empty-arts strong{font-size:14px;color:#b6b6b6;font-weight:450}.ea-v13-gallery-tools{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:15px}.ea-v13-gallery-tools label{cursor:pointer;color:#aaa;font-size:12px;padding:8px 0}.ea-v13-gallery-tools input{display:none}.ea-v13-empty-notes{color:#777;font-size:12px;line-height:1.65;padding:12px 0}.ea-v13-bank{max-width:850px;margin:auto}.ea-v13-bank-list{display:grid;gap:10px}.ea-v13-bank-note{border:1px solid #303030;background:#1b1b1b;border-radius:8px;padding:16px 18px}.ea-v13-bank-note p{white-space:pre-wrap;font-size:14px;line-height:1.55;margin:7px 0}.ea-v13-bank-actions{display:flex;align-items:center;gap:16px;margin-top:12px}.ea-v13-undo{position:fixed;right:24px;bottom:25px;z-index:101;background:#292929;border:1px solid #656565;border-radius:8px;padding:11px 14px;display:flex;align-items:center;gap:18px;color:white;font-size:13px;box-shadow:0 14px 45px #000a}.ea-v13-undo button{border:0;background:none;color:white;cursor:pointer;text-decoration:underline;font-size:12px}.ea-v13-modal{position:fixed;inset:0;z-index:90;background:#000c;display:grid;place-items:center;padding:18px}.ea-v13-modal-body{background:#202020;border:1px solid #434343;border-radius:13px;padding:26px;width:min(600px,100%);max-height:90vh;overflow:auto}.ea-v13-modal-body h2{font-size:23px;font-weight:520;margin:0 0 15px}.ea-v13-modal-text{font-size:16px;line-height:1.7;white-space:pre-wrap;margin:0 0 24px}.ea-v13-modal-textarea{width:100%;min-height:170px;background:#121212;border:1px solid #555;border-radius:8px;padding:13px;font-size:14px;line-height:1.6;resize:vertical}.ea-v13-modal-actions{display:flex;align-items:center;gap:12px;justify-content:flex-end;margin-top:20px}.ea-v13-modal-primary{background:#eee;color:#171717;border:0;border-radius:6px;padding:11px 18px;font-size:13px}.ea-v13-modal-secondary{background:none;color:#bbb;border:0;padding:10px;font-size:13px}
+/* A single, large gold principle; assessment stays beneath it, not on the reading page. */
+.ea-v13-focus{max-width:1060px;margin:0 auto;padding:10px 0 45px;display:flex;flex-direction:column;align-items:center}.ea-v13-focus-head{width:100%;display:flex;justify-content:flex-end;min-height:32px}.ea-v13-focus-head .ea-v13-link{color:#8c8c8c}.ea-v13-gold-card{width:min(100%,680px);min-height:340px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:22px;margin:22px 0 0;padding:46px 37px;background:linear-gradient(145deg,#29241b 0%,#1b1916 45%,#292318 100%);border:1px solid #aa8c4a;border-radius:16px;box-shadow:inset 0 0 0 1px #66573588,0 25px 66px #0006;color:#ead9ae;cursor:pointer;transition:border-color .15s,transform .18s}.ea-v13-gold-card:hover,.ea-v13-gold-card:focus-visible{border-color:#e8cb83;transform:translateY(-2px)}.ea-v13-gold-icon{font-size:27px;line-height:1;color:#c9aa69}.ea-v13-gold-name{font:500 clamp(32px,5vw,54px)/1.15 Inter,system-ui,sans-serif;letter-spacing:-.035em;color:#f1e0b9;max-width:580px}.ea-v13-gold-hint{font-size:12px;color:#b6a482;margin-top:10px}.ea-v13-focus-rating{width:min(100%,730px);text-align:center;margin:35px auto 10px}.ea-v13-focus-rating p{font-size:14px;color:#c1c1c1;margin:0 0 18px}.ea-v13-focus-rating .ea-v13-ratings{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.ea-v13-ratings button{border:1px solid #454545;background:#202020;color:#e2e2e2;border-radius:8px;padding:12px 16px;cursor:pointer;font-size:13px}.ea-v13-ratings button:hover,.ea-v13-ratings button:focus-visible{background:#353535;border-color:#a6a6a6}.ea-v13-detail{max-width:810px;margin:16px auto 50px}.ea-v13-detail-return{margin:0 0 46px}.ea-v13-detail h1{font-size:clamp(34px,5vw,55px);letter-spacing:-.035em;line-height:1.17;font-weight:500;margin:0 0 34px}.ea-v13-detail-concept{white-space:pre-wrap;font-size:clamp(18px,2.3vw,23px);line-height:1.8;color:#dcdcdc;max-width:780px}.ea-v13-detail-command{border-left:2px solid #a78a53;padding:8px 20px;margin:55px 0;font-size:17px;line-height:1.7;color:#e1d4b8}.ea-v13-detail-media{margin-top:45px;display:grid;gap:14px;grid-template-columns:repeat(2,minmax(0,1fr))}.ea-v13-detail-media:empty{display:none}.ea-v13-detail-media button{background:none;border:0;padding:0;cursor:zoom-in}.ea-v13-detail-media img{width:100%;height:auto;max-height:550px;object-fit:contain;border-radius:9px}.ea-v13-no-focus{display:grid;place-items:center;min-height:55vh;text-align:center;gap:15px;color:#999}.ea-v13-no-focus h1{font-size:26px;color:#ddd;font-weight:500}
+@media(max-width:820px){.ea-v13-gallery-layout{grid-template-columns:1fr}.ea-v13-insights{grid-template-columns:repeat(2,minmax(0,1fr))}.ea-v13-gallery-layout .ea-v13-artwork-wall{max-width:100%}}
+@media(max-width:580px){.ea-v13-exercises{grid-template-columns:1fr}.ea-v13-category-body{margin-left:5px;padding-left:11px}.ea-v13-cat-title{font-size:18px}.ea-v13-category-summary{padding:18px 2px}.ea-v13-exercise{min-height:70px}.ea-v13-gallery-layout{gap:12px}.ea-v13-insights{grid-template-columns:1fr}.ea-v13-artwork-wall{gap:7px}.ea-v13-art-tile:nth-child(3n){grid-column:span 1}.ea-v13-art-tile:nth-child(3n) img{max-height:350px;object-fit:cover}.ea-v13-gold-card{min-height:330px;padding:35px 25px}.ea-v13-gold-name{font-size:35px}.ea-v13-focus-rating{margin-top:24px}.ea-v13-ratings button{padding:11px 12px}.ea-v13-detail-return{margin-bottom:25px}}
+
+.ea-v13-exercise-instructions{font-size:15px;line-height:1.65;color:#bdbdbd;margin:4px 0 21px;max-width:800px}.ea-v13-editor{max-width:700px;margin:0 auto;padding-bottom:70px}.ea-v13-editor h1{font-size:30px;font-weight:500;margin:0 0 30px}.ea-v13-editor .field{margin-bottom:23px}.ea-v13-editor-focus-list{max-height:300px;overflow:auto;display:grid;gap:2px;margin-top:12px;border:1px solid #333;border-radius:8px;padding:8px}.ea-v13-edit-focus{display:flex;align-items:center;gap:12px;padding:11px 8px;font-size:13px;color:#dedede}.ea-v13-edit-focus:hover{background:#282828}.ea-v13-edit-focus[hidden]{display:none!important}.ea-v13-editor-actions{display:flex;align-items:center;gap:18px;margin:20px 0}.ea-v13-editor input[type=checkbox]{accent-color:#dadada}
+
+.ea-v13-category-summary>span:first-child,.ea-v13-level-summary>span:first-child{min-width:0;flex:1}.ea-v13-summary-right{flex-shrink:0;max-width:96px}.ea-v13-exercise-browser .ea-v13-subtitle{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ea-v13-level-preview{white-space:normal;max-width:70px;text-align:right}
 
 </style>
 </head>
@@ -2451,6 +2488,229 @@ EA.finishView=function(){
 EA.installAudio();
 render();
 EA.openIntro();
+
+
+/* Contextual page composition. Internal associations are not rendered on read pages. */
+EA.focusDetailOpen=false;
+EA.showFocusDetail=function(){EA.focusDetailOpen=true;render()};
+EA.showFocusCard=function(){EA.focusDetailOpen=false;render()};
+const eaPriorFocusPage=focusView;
+focusView=function(){
+ const f=routedFocus();
+ if(!f)return eaPriorFocusPage();
+ const detail=EA.focusDetailOpen;
+ const top=`<div class="ea-principle-top"><span class="eyebrow">Focos</span><button class="ea-quiet" onclick="nav('focusLibrary')">Biblioteca</button></div>`;
+ if(!detail)return `<section class="ea-principle-stage">${top}<button class="ea-principle-card" onclick="EA.showFocusDetail()"><h1>${esc(f.title)}</h1><p>${esc(f.microSkill||f.concept||'')}</p><div class="ea-open-hint">Explorar princípio →</div></button></section>`;
+ return `<section class="ea-principle-detail">${top}<div><button class="ea-quiet" onclick="EA.showFocusCard()">← Voltar ao princípio</button><h1>${esc(f.title)}</h1></div><div class="ea-detail-text">${esc(f.concept||f.microSkill||'')}</div><div class="ea-principle-gallery" id="focusVisual_${f.id}"></div>${f.microSkill?`<div class="ea-detail-text"><strong>${esc(f.microSkill)}</strong></div>`:''}${EA.safeUrl(f.courseUrl)?`<a class="ea-quiet" href="${esc(EA.safeUrl(f.courseUrl))}" target="_blank" rel="noopener">Material complementar ↗</a>`:''}<details class="ea-reveal"><summary>Registrar uma tentativa</summary><div class="focus-rating"><button onclick="rateFocus('${f.id}',1)">Muito difícil</button><button onclick="rateFocus('${f.id}',2)">Difícil</button><button onclick="rateFocus('${f.id}',3)">OK</button><button onclick="rateFocus('${f.id}',4)">Fácil</button><button onclick="rateFocus('${f.id}',5)">Automático</button></div></details></section>`;
+};
+const eaPriorFocusImages=loadFocusNowImage;
+loadFocusNowImage=async function(fid){
+ const holder=document.getElementById('focusVisual_'+fid),f=EA.focusById(fid);
+ if(!holder||!f)return;
+ const images=[];
+ for(const imageId of focusImageIds(f)){
+  const img=await getImage(imageId);
+  if(img)images.push(`<button onclick="viewArt('${imageId}')" aria-label="Ampliar imagem"><img src="${URL.createObjectURL(img.blob)}" alt="${esc(img.name)}"></button>`);
+ }
+ holder.innerHTML=images.join('');
+};
+const eaPriorNav=nav;
+nav=function(page,extra={}){if(page==='focus')EA.focusDetailOpen=false;return eaPriorNav(page,extra)};
+/* Foundation pages never expose focus linkage, tags, or editing instructions. */
+foundationView=function(fid){
+ const f=state.foundations.find(x=>x.id===fid);
+ if(!f)return '<div class="empty">Fundamento não encontrado.</div>';
+ const notes=state.notes.filter(n=>n.foundationId===fid&&n.source==='practice');
+ const favs=notes.filter(n=>n.favorite);
+ const hasWorks=(f.artIds||[]).length>0;
+ return `<section class="ea-foundation-clean"><header class="ea-foundation-header"><div><span class="eyebrow">Fundamento</span><h1>${esc(f.name)}</h1></div><button class="btn primary" onclick="startPractice('${fid}')">Prática</button></header>${favs.length?`<div class="ea-insights">${favs.map(n=>favoriteInsightHtml(n)).join('')}</div>`:''}${hasWorks?'<div class="ea-work-gallery" id="artGrid"></div>':'<div id="artGrid" class="ea-work-gallery"></div>'}${notes.length?`<details class="ea-reveal"><summary>Anotações dos estudos (${notes.length})</summary><div class="ea-insights">${notes.slice().reverse().map(n=>noteHtml(n)).join('')}</div></details>`:''}<div class="ea-secondary-tools"><label class="ea-quiet">${hasWorks?'Adicionar obras':'Adicionar imagens'}<input class="hidden" type="file" multiple accept="image/*" onchange="addMasterImages(event,'${fid}')"></label>${EA.safeUrl(f.courseUrl)?`<a class="ea-quiet" href="${esc(EA.safeUrl(f.courseUrl))}" target="_blank" rel="noopener">Material complementar ↗</a>`:''}<button class="ea-quiet" onclick="nav('editFoundation',{id:'${fid}'})">Editar</button></div></section>`;
+};
+
+/* BEGIN EA_EXPERIENCE_v13 — single-context screens, preserve model/history */
+EA.v13={expanded:{drawing:{},painting:{}}, masterExpanded:{drawing:{},painting:{}}, masterBackArea:null,undo:null};
+EA.v13Area=function(f,kind){
+ const matched=['drawing','painting'].filter(k=>(state.exercises?.[k]||[]).some(ex=>ex.foundationId===f.id));
+ if(matched.length)return matched.includes(kind);
+ if(f.area==='drawing'||f.area==='painting')return f.area===kind;
+ const n=(f.name||'').toLocaleLowerCase('pt-BR');
+ if(/perspect|silhuet|proporç|gestual|figura|anatom|anima|vestiment|design/.test(n))return kind==='drawing';
+ if(/luz|valores|materiais|cores|edge|pintura/.test(n))return kind==='painting';
+ return true; // Unclassified user-created foundations remain discoverable in both areas.
+};
+EA.v13Groups=function(kind){
+ const exercises=state.exercises?.[kind]||[];
+ const foundations=state.foundations||[];
+ const groups=foundations.map(f=>({f,items:exercises.filter(ex=>ex.foundationId===f.id)})).filter(x=>x.items.length);
+ const validIds=new Set(foundations.map(f=>f.id));
+ const orphaned=exercises.filter(ex=>!validIds.has(ex.foundationId));
+ if(orphaned.length)groups.push({f:{id:'unassigned_'+kind,name:'Sem fundamento'},items:orphaned});
+ return groups;
+};
+EA.v13Level=function(ex){return ex.difficulty==='hard'?3:ex.difficulty==='medium'?2:1};
+EA.v13ToggleCat=function(kind,fid,el){
+ if(el.open){EA.v13.expanded[kind]={fid,level:EA.v13.expanded[kind]?.fid===fid?EA.v13.expanded[kind]?.level:null};document.querySelectorAll('.ea-v13-exercise-browser>.ea-v13-accordion').forEach(other=>{if(other!==el)other.open=false})}
+ else if(EA.v13.expanded[kind]?.fid===fid)EA.v13.expanded[kind]={};
+};
+EA.v13ToggleLevel=function(kind,fid,level,el){
+ if(el.open){EA.v13.expanded[kind]={fid,level};el.parentElement.querySelectorAll('.ea-v13-level').forEach(other=>{if(other!==el)other.open=false})}
+ else if(EA.v13.expanded[kind]?.level===level)EA.v13.expanded[kind]={fid,level:null};
+};
+exerciseListView=function(kind){
+ const groups=EA.v13Groups(kind),selected=EA.v13.expanded[kind]||{};
+ const category=({f,items})=>{
+  const opened=selected.fid===f.id;
+  const levels=[1,2,3].map(level=>{
+   const exercises=items.filter(ex=>EA.v13Level(ex)===level);
+   if(!exercises.length)return '';
+   const levelOpen=opened&&selected.level===level;
+   const cards=exercises.map(ex=>{
+    const count=(ex.ratings||[]).length;
+    return `<button type="button" class="ea-v13-exercise" onclick="EA.v13.expanded['${kind}']={fid:'${f.id}',level:${level}};nav('exercise',{kind:'${kind}',id:'${ex.id}'})"><span class="ea-v13-exercise-name">${esc(ex.title)}${count?`<span class="ea-v13-exercise-info" style="display:block">${count} sessão${count===1?'':'ões'} avaliada${count===1?'':'s'}</span>`:''}</span><img class="ea-v13-exercise-img" id="exerciseCover_${ex.id}" alt="" style="display:none"><span class="ea-v13-chevron" aria-hidden="true">›</span></button>`;
+   }).join('');
+   return `<details class="ea-v13-level" ${levelOpen?'open':''} ontoggle="EA.v13ToggleLevel('${kind}','${f.id}',${level},this)"><summary class="ea-v13-level-summary"><span><span class="ea-v13-level-title">NV${level}</span><span class="ea-v13-subtitle" style="display:block">${esc(exercises.slice(0,2).map(x=>x.title).join(' · '))}</span></span><span class="ea-v13-summary-right"><span class="ea-v13-level-preview">${exercises.length} exercício${exercises.length===1?'':'s'}</span><span class="ea-v13-chevron">›</span></span></summary><div class="ea-v13-level-body"><div class="ea-v13-exercises">${cards}</div></div></details>`;
+  }).join('');
+  const preview=items.slice(0,2).map(x=>x.title).join(' · ');
+  return `<details class="ea-v13-accordion" ${opened?'open':''} ontoggle="EA.v13ToggleCat('${kind}','${f.id}',this)"><summary class="ea-v13-category-summary"><span style="min-width:0"><h2 class="ea-v13-cat-title">${esc(f.name)}</h2><div class="ea-v13-subtitle">${esc(preview)}</div></span><span class="ea-v13-summary-right"><span class="ea-v13-level-preview">${items.length} exercício${items.length===1?'':'s'}</span><span class="ea-v13-chevron">›</span></span></summary><div class="ea-v13-category-body">${levels}</div></details>`;
+ };
+ return `<section class="ea-v13-container"><header class="ea-v13-head"><h1>${kindLabel(kind)}</h1></header><div class="ea-v13-exercise-browser">${groups.length?groups.map(category).join(''):`<div class="ea-v13-empty">Não há exercícios vinculados a fundamentos nesta área.</div>`}</div><div class="ea-v13-quiet-new"><button class="ea-v13-link" type="button" onclick="nav('newExercise',{kind:'${kind}'})">+ Criar exercício</button></div></section>`;
+};
+// Exercise photos use the same existing import/deduplication and reference-pairing logic.
+EA.v13UploadExercise=function(kind,exid,mode,el){
+ if(!el.files?.length)return;
+ const fake={preventDefault(){},dataTransfer:{files:[...el.files]}};
+ void dropExerciseFiles(fake,kind,exid,mode);
+ el.value='';
+};
+const eaV13PreviousExerciseView=exerciseView;
+exerciseView=function(kind,exid){
+ let html=eaV13PreviousExerciseView(kind,exid);
+ if(!state.exercises?.[kind]?.some(x=>x.id===exid))return html;
+ // Display upload controls only in the exercise workspace, not in catalogues or Focos.
+ const insert=`<div class="ea-v13-exercise-upload"><label class="ea-v13-add-image">+ Adicionar imagem do estudo<input type="file" accept="image/*" multiple onchange="EA.v13UploadExercise('${kind}','${exid}',EA.exerciseMediaMode('${kind}',{id:'${exid}',entries:[]}),this)"></label></div>`;
+ // Mode must match the actively selected tab, even after switching tabs.
+ const safe=insert.replace(`EA.exerciseMediaMode('${kind}',{id:'${exid}',entries:[]})`,`(EA.exerciseMediaTabs['${kind}:${exid}']||EA.exerciseMediaMode('${kind}',state.exercises['${kind}'].find(x=>x.id==='${exid}')))`);
+ const ex=state.exercises[kind].find(x=>x.id===exid);
+ const instruction=(ex.instructions||'').split('\n').find(line=>line.trim()&&!/^(PRTP|Referências visuais|Metas|Orientação)/i.test(line))||'';
+ const lead=instruction?`<p class="ea-v13-exercise-instructions">${esc(instruction.replace(/^Enunciado original:\s*/i,''))}</p>`:'';
+ html=html.replace('<div class="ea-ui4-tabs">',lead+'<div class="ea-ui4-tabs">');
+ html=html.replace('<div class="ea-ui4-finish-wrap">',safe+`<details class="ea-ui4-details"><summary>Opções do exercício</summary><button class="ea-v13-link" onclick="nav('editExercise',{kind:'${kind}',id:'${exid}'})">Editar exercício</button></details><div class="ea-ui4-finish-wrap">`);
+ return html;
+};
+EA.v13PickSource=function(el){if(!el.files?.length)return;void dropPairedReference({preventDefault(){},dataTransfer:{files:[...el.files]}});el.value=''};
+const eaV13PreviousRefRequest=showReferenceRequest;
+showReferenceRequest=function(){eaV13PreviousRefRequest();const holder=document.getElementById('referenceDropTarget');if(holder&&!holder.querySelector('.ea-v13-pick-ref'))holder.insertAdjacentHTML('beforeend',`<label class="ea-v13-add-image ea-v13-pick-ref" style="min-height:45px;margin:12px 0 0">Escolher imagem de referência<input type="file" accept="image/*" onchange="EA.v13PickSource(this)"></label>`)};
+// A completed manual session returns to its foundation/level after a short confirmation.
+const eaV13FinishPrevious=EA.finishExercise;
+EA.finishExercise=function(kind,exid,rating){
+ const guided=!!guidedSession?.active&&guidedSession.current?.id===exid;
+ eaV13FinishPrevious(kind,exid,rating);
+ if(guided)return; // Guided training already handles its next exercise.
+ const old=document.getElementById('eaV13Completed');if(old)old.remove();
+ const finish=document.createElement('div');finish.id='eaV13Completed';finish.className='ea-v13-complete';finish.setAttribute('role','status');finish.innerHTML='<div class="ea-v13-complete-content"><div class="ea-v13-complete-symbol">✓</div><div class="ea-v13-complete-text">Sessão concluída</div><div class="ea-v13-complete-sub">Voltando aos exercícios</div></div>';
+ document.body.appendChild(finish);
+ window.setTimeout(()=>{finish.remove();nav('exerciseList',{kind})},850);
+};
+// MASTERS: area -> vertical sequence of foundational galleries, with favorite notes beside the works.
+mastersView=function(){return `<div class="ea-ui4-training"><header><h1>Estudo de Mestres</h1></header><div class="choice-grid ea-ui4-areas"><button type="button" class="choice" onclick="nav('masterArea',{kind:'drawing'})"><h3>Desenho</h3></button><button type="button" class="choice" onclick="nav('masterArea',{kind:'painting'})"><h3>Pintura</h3></button></div></div>`};
+EA.v13InsightCard=function(n){return `<article class="ea-v13-insight"><span class="ea-v13-insight-caption">${esc(noteLabel(n))}</span><button type="button" class="ea-v13-insight-open" onclick="EA.v13InsightOptions('${n.id}')">${esc(n.text)}</button><button type="button" class="ea-v13-insight-unfav" aria-label="Desfavoritar anotação" onclick="EA.v13ToggleFavorite('${n.id}',false)">Desfavoritar</button></article>`};
+EA.v13MasterAreaView=function(kind){
+ const categories=state.foundations.filter(f=>EA.v13Area(f,kind));
+ return `<section class="ea-v13-container ea-v13-masters"><header class="ea-v13-head"><h1>${kindLabel(kind)}</h1><button class="ea-v13-link" onclick="nav('notesBank',{kind:'${kind}'})">Banco de anotações ↗</button></header>${categories.length?categories.map(f=>{
+  const arts=f.artIds||[],favorites=state.notes.filter(n=>n.foundationId===f.id&&n.favorite);
+  const opened=EA.v13.masterExpanded[kind][f.id]??!!arts.length;
+  return `<details class="ea-v13-accordion ea-v13-master-category" ${opened?'open':''} ontoggle="EA.v13.masterExpanded['${kind}']['${f.id}']=this.open"><summary class="ea-v13-category-summary"><span><h2 class="ea-v13-cat-title">${esc(f.name)}</h2><div class="ea-v13-subtitle">${arts.length} obra${arts.length===1?'':'s'}${favorites.length?' · '+favorites.length+' descoberta'+(favorites.length===1?'':'s'):''}</div></span><span class="ea-v13-chevron">›</span></summary><div class="ea-v13-category-body"><div class="ea-v13-gallery-layout"><div><div class="ea-v13-artwork-wall" id="eaV13Arts_${f.id}">${arts.length?'<span class="ea-v13-muted">Carregando obras…</span>':`<div class="ea-v13-empty-arts"><strong>Sem obras adicionadas</strong><span>As obras aparecerão aqui quando você as incluir.</span></div>`}</div><div class="ea-v13-gallery-tools"><label>+ Adicionar obras<input type="file" multiple accept="image/*" onchange="EA.v13AddMasterWorks(this.files,'${f.id}','${kind}');this.value=''"/></label><button class="ea-v13-link" onclick="EA.v13OpenPractice('${f.id}','${kind}')">Iniciar estudo →</button></div></div><aside class="ea-v13-insights" id="eaV13Insights_${f.id}">${favorites.length?favorites.map(EA.v13InsightCard).join(''):`<p class="ea-v13-empty-notes">As descobertas favoritas deste fundamento aparecerão aqui.</p>`}</aside></div></div></details>`}).join(''):'<p class="ea-v13-empty">Nenhum fundamento disponível nesta área.</p>'}</section>`;
+};
+EA.v13MasterGalleryLoad=async function(kind){
+ for(const f of state.foundations.filter(x=>EA.v13Area(x,kind))){
+  const holder=document.getElementById('eaV13Arts_'+f.id);
+  if(!holder||!f.artIds?.length)continue;
+  const result=[];
+  for(const imageId of f.artIds){
+   const img=await getImage(imageId);if(!img)continue;
+   result.push(`<button class="ea-v13-art-tile" onclick="viewArt('${imageId}')"><img src="${URL.createObjectURL(img.blob)}" alt="${esc(img.name||'Obra de referência')}" loading="lazy"><div class="ea-v13-art-caption">${esc(img.name||'Obra')}</div></button>`);
+  }
+  if(route.page==='masterArea'&&route.kind===kind&&holder.isConnected)holder.innerHTML=result.join('')||'<div class="ea-v13-empty-arts">Não foi possível carregar as obras.</div>';
+ }
+};
+EA.v13AddMasterWorks=async function(files,fid,kind){
+ const f=state.foundations.find(x=>x.id===fid);if(!f)return;
+ for(const file of [...files].filter(x=>x.type.startsWith('image/')))f.artIds.push(await putImage(file,{kind:'master',foundationId:fid}));
+ save();EA.v13.masterExpanded[kind][fid]=true;render();
+};
+EA.v13OpenPractice=function(fid,kind){EA.v13.masterBackArea=kind;void startPractice(fid)};
+EA.v13ModalClose=function(){document.getElementById('eaV13NoteModal')?.remove()};
+EA.v13Modal=function(body){EA.v13ModalClose();const el=document.createElement('div');el.id='eaV13NoteModal';el.className='ea-v13-modal';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.onclick=e=>{if(e.target===el)EA.v13ModalClose()};el.innerHTML=`<div class="ea-v13-modal-body">${body}</div>`;document.body.appendChild(el)};
+EA.v13InsightOptions=function(nid){const n=state.notes.find(x=>x.id===nid);if(!n)return;
+ EA.v13Modal(`<h2>Descoberta</h2><div class="ea-v13-modal-text">${esc(n.text)}</div><div class="ea-v13-modal-actions"><button class="ea-v13-modal-secondary" onclick="EA.v13ModalClose()">Voltar</button><button class="ea-v13-modal-primary" onclick="EA.v13EditInsight('${nid}')">Editar</button></div>`);
+};
+EA.v13EditInsight=function(nid){const n=state.notes.find(x=>x.id===nid);if(!n)return;
+ EA.v13Modal(`<h2>Editar descoberta</h2><textarea class="ea-v13-modal-textarea" id="eaV13NoteText">${esc(n.text)}</textarea><div class="ea-v13-modal-actions"><button class="ea-v13-modal-secondary" onclick="EA.v13ModalClose()">Cancelar</button><button class="ea-v13-modal-primary" onclick="EA.v13SaveInsight('${nid}')">Salvar</button></div>`);
+};
+EA.v13SaveInsight=function(nid){const n=state.notes.find(x=>x.id===nid),txt=document.getElementById('eaV13NoteText')?.value.trim();if(!n||!txt)return;n.text=txt;save();EA.v13ModalClose();render()};
+EA.v13UndoNote=function(){const previous=EA.v13.undo;if(!previous)return;const n=state.notes.find(x=>x.id===previous.id);if(n){n.favorite=previous.favorite;save();render()}EA.v13.undo=null;document.getElementById('eaV13Undo')?.remove()};
+EA.v13ToggleFavorite=function(nid,favorite){const n=state.notes.find(x=>x.id===nid);if(!n)return;EA.v13.undo={id:nid,favorite:n.favorite};n.favorite=favorite;save();render();document.getElementById('eaV13Undo')?.remove();const bar=document.createElement('div');bar.id='eaV13Undo';bar.className='ea-v13-undo';bar.innerHTML=`<span>${favorite?'Adicionada ao mural':'Removida do mural'}</span><button onclick="EA.v13UndoNote()">Desfazer</button>`;document.body.appendChild(bar)};
+EA.v13NotesBank=function(kind){const relevant=state.notes.filter(n=>{const f=state.foundations.find(x=>x.id===n.foundationId);return f&&EA.v13Area(f,kind)}).slice().reverse();return `<section class="ea-v13-bank"><header class="ea-v13-head"><h1>Banco de anotações</h1></header><div class="ea-v13-bank-list">${relevant.length?relevant.map(n=>{const f=state.foundations.find(x=>x.id===n.foundationId);return `<article class="ea-v13-bank-note"><span class="ea-v13-muted">${esc(f?.name||'Fundamento')} · ${esc(noteLabel(n))}</span><p>${esc(n.text)}</p><div class="ea-v13-bank-actions"><button class="ea-v13-link" onclick="EA.v13InsightOptions('${n.id}')">Abrir / editar</button><button class="ea-v13-link" onclick="EA.v13ToggleFavorite('${n.id}',${!n.favorite})">${n.favorite?'Desfavoritar':'Favoritar'}</button></div></article>`}).join(''):'<div class="ea-v13-empty">Nenhuma anotação ainda. Elas serão guardadas após seus estudos.</div>'}</div></section>`};
+// FOCOS: one card, one assessment, detailed reading only after opening.
+focusView=function(){
+ const f=routedFocus();
+ if(!f)return `<section class="ea-v13-no-focus"><div><h1>${state.focuses.length?'Revisões em dia':'Nenhum Foco cadastrado'}</h1><p>${state.focuses.length?'Os princípios voltam quando chegar o momento de revisá-los.':'Adicione um princípio para começar.'}</p><button class="ea-v13-link" onclick="${state.focuses.length?"nav('focusLibrary')":"openNewFocus()"}">${state.focuses.length?'Abrir biblioteca':'Criar primeiro Foco'}</button></div></section>`;
+ const detail=EA.focusDetailOpen;
+ if(detail)return `<section class="ea-v13-detail"><button class="ea-v13-link ea-v13-detail-return" onclick="EA.showFocusCard()">← Voltar à carta</button><h1>${esc(f.title)}</h1><div class="ea-v13-detail-concept">${esc(f.concept||f.microSkill||'')}</div>${f.microSkill?`<div class="ea-v13-detail-command">${esc(f.microSkill)}</div>`:''}<div class="ea-v13-detail-media" id="focusVisual_${f.id}"></div>${EA.safeUrl(f.courseUrl)?`<p style="margin-top:40px"><a class="ea-v13-link" href="${esc(EA.safeUrl(f.courseUrl))}" target="_blank" rel="noopener">Material complementar ↗</a></p>`:''}</section>`;
+ return `<section class="ea-v13-focus"><div class="ea-v13-focus-head"><button type="button" class="ea-v13-link" onclick="nav('focusLibrary')">Biblioteca</button></div><button type="button" class="ea-v13-gold-card" onclick="EA.showFocusDetail()"><span class="ea-v13-gold-icon" aria-hidden="true">✦</span><span class="ea-v13-gold-name">${esc(f.title)}</span><span class="ea-v13-gold-hint">Abrir princípio →</span></button><div class="ea-v13-focus-rating"><p>Depois de tentar aplicar, como foi lembrar este princípio?</p><div class="ea-v13-ratings">${['Muito difícil','Difícil','OK','Fácil','Automático'].map((label,i)=>`<button onclick="EA.v13RateFocus('${f.id}',${i+1})">${label}</button>`).join('')}</div></div></section>`;
+};
+EA.v13RateFocus=function(fid,rating){rateFocus(fid,rating);EA.focusDetailOpen=false};
+// Native gallery loading should not display mandatory-image placeholders on Focos.
+loadFocusNowImage=async function(fid){
+ const holder=document.getElementById('focusVisual_'+fid),f=EA.focusById(fid);if(!holder||!f)return;
+ const items=[];for(const imageId of focusImageIds(f)){const img=await getImage(imageId);if(img)items.push(`<button type="button" onclick="viewArt('${imageId}')"><img src="${URL.createObjectURL(img.blob)}" alt="${esc(img.name||'Ilustração do princípio')}"></button>`)}
+ if(holder.isConnected)holder.innerHTML=items.join('');
+};
+
+// Editing lives on a separate screen; no focus-link controls appear during a practice.
+EA.v13EditExercise=function(kind,exid){
+ const ex=state.exercises?.[kind]?.find(x=>x.id===exid);if(!ex)return '<p>Exercício não encontrado.</p>';
+ const options=state.foundations.map(f=>`<option value="${esc(f.id)}" ${ex.foundationId===f.id?'selected':''}>${esc(f.name)}</option>`).join('');
+ const picker=(state.focuses||[]).map(f=>`<label class="ea-v13-edit-focus" data-focus-name="${esc(f.title.toLocaleLowerCase('pt-BR'))}"><input type="checkbox" name="v13ExerciseFocus" value="${esc(f.id)}" ${exerciseFocusIds(ex).includes(f.id)?'checked':''}><span>${esc(f.title)}</span></label>`).join('');
+ return `<section class="ea-v13-editor"><h1>Editar exercício</h1><div class="field"><label>Nome do exercício</label><input id="v13ExerciseTitle" class="input" value="${esc(ex.title)}"></div><div class="field"><label>Fundamento</label><select id="v13ExerciseFoundation" class="input">${options}</select></div><div class="field"><label>Nível</label><select id="v13ExerciseDifficulty" class="input">${[['easy','NV1'],['medium','NV2'],['hard','NV3']].map(([key,name])=>`<option value="${key}" ${ex.difficulty===key?'selected':''}>${name}</option>`).join('')}</select></div><div class="field"><label>Focos relacionados</label><input class="input" placeholder="Buscar Foco" oninput="EA.v13FilterExerciseFocos(this.value)"><div class="ea-v13-editor-focus-list">${picker}</div></div><div class="ea-v13-editor-actions"><button class="ea-v13-modal-primary" onclick="EA.v13SaveExercise('${kind}','${exid}')">Salvar</button><button class="ea-v13-link" onclick="nav('exercise',{kind:'${kind}',id:'${exid}'})">Cancelar</button></div></section>`;
+};
+EA.v13FilterExerciseFocos=function(term){const q=term.toLocaleLowerCase('pt-BR').trim();document.querySelectorAll('.ea-v13-edit-focus').forEach(el=>el.hidden=!el.dataset.focusName.includes(q))};
+EA.v13SaveExercise=function(kind,exid){
+ const ex=state.exercises?.[kind]?.find(x=>x.id===exid);if(!ex)return;
+ const title=document.getElementById('v13ExerciseTitle')?.value.trim();const foundationId=document.getElementById('v13ExerciseFoundation')?.value;const difficulty=document.getElementById('v13ExerciseDifficulty')?.value;
+ const focusIds=[...document.querySelectorAll('input[name=v13ExerciseFocus]:checked')].map(el=>el.value);
+ if(!title||!state.foundations.some(f=>f.id===foundationId)||!['easy','medium','hard'].includes(difficulty)||!focusIds.length)return alert('Informe nome, fundamento, nível e ao menos um Foco.');
+ ex.title=title;ex.foundationId=foundationId;ex.difficulty=difficulty;ex.focusIds=focusIds;save();nav('exercise',{kind,id:exid});
+};
+
+// Route history keeps the expanded category/level instead of throwing the user back to 50 cards.
+const eaV13PreviousGoBack=goBack;
+goBack=function(){
+ if(route.page==='masterArea')return nav('masters');
+ if(route.page==='notesBank')return nav('masterArea',{kind:route.kind});
+ if(route.page==='editExercise')return nav('exercise',{kind:route.kind,id:route.id});
+ if(route.page==='foundation'&&EA.v13.masterBackArea){const kind=EA.v13.masterBackArea;EA.v13.masterBackArea=null;return nav('masterArea',{kind})}
+ return eaV13PreviousGoBack();
+};
+const eaV13PreviousRender=render;
+render=function(){
+ if(route.page==='masterArea'||route.page==='notesBank'||route.page==='editExercise'){
+  document.getElementById('backBtn')?.classList.remove('hidden');
+  const app=document.getElementById('app');app.innerHTML=route.page==='masterArea'?EA.v13MasterAreaView(route.kind):route.page==='notesBank'?EA.v13NotesBank(route.kind):EA.v13EditExercise(route.kind,route.id);
+  if(route.page==='masterArea')void EA.v13MasterGalleryLoad(route.kind);
+  return;
+ }
+ eaV13PreviousRender();
+ if(route.page==='exerciseList'){
+  // Native cover loader expects a div and inserts an img; our thumbnail is an img.
+  for(const ex of state.exercises?.[route.kind]||[]){const image=document.getElementById('exerciseCover_'+ex.id);if(!image||!ex.entries?.length)continue;const latest=ex.entries[ex.entries.length-1];void getImage(latest.imageId).then(item=>{if(item&&image.isConnected){image.src=URL.createObjectURL(item.blob);image.style.display='block'}}).catch(()=>{});
+  }
+ }
+};
+// A user returning from the old master-study practice should return to the appropriate gallery.
+const eaV13PriorFinishPractice=finishPractice;
+finishPractice=function(){const back=EA.v13.masterBackArea;eaV13PriorFinishPractice();if(back&&route.page==='foundation'){EA.v13.masterBackArea=null;nav('masterArea',{kind:back})}};
+render();
+/* END EA_EXPERIENCE_v13 */
 
 </script>
 </body>

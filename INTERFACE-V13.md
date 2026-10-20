@@ -1,0 +1,5 @@
+# Interface v13 — navegação progressiva
+Treino: Desenho/Pintura → fundamento → nível NV1/NV2/NV3 → exercício. Níveis reaproveitam a dificuldade cadastrada. Fotos são opcionais; os registros legados sem fundamento continuam em "Sem fundamento". Sessões manuais retornam ao nível anterior, enquanto Treinar agora segue sua própria sequência.
+Estudo de Mestres: escolha Desenho ou Pintura, então galerias por fundamento, duas colunas de obras com descobertas favoritas na lateral. Banco de anotações permite abrir, editar, favoritar/desfavoritar e desfazer sem excluir histórico.
+Focos: carta dourada única, avaliação na tela principal; ao abrir, texto e imagens opcionais numa página separada. Avaliação mental e dificuldade prática continuam independentes.
+A biblioteca pessoal e PDFs não são publicados no repositório; as galerias carregam exclusivamente imagens cadastradas pela pessoa usuária. Testes de navegador foram feitos com dados simulados e o conjunto estruturado de 66 exercícios e 40 Focos.
