@@ -1,0 +1,68 @@
+{
+  "name": "evolucao-art-desktop",
+  "productName": "Evolução Art",
+  "version": "0.1.0",
+  "description": "Evolução Art: Focos, treino recomendado e estudo de mestres",
+  "private": true,
+  "main": "main.cjs",
+  "author": "Evolução Art",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kauandonargas/evolucao-art.git"
+  },
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.cjs",
+    "check": "node --check main.cjs && node --check desktop-logic.cjs && node --check scripts/set-ci-version.cjs && npm test",
+    "dist:windows": "electron-builder --win nsis --x64 --publish never"
+  },
+  "dependencies": {
+    "electron-updater": "^6.3.9"
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.0"
+  },
+  "build": {
+    "appId": "app.evolucaoart.desktop",
+    "productName": "Evolução Art",
+    "asar": true,
+    "files": [
+      "main.cjs",
+      "desktop-logic.cjs",
+      "renderer/index.html",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "Evolucao-Art-Setup-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowElevation": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "deleteAppDataOnUninstall": false
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "kauandonargas",
+        "repo": "evolucao-art",
+        "releaseType": "release"
+      }
+    ]
+  }
+}

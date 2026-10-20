@@ -1,0 +1,1682 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Evolução Art</title>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#101110;--paper:#181a18;--paper-2:#20231f;--ink:#f1f3ef;--muted:#9ca19a;--line:#30342f;
+  --green:#5f9b72;--green-soft:#1c3525;--green-line:#356044;--dark:#2a2e29;--shadow:0 18px 55px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}.hidden{display:none!important}
+.shell{min-height:100vh}.topbar{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;background:rgba(16,17,16,.92);backdrop-filter:blur(10px);position:sticky;top:0;z-index:8}
+.brand{font-family:Georgia,serif;font-size:21px}.back{border:0;background:transparent;color:var(--muted);padding:8px 0}.back:hover{color:var(--ink)}
+main{width:min(1120px,calc(100% - 36px));margin:0 auto;padding:52px 0 90px}.hero{max-width:720px;margin-bottom:34px}.eyebrow{text-transform:uppercase;letter-spacing:.15em;font-size:11px;font-weight:750;color:var(--muted)}
+h1,h2,h3{font-family:Georgia,serif;font-weight:500}h1{font-size:48px;line-height:1.02;margin:8px 0 12px}h2{font-size:30px;margin:0}h3{font-size:21px;margin:0}.lead{color:var(--muted);line-height:1.65;margin:0}
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.choice{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:24px;min-height:260px;padding:28px;text-align:left;display:flex;flex-direction:column;justify-content:space-between;transition:.18s}.choice:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:#444a43}.choice .num{color:var(--muted);font-size:12px}.choice h2{font-size:34px}.choice p{color:var(--muted);line-height:1.55;margin:8px 0 0}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.btn{border:1px solid var(--line);background:var(--paper-2);color:var(--ink);border-radius:12px;padding:10px 14px;font-weight:700}.btn:hover{border-color:#4a5049}.btn.primary{background:#2c312d;border-color:#3b413b;color:var(--ink)}.btn.green{background:var(--green);border-color:var(--green);color:#08110b}.btn.small{padding:7px 10px;font-size:12px}.btn:disabled{opacity:.45;cursor:not-allowed}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:20px}.section-head p{margin:5px 0 0;color:var(--muted)}.cards{display:grid;gap:12px}.card{border:1px solid var(--line);background:var(--paper);border-radius:20px;padding:20px}.clickable{cursor:pointer;transition:.15s}.clickable:hover{transform:translateY(-1px);box-shadow:var(--shadow);border-color:#444a43}.done{background:var(--green-soft);border-color:var(--green-line)}.row{display:flex;gap:14px;justify-content:space-between;align-items:center}.grow{flex:1;min-width:0}.title-line{font-weight:800}.meta{font-size:13px;color:var(--muted);line-height:1.55}.targets{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.pill{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:5px 9px;background:var(--paper-2)}.done .pill{background:#24402d;border-color:#3b6648}.empty{border:1px dashed #3d423d;border-radius:20px;padding:44px 20px;text-align:center;color:var(--muted);background:rgba(24,26,24,.55)}
+.progress{height:8px;background:#292d29;border-radius:99px;overflow:hidden;margin-top:14px}.progress span{display:block;height:100%;background:var(--green);border-radius:inherit}.split{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(300px,.7fr);gap:20px}.stack{display:grid;gap:16px}.panel{border:1px solid var(--line);background:var(--paper);border-radius:20px;padding:21px}.panel h3{margin-bottom:12px}.body{line-height:1.7;color:#c2c7c0;white-space:pre-wrap}.course-link{display:flex;gap:8px;margin-top:12px}.course-link input{flex:1}
+.field{display:grid;gap:7px;margin-bottom:13px}.field label{font-size:12px;font-weight:800;color:#b4b9b2}.input,.textarea,.select{width:100%;border:1px solid var(--line);background:#121412;color:var(--ink);border-radius:11px;padding:11px 12px;outline:none}.input::placeholder,.textarea::placeholder{color:#6f756e}.input:focus,.textarea:focus,.select:focus{border-color:#596159;box-shadow:0 0 0 3px rgba(95,155,114,.12)}
+.art-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.art{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#0d0e0d;position:relative}.art-main{all:unset;cursor:pointer;display:block;width:100%}.art img{display:block;width:100%;height:300px;object-fit:contain;background:#0d0e0d}.art-cap{font-size:12px;color:var(--muted);padding:9px 11px;background:var(--paper)}.x{position:absolute;top:8px;right:8px;border:1px solid #3b403b;background:rgba(12,13,12,.88);color:#fff;border-radius:999px;width:28px;height:28px}
+.note{border:1px solid var(--line);border-radius:14px;background:#121412;padding:12px}.note+.note{margin-top:8px}.note-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.note p{margin:7px 0 0;line-height:1.5;color:#c7ccc5;font-size:13px;white-space:pre-wrap}.star{border:0;background:transparent;color:#666c65;font-size:19px;padding:0}.star.on{color:#d2b468}.fav{border-left:3px solid #9d824c;padding:7px 0 7px 12px;margin:7px 0;font-family:Georgia,serif;line-height:1.45}
+.foundation-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.foundation{min-height:190px;display:flex;flex-direction:column;justify-content:space-between}.foundation .master{color:var(--muted);font-size:13px;margin-top:6px}
+.counter-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.counter{border:1px solid var(--line);border-radius:16px;padding:16px;background:#121412}.counter strong{display:block;font-family:Georgia,serif;font-size:30px;font-weight:500;margin-top:3px}.study-form{margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+.overlay{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.72);backdrop-filter:blur(7px);display:none;overflow:auto;padding:24px}.overlay.open{display:block}.modal{width:min(860px,100%);margin:3vh auto;background:var(--paper);border:1px solid var(--line);border-radius:24px;box-shadow:0 26px 80px rgba(0,0,0,.5);overflow:hidden}.modal-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}.modal-body{padding:22px}.modal-close{border:1px solid var(--line);background:var(--paper-2);color:var(--ink);border-radius:10px;padding:7px 10px}.steps{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}.step{font-size:12px;padding:6px 9px;border-radius:999px;background:#252925;color:#a8aea6}.step.active{background:#373d37;color:#fff}.step.done{background:var(--green-soft);color:#93c6a2}.reference{border:1px solid var(--line);border-radius:16px;background:#0d0e0d;padding:10px;text-align:center}.reference img{display:block;max-width:100%;max-height:520px;object-fit:contain;margin:auto}.no-reference{height:360px;border:1px dashed #444a44;border-radius:16px;display:grid;place-items:center;color:var(--muted);text-align:center;padding:24px}.upload{border:1px dashed #444a44;border-radius:15px;padding:22px;text-align:center;background:#121412}.preview{display:block;max-width:100%;max-height:360px;object-fit:contain;margin:12px auto 0;border-radius:10px}.practice-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+dialog{border:1px solid var(--line);border-radius:18px;padding:0;background:#0c0d0c;color:#fff;max-width:min(96vw,1100px)}dialog::backdrop{background:rgba(0,0,0,.88)}dialog img{display:block;max-width:94vw;max-height:88vh;object-fit:contain}.dialog-bar{display:flex;justify-content:flex-end;padding:8px}.dialog-bar button{border:1px solid #353a35;background:#171917;color:#fff;border-radius:9px;padding:7px 10px}
+@media(max-width:850px){main{padding-top:34px}.choice-grid,.split,.practice-grid{grid-template-columns:1fr}.foundation-grid{grid-template-columns:1fr 1fr}.topbar{padding:0 18px}h1{font-size:40px}.art img{height:260px}}
+@media(max-width:560px){.foundation-grid,.art-grid,.counter-grid{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.choice{min-height:210px}.choice h2{font-size:30px}.row{align-items:flex-start}.topbar{height:62px}.brand{font-size:17px}}
+
+/* Image-first layout */
+main{width:min(1680px,calc(100% - 28px));padding:32px 0 72px}.hero{margin-bottom:22px;max-width:900px}.hero h1{font-size:clamp(34px,4vw,58px)}
+.image-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:16px}.image-page-head .hero{margin:0}.status-strip{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.status-chip{border:1px solid var(--line);background:rgba(24,26,24,.82);border-radius:999px;padding:7px 11px;font-size:12px;color:#c9cec7}.status-chip strong{color:#fff}.status-chip.complete{background:var(--green-soft);border-color:var(--green-line);color:#9dccaa}
+.exercise-controls{display:flex;gap:10px;align-items:end;flex-wrap:wrap;padding:12px 0 18px;border-bottom:1px solid var(--line);margin-bottom:18px}.exercise-controls .field{margin:0;min-width:170px}.exercise-controls .upload-inline{flex:1;min-width:260px}.exercise-controls label{font-size:11px}.exercise-controls input[type=file]{padding:8px;background:transparent}
+.image-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}.study-art{position:relative;border:1px solid var(--line);border-radius:14px;background:#090a09;overflow:hidden}.study-art button.image-button{all:unset;display:block;cursor:zoom-in;width:100%}.study-art img{display:block;width:100%;height:auto;max-height:78vh;object-fit:contain;background:#090a09}.study-meta{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px 11px;background:#141614;border-top:1px solid #242724;font-size:12px;color:var(--muted)}.study-type{color:#daddd8}.study-remove{border:0;background:transparent;color:#777d76;padding:2px 4px}.study-remove:hover{color:#fff}.gallery-empty{min-height:46vh;border:1px dashed #343934;border-radius:16px;display:grid;place-items:center;text-align:center;color:var(--muted);background:#0d0f0d}
+.exercise-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.exercise-tile{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#111311;cursor:pointer;transition:.15s}.exercise-tile:hover{border-color:#4a5049;transform:translateY(-1px)}.exercise-tile.done{border-color:var(--green-line)}.exercise-cover{height:300px;background:#090a09;display:grid;place-items:center;overflow:hidden}.exercise-cover img{width:100%;height:100%;object-fit:contain}.exercise-cover .cover-empty{font-size:12px;color:#555c55}.exercise-tile-info{padding:14px 15px;display:flex;justify-content:space-between;gap:12px;align-items:center}.exercise-tile-title{font-size:17px;font-weight:750}.exercise-tile-counts{font-size:12px;color:var(--muted);margin-top:4px}.exercise-tile.done .exercise-tile-title{color:#9dccaa}
+.foundation-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}.foundation-main{min-width:0}.foundation-sidebar{position:sticky;top:88px;display:grid;gap:12px}.foundation-art-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:12px}.foundation-art-head h2{font-size:28px}.foundation-info{border:1px solid var(--line);background:#151715;border-radius:16px;padding:16px}.foundation-info h3{font-size:18px}.foundation-info .body{font-size:14px;line-height:1.6}.foundation-notes{border:1px solid var(--line);background:#151715;border-radius:16px;padding:16px}.favorite-bar{display:flex;gap:8px;overflow:auto;padding:0 0 12px;margin-bottom:12px}.favorite-bar .fav{min-width:260px;max-width:420px;border:1px solid #4d422a;border-left:3px solid #9d824c;background:#171713;border-radius:10px;padding:10px 12px;margin:0;font-family:inherit;font-size:12px;color:#d8d0bb}.art-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.art{border-radius:14px}.art img{height:auto;max-height:82vh;object-fit:contain}.art-cap{background:#141614;border-top:1px solid #242724;padding:8px 10px}
+.overlay{padding:10px;background:rgba(0,0,0,.86)}.modal{width:min(1600px,100%);margin:0 auto;min-height:calc(100vh - 20px);border-radius:18px}.modal-body{padding:14px 16px 18px}.modal-head{padding:12px 16px}.steps{margin-bottom:12px}.practice-grid{grid-template-columns:minmax(0,1.45fr) minmax(320px,.55fr);gap:14px}.practice-visual{background:#080908;border:1px solid var(--line);border-radius:14px;min-height:65vh;display:grid;place-items:center;overflow:hidden}.practice-visual img{display:block;max-width:100%;max-height:calc(100vh - 190px);width:auto;height:auto;object-fit:contain}.practice-side{display:flex;flex-direction:column;gap:12px}.practice-side .upload{padding:12px}.preview{max-height:58vh;border-radius:8px}.compare-wall{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:14px}.compare-wall .practice-visual{min-height:56vh}.compare-label{position:absolute;left:10px;top:10px;background:rgba(0,0,0,.72);border:1px solid #383d38;border-radius:999px;padding:5px 8px;font-size:11px;color:#ddd}.visual-wrap{position:relative}.no-reference{height:auto;min-height:65vh;background:#0a0b0a}
+@media(max-width:1050px){.image-gallery,.art-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.foundation-layout{grid-template-columns:1fr}.foundation-sidebar{position:static}.practice-grid{grid-template-columns:1fr}.practice-visual{min-height:48vh}.compare-wall{grid-template-columns:1fr}.exercise-cards{grid-template-columns:1fr}}
+@media(max-width:620px){main{width:min(100% - 18px,1680px);padding-top:18px}.image-gallery,.art-grid{grid-template-columns:1fr}.exercise-cover{height:240px}.exercise-controls{align-items:stretch}.exercise-controls>*{width:100%!important}.image-page-head{align-items:flex-start;flex-direction:column}.foundation-art-head{align-items:flex-start;flex-direction:column}.practice-visual{min-height:42vh}.modal{min-height:calc(100vh - 10px)}}
+
+
+
+/* Exercise workspace — image first, drag only */
+.exercise-workspace{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 190px);border-top:1px solid var(--line);border-bottom:1px solid var(--line);animation:workspaceIn .42s cubic-bezier(.2,.8,.2,1)}
+.exercise-zone{position:relative;min-width:0;padding:18px 18px 40px;transition:background .22s ease,box-shadow .22s ease}
+.exercise-zone+ .exercise-zone{border-left:1px solid var(--line)}
+.exercise-zone.dragging{background:rgba(95,155,114,.07);box-shadow:inset 0 0 0 1px rgba(95,155,114,.36)}
+.zone-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 2px 16px;position:sticky;top:72px;z-index:3;background:linear-gradient(to bottom,var(--bg) 72%,rgba(16,17,16,0));backdrop-filter:blur(8px)}
+.zone-title{display:flex;align-items:baseline;gap:10px}.zone-title h2{font-size:24px}.zone-count{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.drop-hint{font-size:11px;color:#666d66;transition:color .2s ease,transform .2s ease}.exercise-zone.dragging .drop-hint{color:#9dccaa;transform:translateY(-1px)}
+.zone-gallery{display:grid;grid-template-columns:1fr;gap:16px;align-items:start}
+.zone-empty{min-height:58vh;display:grid;place-items:center;text-align:center;color:#555c55;border:1px dashed transparent;border-radius:18px;transition:border-color .22s ease,color .22s ease,transform .22s ease;background:radial-gradient(circle at 50% 42%,rgba(255,255,255,.018),transparent 48%)}
+.zone-empty strong{display:block;color:#727a72;font-weight:600;margin-bottom:7px}.exercise-zone.dragging .zone-empty{border-color:#42604a;color:#8fb49a;transform:scale(.995)}
+.zone-art{position:relative;background:#090a09;border-radius:14px;overflow:hidden;border:1px solid #242724;animation:artIn .34s cubic-bezier(.2,.8,.2,1) both;transform-origin:center top}
+.zone-art .image-button{all:unset;display:block;width:100%;cursor:zoom-in}.zone-art img{display:block;width:100%;height:auto;max-height:82vh;object-fit:contain;background:#090a09}
+.zone-art .study-remove{position:absolute;right:10px;top:10px;width:30px;height:30px;border:1px solid rgba(255,255,255,.09);border-radius:999px;background:rgba(10,11,10,.72);backdrop-filter:blur(8px);color:#a6aca5;opacity:0;transform:translateY(-4px);transition:opacity .16s ease,transform .16s ease,background .16s ease,color .16s ease}.zone-art:hover .study-remove{opacity:1;transform:none}.zone-art .study-remove:hover{background:rgba(28,31,28,.94);color:#fff}
+.exercise-header{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;padding:2px 2px 18px}.exercise-header .hero{margin:0}.exercise-header h1{margin-bottom:0}.exercise-status{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}.exercise-status .status-chip{background:transparent;border-color:#292d29}.exercise-status .status-chip.complete{background:var(--green-soft);border-color:var(--green-line)}
+@keyframes workspaceIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes artIn{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+@media(max-width:820px){.exercise-workspace{grid-template-columns:1fr}.exercise-zone+ .exercise-zone{border-left:0;border-top:1px solid var(--line)}.zone-head{top:62px}.exercise-header{align-items:flex-start;flex-direction:column}.exercise-status{justify-content:flex-start}.zone-empty{min-height:34vh}}
+@media(prefers-reduced-motion:reduce){.exercise-workspace,.zone-art{animation:none}.exercise-zone,.drop-hint,.zone-empty,.study-remove{transition:none}}
+
+
+
+/* Visual refinement — quiet, image-led, dark only */
+:root{
+  --bg:#080909;--paper:#0f1010;--paper-2:#151616;--ink:#f4f4f1;--muted:#858a84;--line:#202220;
+  --green:#78ad83;--green-soft:#142219;--green-line:#294331;--shadow:0 24px 70px rgba(0,0,0,.38);
+}
+html{background:#080909}
+body{background:radial-gradient(1100px 700px at 50% -180px,#171a18 0,#0b0c0b 42%,#080909 72%);letter-spacing:-.01em}
+body,button,input,textarea,select{font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif}
+h1,h2,h3,.brand{font-family:inherit;font-weight:620;letter-spacing:-.035em}
+.topbar{height:58px;border:0;padding:0 22px;background:rgba(8,9,9,.72);box-shadow:0 1px 0 rgba(255,255,255,.035);backdrop-filter:blur(18px) saturate(120%)}
+.brand{font-size:13px;font-weight:600;color:#b9bdb8;letter-spacing:-.01em}.back{font-size:13px;color:#777c76}.back:hover{color:#eceeea}
+main{width:min(1800px,calc(100% - 24px));padding:26px 0 64px}.hero{margin-bottom:20px}.eyebrow{font-size:10px;letter-spacing:.12em;color:#666b65;font-weight:700}h1{font-size:clamp(32px,4vw,54px);line-height:1;margin:7px 0 10px}h2{font-size:26px}.lead{color:#8d928c}
+
+/* buttons / inputs */
+.btn{border:0;background:#171918;border-radius:999px;padding:10px 14px;font-size:13px;font-weight:650;box-shadow:inset 0 0 0 1px rgba(255,255,255,.055);transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
+.btn:hover{transform:translateY(-1px);background:#1d1f1e;box-shadow:inset 0 0 0 1px rgba(255,255,255,.09)}.btn.primary{background:#f0f1ed;color:#101110;box-shadow:none}.btn.primary:hover{background:#fff}.btn.green{background:#8fbd98;color:#071009;box-shadow:none}
+.input,.textarea,.select{border:0;background:#111312;border-radius:13px;padding:12px 13px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.055)}.input:focus,.textarea:focus,.select:focus{box-shadow:inset 0 0 0 1px #566159,0 0 0 3px rgba(120,173,131,.08)}
+.panel,.card{border:0;background:#101111;border-radius:18px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.035)}
+.empty{border:0;background:#0d0e0e;border-radius:18px;color:#666b65}
+
+/* home and section choices */
+.choice-grid{gap:12px}.choice{border:0;background:linear-gradient(145deg,#111312,#0d0e0e);border-radius:22px;min-height:250px;padding:24px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.035);transition:transform .28s cubic-bezier(.2,.8,.2,1),background .28s ease,box-shadow .28s ease}
+.choice:hover{transform:translateY(-3px);background:linear-gradient(145deg,#151715,#101110);box-shadow:0 22px 60px rgba(0,0,0,.28),inset 0 0 0 1px rgba(255,255,255,.055)}.choice h2{font-size:32px}.choice p{max-width:440px;color:#787d77}.choice .num{color:#5c615b}
+.section-head{margin-bottom:14px}.section-head p{color:#777c76;font-size:13px}
+
+/* exercise list: artwork as the card */
+.exercise-cards{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.exercise-tile{border:0;border-radius:18px;background:#0d0e0e;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.035);transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s ease}.exercise-tile:hover{transform:translateY(-3px);box-shadow:0 22px 50px rgba(0,0,0,.28),inset 0 0 0 1px rgba(255,255,255,.06)}.exercise-tile.done{box-shadow:inset 0 0 0 1px rgba(120,173,131,.34)}
+.exercise-cover{height:clamp(240px,32vw,430px);background:#0b0c0c}.exercise-cover img{object-fit:contain;transition:transform .45s cubic-bezier(.2,.8,.2,1)}.exercise-tile:hover .exercise-cover img{transform:scale(1.012)}.exercise-cover .cover-empty{color:#484d48}.exercise-tile-info{padding:13px 14px 14px}.exercise-tile-title{font-size:15px;font-weight:650}.exercise-tile-counts{font-size:11px;color:#6d726c}.status-chip{border:0;background:#121413;border-radius:999px;padding:6px 9px;font-size:11px;color:#8b908a}.status-chip.complete{background:#142219;color:#9dcca7}
+
+/* exercise screen: two quiet canvases, almost no chrome */
+.exercise-header{padding:0 4px 12px;align-items:center}.exercise-header .eyebrow{display:none}.exercise-header h1{font-size:clamp(24px,2.7vw,38px);margin:0}.exercise-status{gap:6px}.exercise-status .status-chip{background:transparent!important;border:0!important;padding:5px 7px;color:#70756f}.exercise-status .status-chip.complete{color:#8fbd98}
+.exercise-workspace{min-height:calc(100vh - 118px);border:0;gap:10px;animation:workspaceIn .5s cubic-bezier(.16,1,.3,1)}
+.exercise-zone{padding:0 12px 28px;background:rgba(16,17,17,.6);border-radius:20px;overflow:clip;box-shadow:inset 0 0 0 1px rgba(255,255,255,.028);transition:background .2s ease,box-shadow .2s ease,transform .2s ease}
+.exercise-zone+.exercise-zone{border:0}.exercise-zone.dragging{background:#111a14;box-shadow:inset 0 0 0 1px rgba(120,173,131,.32);transform:scale(.997)}
+.zone-head{top:58px;padding:15px 5px 12px;background:linear-gradient(to bottom,rgba(16,17,17,.96) 68%,rgba(16,17,17,0));backdrop-filter:blur(12px)}.zone-title{gap:8px}.zone-title h2{font-size:15px;font-weight:650;letter-spacing:-.015em}.zone-count{font-size:11px;color:#5f645e}.drop-hint{font-size:10px;color:#50554f}.exercise-zone.dragging .drop-hint{color:#9bc6a3;transform:none}
+.zone-gallery{gap:10px}.zone-empty{min-height:calc(100vh - 190px);border:0;border-radius:14px;background:transparent;color:#4b504b;transition:color .2s ease,transform .2s ease}.zone-empty strong{font-size:13px;color:#656a64;font-weight:600}.exercise-zone.dragging .zone-empty{border:0;color:#88b391;transform:scale(.992)}
+.zone-art{border:0;border-radius:12px;background:#090a0a;box-shadow:0 12px 34px rgba(0,0,0,.24);animation:artIn .48s cubic-bezier(.16,1,.3,1) both}.zone-art img{background:#090a0a;max-height:84vh;transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .35s ease}.zone-art:hover img{transform:scale(1.006)}
+.zone-art .study-remove{right:9px;top:9px;width:28px;height:28px;border:0;background:rgba(8,9,9,.72);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);opacity:0;transform:scale(.9);transition:opacity .18s ease,transform .18s ease,background .18s ease}.zone-art:hover .study-remove{opacity:1;transform:scale(1)}
+
+/* master pages: less dashboard, more gallery */
+.foundation-grid{gap:12px}.foundation{border:0;background:#101111}.foundation-layout{gap:14px}.foundation-art{padding:0}.art-grid{gap:10px}.art{border:0;border-radius:14px;background:#090a0a;box-shadow:0 10px 28px rgba(0,0,0,.22)}.art img{background:#090a0a}.art-cap{background:#101111;border:0;color:#737872}.foundation-sidebar .panel{background:#0f1010}.note{border:0;background:#121313;border-radius:12px}.fav{border-left-color:#5f705f}
+
+/* overlays and image viewing */
+.overlay{background:rgba(0,0,0,.8);backdrop-filter:blur(16px)}.modal{border:0;background:#0d0e0e;border-radius:22px;box-shadow:0 40px 100px rgba(0,0,0,.55)}.modal-head{border-bottom:1px solid rgba(255,255,255,.05)}
+dialog{border:0;border-radius:18px;background:#070808;box-shadow:0 40px 100px rgba(0,0,0,.65);animation:dialogIn .25s cubic-bezier(.16,1,.3,1)}dialog::backdrop{background:rgba(0,0,0,.92);backdrop-filter:blur(10px)}.dialog-bar{position:absolute;right:0;z-index:2}.dialog-bar button{border:0;background:rgba(15,16,16,.72);backdrop-filter:blur(8px);border-radius:999px}
+
+/* subtle page motion */
+#app.page-enter{animation:pageEnter .38s cubic-bezier(.16,1,.3,1)}
+@keyframes pageEnter{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes workspaceIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes artIn{0%{opacity:0;transform:translateY(14px) scale(.975);filter:blur(4px)}100%{opacity:1;transform:none;filter:none}}
+@keyframes dialogIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+
+@media(max-width:1100px){.exercise-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:820px){.exercise-workspace{gap:10px}.exercise-zone+.exercise-zone{border:0}.zone-head{top:58px}.zone-empty{min-height:35vh}}
+@media(max-width:620px){main{width:calc(100% - 14px);padding-top:18px}.topbar{padding:0 12px}.brand{max-width:58vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.exercise-cards{grid-template-columns:1fr}.exercise-header{padding-inline:2px}.exercise-zone{border-radius:16px;padding-inline:8px}}
+@media(prefers-reduced-motion:reduce){#app.page-enter,dialog,.zone-art,.exercise-workspace{animation:none}.choice,.exercise-tile,.btn,.zone-art img,.exercise-zone{transition:none}}
+
+
+/* Social-feed refinement — compact artwork posts */
+.exercise-workspace{
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:0;
+  background:transparent;
+}
+.exercise-zone{
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  padding:0 22px 48px;
+}
+.exercise-zone+.exercise-zone{
+  border-left:1px solid rgba(255,255,255,.055);
+}
+.exercise-zone.dragging{
+  background:rgba(120,173,131,.035);
+  box-shadow:inset 0 0 0 1px rgba(120,173,131,.18);
+  transform:none;
+}
+.zone-head{
+  width:min(100%,460px);
+  margin:0 auto;
+  padding:13px 2px 12px;
+  background:linear-gradient(to bottom,rgba(8,9,9,.98) 76%,rgba(8,9,9,0));
+}
+.zone-title h2{font-size:13px;font-weight:650}.zone-count{font-size:10px}.drop-hint{font-size:10px}
+.zone-gallery{
+  width:min(100%,460px);
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  align-items:stretch;
+}
+.zone-empty{
+  width:100%;
+  min-height:300px;
+  border-radius:18px;
+  background:rgba(255,255,255,.012);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.035);
+}
+.exercise-zone.dragging .zone-empty{
+  background:rgba(120,173,131,.035);
+  box-shadow:inset 0 0 0 1px rgba(120,173,131,.18);
+}
+.zone-art{
+  width:100%;
+  border-radius:18px;
+  padding:7px;
+  background:#101111;
+  box-shadow:0 10px 30px rgba(0,0,0,.24),inset 0 0 0 1px rgba(255,255,255,.045);
+  overflow:hidden;
+  animation:feedPostIn .42s cubic-bezier(.16,1,.3,1) both;
+}
+.zone-art .image-button{
+  overflow:hidden;
+  border-radius:13px;
+  background:#090a0a;
+}
+.zone-art img{
+  width:100%;
+  height:auto;
+  max-height:560px;
+  object-fit:contain;
+  background:#090a0a;
+  border-radius:13px;
+  transform:none!important;
+}
+.zone-art:hover{
+  box-shadow:0 16px 38px rgba(0,0,0,.3),inset 0 0 0 1px rgba(255,255,255,.065);
+}
+.zone-art .study-remove{right:14px;top:14px}
+.exercise-header{
+  width:min(100%,980px);
+  margin:0 auto;
+  padding-bottom:14px;
+}
+@keyframes feedPostIn{
+  from{opacity:0;transform:translateY(12px) scale(.985)}
+  to{opacity:1;transform:none}
+}
+@media(max-width:980px){
+  .exercise-zone{padding-inline:14px}
+  .zone-head,.zone-gallery{width:min(100%,420px)}
+  .zone-art img{max-height:520px}
+}
+@media(max-width:820px){
+  .exercise-workspace{grid-template-columns:1fr;gap:24px}
+  .exercise-zone+.exercise-zone{border-left:0;border-top:1px solid rgba(255,255,255,.055)}
+  .zone-head,.zone-gallery{width:min(100%,520px)}
+  .zone-empty{min-height:220px}
+  .zone-art img{max-height:620px}
+}
+@media(max-width:560px){
+  .exercise-zone{padding-inline:0}
+  .zone-head,.zone-gallery{width:100%}
+  .zone-art{border-radius:14px;padding:5px}
+  .zone-art .image-button,.zone-art img{border-radius:10px}
+  .zone-art img{max-height:68vh}
+}
+
+/* Training difficulty */
+.difficulty-picker{display:flex;gap:8px;margin-top:5px}.difficulty-option{flex:1;position:relative}.difficulty-option input{position:absolute;opacity:0;pointer-events:none}.difficulty-option span{display:flex;align-items:center;justify-content:center;min-height:42px;border-radius:12px;background:#111312;color:#777d77;box-shadow:inset 0 0 0 1px rgba(255,255,255,.055);font-size:12px;font-weight:650;cursor:pointer;transition:background .16s ease,color .16s ease,box-shadow .16s ease,transform .16s ease}.difficulty-option span:hover{color:#c5cac5;background:#141615}.difficulty-option input:checked+span{color:#e7ebe7;box-shadow:inset 0 0 0 1px rgba(255,255,255,.13);transform:translateY(-1px)}.difficulty-option.easy input:checked+span{background:#102017;color:#a7d4b0}.difficulty-option.medium input:checked+span{background:#211b0f;color:#dfc58c}.difficulty-option.hard input:checked+span{background:#241313;color:#dca0a0}
+.difficulty-chip{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;padding:5px 8px;border-radius:999px;background:#121413;color:#7c827c;white-space:nowrap}.difficulty-chip.easy{background:#102017;color:#8fc39a}.difficulty-chip.medium{background:#211b0f;color:#cfb473}.difficulty-chip.hard{background:#241313;color:#d28d8d}.exercise-tile-meta{display:flex;align-items:center;gap:7px;margin-top:5px;flex-wrap:wrap}.exercise-tile-meta .exercise-tile-counts{margin-top:0}
+
+/* Reference pairing + duplicate feedback */
+.reference-request{max-width:760px;margin:8vh auto;background:#0d0e0e;border-radius:22px;box-shadow:0 28px 90px rgba(0,0,0,.55);overflow:hidden;animation:dialogIn .24s cubic-bezier(.16,1,.3,1)}
+.reference-request-head{display:flex;align-items:center;justify-content:space-between;padding:15px 17px;border-bottom:1px solid rgba(255,255,255,.055)}
+.reference-request-head strong{font-size:14px}.reference-request-head span{font-size:11px;color:#6f746f}
+.reference-request-close{border:0;background:transparent;color:#777d77;font-size:22px;line-height:1;cursor:pointer;padding:3px 6px}
+.reference-request-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;padding:14px}
+.reference-study-preview,.reference-drop-target{min-height:420px;border-radius:16px;background:#090a0a;overflow:hidden}
+.reference-study-preview{display:grid;place-items:center}.reference-study-preview img{display:block;width:100%;height:100%;max-height:560px;object-fit:contain}
+.reference-drop-target{display:grid;place-items:center;text-align:center;padding:28px;color:#676d67;box-shadow:inset 0 0 0 1px rgba(255,255,255,.055);transition:background .18s ease,box-shadow .18s ease,color .18s ease,transform .18s ease}
+.reference-drop-target strong{display:block;color:#a2a8a2;font-size:14px;margin-bottom:7px}.reference-drop-target.dragging{background:#101913;color:#94be9c;box-shadow:inset 0 0 0 1px rgba(120,173,131,.34);transform:scale(.994)}
+.attached-reference{display:flex;align-items:center;gap:9px;padding:8px 3px 1px}.attached-reference button{width:48px;height:48px;border:0;border-radius:9px;padding:0;overflow:hidden;background:#090a0a;cursor:pointer}.attached-reference img{width:100%;height:100%;object-fit:cover;border-radius:9px}.attached-reference span{font-size:10px;color:#686e68}
+.app-toast{position:fixed;left:50%;bottom:24px;z-index:80;transform:translate(-50%,14px);opacity:0;background:#171a18;color:#d9ddd9;padding:10px 14px;border-radius:999px;box-shadow:0 14px 40px rgba(0,0,0,.45);font-size:12px;pointer-events:none;transition:opacity .18s ease,transform .18s ease}.app-toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:700px){.reference-request{margin:2vh auto}.reference-request-body{grid-template-columns:1fr}.reference-study-preview,.reference-drop-target{min-height:280px}}
+
+
+/* Focos — adaptive resurfacing, image first */
+.home-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.focus-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:16px}
+.focus-page-head .hero{margin:0}
+.focus-now{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(320px,.7fr);gap:16px;align-items:stretch}
+.focus-visual{min-height:62vh;border-radius:18px;background:#090a0a;overflow:hidden;display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.035)}
+.focus-visual img{display:block;width:100%;height:100%;max-height:76vh;object-fit:contain;background:#090a0a}
+.focus-copy{border-radius:18px;background:#101111;box-shadow:inset 0 0 0 1px rgba(255,255,255,.035);padding:22px;display:flex;flex-direction:column;min-height:100%}
+.focus-copy h2{font-size:clamp(25px,2.5vw,38px);line-height:1.06;margin:7px 0 14px}
+.focus-concept{color:#a6aba5;line-height:1.68;font-size:14px;white-space:pre-wrap}
+.focus-command{margin-top:24px;padding-top:22px;border-top:1px solid rgba(255,255,255,.055)}
+.focus-command .eyebrow{margin-bottom:8px}.focus-command strong{display:block;font-family:Georgia,serif;font-size:clamp(21px,2.1vw,31px);font-weight:500;line-height:1.28;color:#e8ebe7}
+.focus-actions{margin-top:auto;padding-top:26px}
+.focus-deeper{display:inline-flex;margin-bottom:16px;color:#8f958e;font-size:12px;text-decoration:none}.focus-deeper:hover{color:#d9ddd8}
+.focus-feedback{padding-top:18px;border-top:1px solid rgba(255,255,255,.055)}
+.focus-feedback p{font-size:11px;color:#6e746d;margin:0 0 9px}
+.focus-rating{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.focus-rating button{border:0;border-radius:10px;background:#151715;color:#7e847d;padding:10px 6px;font-size:10px;line-height:1.15;min-height:44px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.045);transition:background .16s ease,color .16s ease,transform .16s ease}
+.focus-rating button:hover{background:#1b1d1b;color:#d7dbd6;transform:translateY(-1px)}
+.focus-empty{min-height:55vh;display:grid;place-items:center;text-align:center;border-radius:20px;background:#0d0e0e;box-shadow:inset 0 0 0 1px rgba(255,255,255,.03)}
+.focus-empty .inner{max-width:520px;padding:36px}.focus-empty h2{font-size:34px;margin-bottom:10px}.focus-empty p{color:#727872;line-height:1.6}
+.focus-library{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.focus-library-item{border-radius:18px;background:#101111;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.035)}
+.focus-library-image{height:260px;background:#090a0a;display:grid;place-items:center;color:#4d524d;overflow:hidden}
+.focus-library-image img{display:block;width:100%;height:100%;object-fit:contain;background:#090a0a}
+.focus-library-body{padding:14px}.focus-library-body h3{font-size:20px;margin:0 0 7px}.focus-library-body p{font-size:12px;color:#777d76;line-height:1.55;margin:0 0 13px}
+.focus-form-preview{min-height:260px;border-radius:16px;background:#090a0a;display:grid;place-items:center;color:#555b55;overflow:hidden;margin-bottom:14px}
+.focus-form-preview img{max-width:100%;max-height:420px;object-fit:contain}
+.favorite-insight{position:relative;padding-right:40px!important}
+.favorite-insight .star{position:absolute;right:10px;top:8px}
+.favorite-insight .fav-label{display:block;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#887b5d;margin-bottom:5px}
+@media(max-width:980px){.home-grid{grid-template-columns:1fr}.focus-now{grid-template-columns:1fr}.focus-visual{min-height:48vh}.focus-copy{min-height:auto}.focus-library{grid-template-columns:1fr}}
+@media(max-width:620px){.focus-page-head{align-items:flex-start;flex-direction:column}.focus-copy{padding:17px}.focus-rating{grid-template-columns:1fr 1fr}.focus-rating button:last-child{grid-column:1/-1}.focus-library-image{height:220px}}
+
+
+
+/* V2 — guided training + richer focus editor */
+.guided-launch{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr);gap:14px;margin:2px 0 18px}.guided-main{border:1px solid #27302a;background:linear-gradient(145deg,#111713,#0d100e);border-radius:22px;padding:24px;display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:150px;box-shadow:inset 0 0 0 1px rgba(120,173,131,.04)}.guided-main h2{font-size:30px;margin:6px 0 8px}.guided-main p{color:#899089;max-width:650px;line-height:1.55;margin:0}.guided-main .btn{white-space:nowrap}.guided-status{border:1px solid var(--line);background:#0d0f0e;border-radius:22px;padding:20px;display:flex;flex-direction:column;justify-content:space-between}.guided-status strong{font-size:28px;font-weight:620}.guided-status .meta{margin-top:5px}.manual-label{margin:28px 0 10px;color:#666d67;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}
+.guided-bar{margin:-4px 0 16px;border:1px solid #294331;background:#101712;border-radius:16px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:14px;animation:workspaceIn .35s ease}.guided-reason{display:flex;gap:10px;align-items:center;min-width:0}.guided-dot{width:8px;height:8px;border-radius:50%;background:#78ad83;box-shadow:0 0 0 5px rgba(120,173,131,.08)}.guided-reason strong{font-size:13px}.guided-reason span{display:block;font-size:11px;color:#7c837c;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.guided-actions{display:flex;gap:8px;flex-wrap:wrap}.guided-actions .btn{padding:8px 11px;font-size:11px}
+.exercise-focus-map{margin-top:11px;border-top:1px solid #1f221f;padding-top:10px}.exercise-focus-map summary{cursor:pointer;color:#7f857f;font-size:11px;list-style:none}.exercise-focus-map summary::-webkit-details-marker{display:none}.focus-link-grid{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.focus-link-toggle{border:1px solid #252925;background:#101211;color:#747a74;border-radius:999px;padding:7px 10px;font-size:11px}.focus-link-toggle.on{background:#132018;border-color:#2e4a36;color:#a7d4b0}
+.focus-editor{display:grid;grid-template-columns:minmax(320px,.72fr) minmax(420px,1.28fr);gap:16px;align-items:start}.focus-editor-form{border:1px solid var(--line);background:#0e100f;border-radius:18px;padding:18px}.focus-editor-form h2{font-size:22px;margin-bottom:16px}.focus-editor-media{border:1px solid var(--line);background:#0b0c0c;border-radius:18px;padding:12px;min-height:560px}.focus-dropzone{min-height:180px;border:1px dashed #303630;border-radius:15px;background:radial-gradient(circle at 50% 35%,rgba(120,173,131,.05),transparent 55%);display:grid;place-items:center;text-align:center;padding:22px;color:#666d66;transition:.16s ease}.focus-dropzone.dragging{border-color:#4c7659;background:rgba(120,173,131,.06);color:#a4c9ac}.focus-dropzone strong{display:block;color:#aeb4ae;margin-bottom:6px;font-size:13px}.focus-dropzone input{display:none}.focus-preview-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}.focus-preview-card{position:relative;border:1px solid #232623;border-radius:13px;overflow:hidden;background:#080909;min-height:180px;display:grid;place-items:center}.focus-preview-card img{display:block;width:100%;height:100%;max-height:330px;object-fit:contain;background:#080909}.focus-preview-card .x{opacity:0;transition:.15s}.focus-preview-card:hover .x{opacity:1}.focus-preview-badge{position:absolute;left:8px;bottom:8px;background:rgba(8,9,9,.78);border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:4px 7px;font-size:9px;color:#9aa09a}.focus-editor-hint{font-size:11px;color:#5f655f;line-height:1.5;margin-top:9px}.focus-save-row{display:flex;gap:8px;align-items:center;margin-top:16px}
+.focus-visual>button{all:unset;cursor:zoom-in;display:grid;place-items:center;width:100%;height:100%;background:#090a0a}.focus-visual>button img{display:block;width:100%;height:100%;max-height:76vh;object-fit:contain}.focus-visual.multi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:#1a1d1a;min-height:62vh}.focus-visual.multi button{all:unset;cursor:zoom-in;background:#090a0a;display:grid;place-items:center;min-height:250px;overflow:hidden}.focus-visual.multi img{width:100%;height:100%;max-height:38vh;object-fit:contain}.focus-library-image.multi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px}.focus-library-image.multi img{max-height:130px}.focus-library-image .more-count{display:grid;place-items:center;background:#0f1110;color:#777d77;font-size:12px}
+.focus-choice-list{display:grid;gap:7px;margin:7px 0 14px}.focus-choice-row{display:flex;align-items:flex-start;gap:9px;padding:9px 10px;border:1px solid #202320;border-radius:12px;background:#0d0f0e}.focus-choice-row input{margin-top:2px}.focus-choice-row span{font-size:12px;color:#a7aca7}.focus-choice-row small{display:block;color:#666c66;margin-top:3px;line-height:1.35}
+.daily-complete{border:1px solid #294331;background:#101713;border-radius:20px;padding:24px;margin-bottom:18px;display:flex;justify-content:space-between;gap:18px;align-items:center}.daily-complete h2{font-size:28px;margin:5px 0 7px}.daily-complete p{margin:0;color:#889089}.daily-complete .toolbar{justify-content:flex-end}
+.home-train-wrap{display:flex;justify-content:center;margin-top:18px}.home-train-now{border:0;border-radius:14px;background:var(--green);color:#08110b;min-width:210px;min-height:52px;padding:0 22px;display:inline-flex;align-items:center;justify-content:center;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:15px;font-weight:800;box-shadow:0 10px 24px rgba(0,0,0,.2),inset 0 0 0 1px rgba(255,255,255,.08);transition:transform .18s ease,filter .18s ease,box-shadow .18s ease}.home-train-now:hover{transform:translateY(-1px);filter:brightness(1.05);box-shadow:0 14px 30px rgba(0,0,0,.24),inset 0 0 0 1px rgba(255,255,255,.12)}.home-train-now:active{transform:translateY(0) scale(.99)}
+@media(max-width:980px){.guided-launch,.focus-editor{grid-template-columns:1fr}.focus-editor-media{min-height:auto}.guided-main{align-items:flex-start;flex-direction:column}.guided-status{min-height:120px}.focus-preview-grid{grid-template-columns:1fr 1fr}.guided-bar{align-items:flex-start;flex-direction:column}.guided-actions{width:100%}.guided-actions .btn{flex:1}}
+@media(max-width:620px){.focus-preview-grid{grid-template-columns:1fr}.focus-visual.multi{grid-template-columns:1fr}.focus-visual.multi img{max-height:52vh}.daily-complete{align-items:flex-start;flex-direction:column}.daily-complete .toolbar{justify-content:flex-start}.guided-main{padding:18px}}
+
+/* Evolução Art v5 — refinamentos incrementais sobre a identidade visual da v4 */
+.ea-focus-preview{border:1px solid var(--line);border-radius:16px;background:#171b17;padding:13px 15px;margin-bottom:19px;display:flex;gap:14px;align-items:center;justify-content:space-between}
+.ea-focus-preview .eyebrow{color:#80ae8a}.ea-focus-preview strong{display:block;font:20px Georgia,serif;margin:4px 0}.ea-focus-preview p{font-size:12px;color:var(--muted);margin:0;line-height:1.5}
+.ea-focus-preview .btn{white-space:nowrap}.ea-focus-nav{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 18px}.ea-focus-nav button{background:#1b201b;border:1px solid #303a31;border-radius:999px;color:#b5beb7;padding:8px 13px;cursor:pointer;font-size:12px}.ea-focus-nav button.on{border-color:#598469;color:#ecf0eb;background:#203126}
+.ea-focus-instruction{font-size:12px;color:#919a92;padding:12px 0 0;line-height:1.7}
+.ea-focus-subtle{font-size:11px;color:#818c83;margin-top:10px}.ea-inline-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.ea-field-help{font-size:12px;color:#9baca0;line-height:1.55;margin-top:5px}.ea-linked-status{display:inline-block;border-radius:999px;font-size:11px;padding:5px 10px;background:#222d24;color:#b6caba}.ea-linked-status.unlinked{background:#302a22;color:#d4b88a}
+.ea-panel{background:#181b18;border:1px solid #303930;border-radius:18px;padding:18px;margin:16px 0}.ea-panel h3{font:22px Georgia,serif;margin:0 0 8px}.ea-panel p{font-size:13px;color:#a1a7a0;line-height:1.6}.ea-inline-summary{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}.ea-chip{border-radius:999px;padding:6px 10px;background:#222820;border:1px solid #384037;color:#b1bdb3;font-size:11px}
+.ea-rating-panel{background:#19231a;border:1px solid #35503b;border-radius:15px;padding:15px;margin:12px 0 0}.ea-rating-panel h3{font-size:17px;font-family:Georgia,serif;margin:2px 0 8px}.ea-rating-panel p{font-size:12px;color:#adb8ac;margin:0 0 12px}.ea-rating-buttons{display:flex;gap:7px;flex-wrap:wrap}.ea-rating-buttons button{font-size:12px;border-radius:9px;background:#262b25;color:#e2e8df;border:1px solid #3a423a;padding:10px 12px;cursor:pointer}.ea-rating-buttons button:hover{background:#304335}.ea-rating-buttons button.ea-skip{color:#aeb7ad;background:transparent;border-color:#354039}
+.ea-review-note{font-size:12px;color:#99a598;margin:10px 0 0}.ea-foundation-tags{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.ea-foundation-tags span{font-size:11px;color:#a9bbae;border:1px solid #304b34;border-radius:7px;padding:4px 7px}
+.ea-quiet-controls{display:flex;align-items:center;gap:8px}.ea-quiet-controls button{background:transparent;border:1px solid #313931;color:#c4d0c4;width:34px;height:34px;cursor:pointer;border-radius:10px;font-size:16px}.ea-quiet-controls button:hover{background:#283329}.ea-intensity{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.ea-intensity button{padding:8px 12px;background:#212520;border:1px solid #353b34;color:#b4bcb5;border-radius:10px;cursor:pointer;font-size:12px}.ea-intensity button.on{color:#e4f1e6;background:#29452e;border-color:#5f9b72}
+.ea-finish{padding:30px 24px;max-width:720px;margin:24px auto;text-align:center;background:#161d17;border:1px solid #38513c;border-radius:24px}.ea-finish h2{font:32px Georgia,serif;margin:6px 0 10px}.ea-finish p{color:#aeb8ab;font-size:14px;line-height:1.65}.ea-finish .ea-inline-actions{justify-content:center;margin:18px auto}.ea-flame{color:#e3ae64;font-weight:700;font-size:13px}
+.ea-master-rec{margin-top:19px;text-align:left;border-top:1px solid #334539;padding-top:16px}.ea-master-rec h3{font:20px Georgia,serif;margin-bottom:6px}.ea-master-rec p{margin:0 0 12px}
+.ea-setup{max-width:700px;margin:12px auto;padding:26px;background:#171c18;border:1px solid #344038;border-radius:20px}.ea-setup h2{font:28px Georgia,serif;margin:0 0 12px}.ea-setup p{color:#aab5ab;line-height:1.65}
+.ea-small-focus-link{background:transparent;border:1px solid #35523a;color:#9fc0a6;border-radius:8px;padding:5px 10px;font-size:11px;cursor:pointer}
+.ea-choice-label{font-size:13px;color:#9cac9e;margin:8px 0 7px}
+.ea-master-tag-list{display:flex;gap:7px;flex-wrap:wrap;padding:8px 0 0}
+.ea-master-tag-list button{border:1px solid #425b46;background:#1b2a1d;color:#b4cbb7;font-size:11px;padding:6px 9px;border-radius:8px;cursor:pointer}
+.ea-sound-chooser{display:none;position:absolute;right:0;top:40px;background:#1c201c;border:1px solid #374437;padding:12px;border-radius:12px;min-width:230px;z-index:40;box-shadow:0 10px 30px #0008;font-size:12px}.ea-sound-chooser.open{display:block}.ea-sound-chooser label{display:block;margin:8px 0;cursor:pointer;color:#becbbe}.ea-sound-chooser p{color:#9ea99e;font-size:11px;line-height:1.5}.ea-sound-chooser input{width:100%;font-size:11px}.ea-sound-wrap{position:relative}
+@media(max-width:650px){.ea-focus-preview{align-items:flex-start;flex-direction:column}.ea-rating-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.ea-quiet-controls button{width:32px;height:32px}.ea-finish h2{font-size:26px}}
+
+
+/* Evolução Art v7: minimal image-first treatment. Visual-only changes. */
+:root {
+  --bg:#121313;
+  --paper:#191a1a;
+  --paper-2:#202121;
+  --ink:#e8e9e7;
+  --muted:#969995;
+  --line:#323434;
+  --green:#84aa8b;
+  --green-soft:#222a23;
+  --green-line:#39473b;
+  --shadow:none;
+}
+html,body {background:var(--bg)!important;color:var(--ink);letter-spacing:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+body {background-image:none!important}
+h1,h2,h3,.brand,.counter strong,.focus-command strong,.focus-library-body h3,
+.focus-copy h2,.ea-focus-preview strong,.ea-finish h2,.ea-setup h2,.ea-panel h3,
+.guided-main h2,.zone-title h2,.focus-empty h2,.ea-rating-panel h3,
+.daily-complete h2,.ea-master-rec h3,.focus-editor-form h2 {
+  font-family:inherit!important;letter-spacing:-.012em!important;font-weight:550!important;
+}
+h1,.hero h1{font-size:clamp(25px,2.2vw,34px)!important;line-height:1.25;margin:4px 0 6px!important}
+h2{font-size:21px!important;line-height:1.3}
+h3{font-size:17px!important;line-height:1.4}
+.eyebrow {font-size:11px;letter-spacing:0;text-transform:none;font-weight:450;color:#8b8e89}
+.lead,.hero p {font-size:13px;line-height:1.5;color:var(--muted)}
+.topbar {height:56px;background:#121313;border:0;border-bottom:1px solid #292b2b;backdrop-filter:none;box-shadow:none;padding:0 27px}
+.brand {font-size:14px;font-weight:550!important;color:#c8cbc6;letter-spacing:0!important}
+.back {font-size:13px;color:#a4a7a2}.back:hover{color:var(--ink)}
+main {width:min(1280px,calc(100% - 64px));padding:30px 0 72px}
+.hero {margin-bottom:22px;max-width:850px}
+.section-head {margin-bottom:14px}.section-head p{font-size:12px}
+/* Flat, legible controls; one intentional color accent. */
+.btn,.btn.primary,.btn.green,.ea-small-focus-link,.ea-quiet-controls button,
+.ea-master-tag-list button,.focus-link-toggle,.focus-rating button,
+.ea-rating-buttons button,.ea-focus-nav button,.ea-intensity button,
+.home-train-now,.focus-preview-remove {
+  border-radius:7px!important;box-shadow:none!important;transition:background .12s ease,border-color .12s ease,color .12s ease!important;transform:none!important;
+}
+.btn,.btn.primary,.ea-small-focus-link,.ea-quiet-controls button,
+.ea-master-tag-list button {background:#242525;color:#dbddda;border:1px solid #383b39;font-weight:500;font-size:12px;padding:9px 12px}
+.btn:hover,.btn.primary:hover,.ea-small-focus-link:hover,.ea-quiet-controls button:hover,
+.ea-master-tag-list button:hover {background:#2a2c2a;border-color:#585b57;transform:none!important}
+.btn.green,.home-train-now {background:var(--green)!important;color:#101811!important;border:1px solid var(--green)!important;font-weight:600}
+.btn.green:hover,.home-train-now:hover {background:#96b99d!important;transform:none!important;box-shadow:none!important}
+.btn:focus-visible,button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible {
+  outline:2px solid #b0cdb5!important;outline-offset:2px;
+}
+.input,.textarea,.select {background:#171818;border:1px solid #383a38;border-radius:6px;box-shadow:none;padding:11px 12px}
+.input:focus,.textarea:focus,.select:focus{box-shadow:none;border-color:#849287}
+.field label {font-size:12px;color:#aaada8;font-weight:500}
+.meta {color:#969995}
+/* Home: short options, no decorative numbers or oversized cards. */
+.choice-grid {gap:10px}
+.home-grid {grid-template-columns:repeat(3,minmax(0,1fr))}
+.choice,.card,.panel,.foundation,.ea-panel,.ea-setup,.ea-finish,
+.guided-launch,.guided-main,.guided-status,.daily-complete,.focus-editor-form,.focus-editor-media,
+.ea-rating-panel,.ea-focus-preview,.note,.counter,.focus-choice-row,
+.focus-library-item,.exercise-tile,.ea-master-rec {
+  background:var(--paper)!important;border:1px solid var(--line)!important;box-shadow:none!important;
+  border-radius:9px!important;transform:none!important;
+}
+.choice {min-height:132px;padding:17px 19px;justify-content:center;gap:8px}
+.choice .num {display:none}
+.choice h2 {font-size:19px!important;font-weight:550!important}
+.choice p {font-size:12px;color:#9fa29d;line-height:1.45;margin:3px 0 0;max-width:100%}
+.choice:hover,.card.clickable:hover,.exercise-tile:hover {background:#202222!important;border-color:#535653!important;transform:none!important;box-shadow:none!important}
+.home-train-wrap {justify-content:center;margin:18px 0 10px}
+.home-train-now {min-width:178px;min-height:41px;border-radius:7px!important;padding:9px 20px;font-size:13px;font-family:inherit;letter-spacing:0}
+.ea-inline-summary {gap:12px;margin-top:16px!important}
+.ea-flame,.ea-chip,.ea-foundation-tags span,.ea-linked-status,.status-chip,.pill,
+.difficulty-chip,.ea-intensity-chip {
+  background:transparent!important;color:#989d98!important;border:1px solid #343735!important;
+  border-radius:6px!important;box-shadow:none!important;font-weight:450!important;
+  text-transform:none;letter-spacing:0;
+}
+/* The current principle is a quiet image-led item, not a colored callout. */
+.ea-focus-preview {margin-bottom:18px;padding:12px 14px;gap:14px;background:#191a1a!important}
+.ea-focus-preview .eyebrow {color:#a0a49e;font-size:11px}
+.ea-focus-preview strong {font-size:16px!important;color:var(--ink);margin:4px 0}
+.ea-focus-preview p{color:#999d97;font-size:12px;max-width:680px}
+.ea-focus-preview .btn{flex-shrink:0;white-space:nowrap}
+.ea-focus-preview > div:not(.ea-focus-thumb){flex:1;min-width:0}
+.ea-focus-thumb{width:100px;height:75px;flex:0 0 100px;background:#101111;border-radius:4px;overflow:hidden;display:grid;place-items:center}
+.ea-focus-thumb img{width:100%;height:100%;display:block;object-fit:contain}
+/* Simplify guided entry and completion; do not create an extra mega-banner. */
+.guided-launch {display:none!important}
+.manual-label {display:none}
+.guided-bar{background:#191a1a!important;border:1px solid #353735!important;border-radius:8px!important;animation:none!important;padding:11px 13px}
+.guided-dot {background:#989f98!important;box-shadow:none!important}
+.guided-reason strong{font-weight:550}
+.daily-complete,.ea-finish {padding:21px;text-align:left;max-width:850px}
+.ea-finish h2,.daily-complete h2 {font-size:23px!important}
+.ea-master-rec {border-top:1px solid #363837!important;padding:15px!important}
+.ea-rating-panel{padding:14px}
+.ea-rating-panel h3{font-size:17px!important}
+.ea-rating-buttons button {background:#232524!important;border:1px solid #3a3d3a!important;color:#cfd2cd!important;font-weight:500!important}
+.ea-rating-buttons button:hover{background:#303331!important}
+.ea-intensity button {background:#222423!important;border:1px solid #393c39!important;color:#c8cbc6!important}
+.ea-intensity button.on,.ea-rating-buttons button.selected,.ea-rating-buttons button.on,
+.ea-focus-nav button.on,.focus-link-toggle.on {background:#303832!important;border:1px solid #506153!important;color:#e3e9e2!important}
+/* Visually neutral categories, without traffic-light red/yellow/green labels. */
+.difficulty-chip.easy,.difficulty-chip.medium,.difficulty-chip.hard {background:#222424!important;color:#b0b4ae!important;border:1px solid #373a37!important}
+.difficulty-option span {border:1px solid #3b3d3a;background:#222423;border-radius:6px;box-shadow:none;color:#afb3ad}
+.difficulty-option input:checked+span{background:#303732;color:#e7ebe6;border-color:#788b79;box-shadow:none}
+.focus-choice-row,.focus-link-toggle,.ea-master-tag-list button {background:#1a1c1a;border-color:#343735;color:#c0c4bd}
+.ea-master-tag-list button {color:#c8cbc6}
+/* Images fill the visual role, controls get out of the way. */
+.exercise-tile,.focus-library-item {overflow:hidden}
+.exercise-cards {grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.exercise-cover {height:clamp(210px,27vw,340px);background:#101111}
+.exercise-cover img,.focus-library-image img {transform:none!important;filter:none!important}
+.exercise-tile-info {padding:11px 13px}
+.exercise-tile-title {font-size:14px;font-weight:550}
+.exercise-tile-counts {font-size:11px;color:#90938f}
+.image-gallery,.art-grid,.art-grid,.zone-gallery {gap:9px}
+.art,.study-art,.zone-art,.focus-visual,.focus-library-image,.exercise-cover,.focus-form-preview,
+.focus-preview-item,.ea-focus-thumb {box-shadow:none!important;border-radius:5px!important}
+.art,.study-art,.zone-art {border:1px solid #242626!important;background:#111212!important}
+.art:hover,.study-art:hover,.zone-art:hover {box-shadow:none!important}
+.zone-art,.zone-art img,.zone-art .image-button {border-radius:5px!important;padding:0!important}
+.zone-art img {max-height:78vh;background:#111212}
+.exercise-zone {padding:0 14px 30px;background:transparent!important;box-shadow:none!important;transform:none!important}
+.exercise-zone+.exercise-zone{border-left:1px solid #313333}
+.zone-head {top:56px;background:#121313;backdrop-filter:none;border-bottom:1px solid #252827}
+.zone-title h2 {font-size:14px!important}
+.zone-empty {background:#191a1a;box-shadow:none;border:1px dashed #353837;border-radius:7px!important}
+.zone-empty strong {font-size:13px}
+.exercise-workspace,.zone-art,#app.page-enter {animation:none!important}
+.exercise-header h1{font-size:clamp(22px,2.2vw,29px)!important}
+/* Focus and editor: panels recede, visual remains big. */
+.focus-page-head,.image-page-head{margin-bottom:16px}
+.focus-now {gap:12px}
+.focus-visual {background:#101111!important;min-height:60vh;border:1px solid #252727!important}
+.focus-copy {background:#191a1a!important;border:1px solid #323434!important;padding:25px!important;border-radius:8px!important}
+.focus-copy h2{font-size:23px!important;line-height:1.3}
+.focus-concept{color:#b1b5ae;line-height:1.55;font-size:13px}
+.focus-command{margin-top:18px;padding-top:17px}
+.focus-command strong {font-size:clamp(16px,1.8vw,22px)!important;line-height:1.45}
+.focus-feedback{margin-top:14px;padding-top:13px}
+.focus-feedback p{color:#989d96}
+.focus-rating{gap:5px}
+.focus-rating button{background:#252726;border:1px solid #393b39;box-shadow:none!important;font-size:11px;color:#b6bab4;padding:10px 5px}
+.focus-rating button:hover {background:#303230;color:#f2f3f0;transform:none}
+.focus-empty {background:transparent;box-shadow:none;border:1px dashed #363837;border-radius:8px}
+.focus-library{gap:12px}
+.focus-library-image{background:#111212}
+.focus-library-body{padding:13px}
+.focus-library-body h3{font-size:16px!important}
+.focus-library-body p{color:#999d97}
+.focus-editor{gap:16px}
+.focus-editor-form{background:#191a1a!important;padding:20px!important}
+.focus-editor-form h2{font-size:18px!important}
+.focus-editor-media {background:transparent!important;border:0!important}
+.focus-preview-grid{gap:8px}
+/* Notes and master studies: subdued UI frames. */
+.foundation-grid{gap:11px}
+.foundation {min-height:135px;padding:17px}
+.foundation-sidebar .panel,.panel,.note {background:#191a1a!important}
+.note p{color:#b6b8b4}
+.favorite-insight .fav-label{color:#999d97;letter-spacing:0;text-transform:none}
+.star.on,.fav{color:#becabd!important}
+.art-cap {background:#191a1a;color:#a0a49f;border:0}
+/* dialog / uploads */
+.overlay{background:rgba(0,0,0,.84);backdrop-filter:none}
+.modal,dialog,.reference-request {background:#171818;border:1px solid #424544;border-radius:8px;box-shadow:none;animation:none}
+.modal-head,.reference-request-head {border-bottom-color:#353736}
+.reference-study-preview,.reference-drop-target {background:#111212;border-radius:6px}
+.ea-sound-chooser {background:#222424;border:1px solid #474947;border-radius:8px;box-shadow:none}
+/* Responsive: simple rows on phone, never squeezed dashboard blocks. */
+@media(max-width:980px){
+ .home-grid{grid-template-columns:1fr}
+ .choice{min-height:100px}
+ .exercise-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:820px){
+ .exercise-zone+.exercise-zone{border-left:0;border-top:1px solid #313333}
+ .zone-head{top:56px}
+}
+@media(max-width:620px){
+ main{width:calc(100% - 28px);padding-top:22px}
+ .topbar{height:52px;padding:0 14px}
+ .brand{font-size:13px}
+ .hero{margin-bottom:18px}
+ h1,.hero h1{font-size:25px!important}
+ .home-grid{gap:7px}
+ .choice{min-height:90px;padding:14px 15px}
+ .choice h2{font-size:17px!important}
+ .choice p{font-size:12px}
+ .ea-focus-preview{align-items:flex-start;gap:11px;flex-wrap:wrap}
+ .ea-focus-thumb{width:72px;height:72px;flex-basis:72px}
+ .ea-focus-preview > .btn{margin-left:auto}
+ .exercise-cards,.focus-library{grid-template-columns:1fr}
+ .focus-copy{padding:17px!important}
+ .focus-visual{min-height:42vh}
+ .exercise-zone{padding:0 0 22px}
+ .ea-inline-summary{justify-content:flex-start!important}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+
+
+/* v8: neutral, Notion-like interface. Artworks are the only visual accents. */
+:root {
+  color-scheme:dark;
+  --bg:#121212;--paper:#191919;--paper-2:#222222;
+  --ink:#f4f4f4;--muted:#a0a0a0;--line:#343434;
+  --green:#f4f4f4;--green-soft:#242424;--green-line:#4c4c4c;
+  --dark:#222222;--shadow:none;
+}
+html,body,button,input,textarea,select {
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,Helvetica,sans-serif!important;
+}
+html,body {background:#121212!important;color:#f4f4f4!important}
+.topbar {background:#121212!important;border-bottom-color:#303030!important}
+.brand,h1,h2,h3,.counter strong,.focus-command strong {font-family:inherit!important}
+.ea-flame,.ea-chip,.pill,.status-chip,.ea-linked-status,.difficulty-chip,.ea-intensity-chip {
+  color:#aaa!important;border-color:#383838!important;background:transparent!important;
+}
+/* Primary actions: white. All other accents are grayscale. */
+.btn.green,.btn.primary,.home-train-now,.btn.green:hover,.home-train-now:hover,
+.btn.primary:hover {background:#f4f4f4!important;color:#121212!important;border-color:#f4f4f4!important;box-shadow:none!important}
+.btn.green:hover,.btn.primary:hover,.home-train-now:hover{background:#fff!important}
+.btn,.ea-small-focus-link,.ea-quiet-controls button,.ea-master-tag-list button,
+.focus-link-toggle,.ea-rating-buttons button,.focus-rating button,.ea-focus-nav button,
+.ea-intensity button {background:#242424!important;color:#e3e3e3!important;border-color:#414141!important}
+.btn:hover,.focus-link-toggle:hover,.ea-rating-buttons button:hover,.focus-rating button:hover,
+.ea-focus-nav button:hover,.ea-intensity button:hover{background:#303030!important;color:#fff!important}
+.ea-intensity button.on,.ea-rating-buttons button.selected,.ea-rating-buttons button.on,
+.ea-focus-nav button.on,.focus-link-toggle.on,.difficulty-option input:checked+span,
+.ea-master-tag-list button.on {
+  background:#353535!important;border-color:#888!important;color:#fff!important;
+}
+.ea-focus-preview .eyebrow,.ea-linked-status,.ea-linked-status.unlinked,
+.ea-choice-label,.ea-field-help,.ea-master-tag-list button,.focus-deeper,
+.focus-instruction,.step.done,.star.on,.fav,.favorite-insight .fav-label {
+  color:#c4c4c4!important;
+}
+.star.on{color:#f1f1f1!important}
+.fav,.favorite-bar .fav{border-color:#555!important;background:#1e1e1e!important}
+.step.done,.done,.exercise-tile.done,.status-chip.complete,.ea-rating-panel,
+.daily-complete {background:#1e1e1e!important;border-color:#444!important;color:#ddd!important}
+.guided-dot{background:#f4f4f4!important;box-shadow:none!important}
+.progress span {background:#dcdcdc!important}
+.input:focus,.textarea:focus,.select:focus {border-color:#bbb!important;box-shadow:none!important}
+.btn:focus-visible,button:focus-visible,a:focus-visible,input:focus-visible,
+textarea:focus-visible,select:focus-visible {outline:2px solid #f4f4f4!important;outline-offset:2px}
+.focus-dropzone{background:#191919!important;border-color:#464646!important;color:#aaa!important}
+.focus-dropzone.dragging,.exercise-zone.dragging,.reference-drop-target.dragging {
+  background:#252525!important;border-color:#aaa!important;box-shadow:inset 0 0 0 1px #666!important;color:#fff!important;
+}
+.exercise-zone.dragging .drop-hint,.exercise-zone.dragging .zone-empty {color:#fff!important}
+.zone-art:hover,.exercise-tile:hover {box-shadow:none!important}
+/* Keep multiple images side by side rather than making a vertical feed. */
+.zone-gallery {
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  width:100%!important;max-width:none!important;
+  gap:10px!important;align-items:start!important;
+}
+.zone-gallery>.zone-empty,.zone-gallery>.gallery-empty{grid-column:1/-1}
+.zone-gallery>.zone-art {min-width:0;width:100%;margin:0;align-self:start}
+.zone-art img {width:100%;height:clamp(160px,22vw,320px)!important;max-height:320px!important;object-fit:contain!important}
+.zone-gallery>.zone-art .study-remove {opacity:1!important;transform:none!important}
+.art-grid,.image-gallery{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important}
+.focus-preview-grid {display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important}
+.focus-preview-card {min-height:145px!important}
+.focus-preview-card img {max-height:260px!important;object-fit:contain!important}
+.focus-visual.multi{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))!important;gap:6px!important}
+.focus-visual.multi button{min-width:0;min-height:140px!important}
+.focus-visual.multi img{max-height:320px!important}
+.focus-library-image.multi {grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.art-grid .art img {max-height:400px!important}
+@media(max-width:990px){
+  .art-grid,.image-gallery,.focus-preview-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:620px){
+  .art-grid,.image-gallery,.focus-preview-grid,.zone-gallery {grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+  .focus-visual.multi{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .focus-visual.multi img {max-height:38vh!important}
+  .zone-art img{height:175px!important;max-height:175px!important}
+  .zone-gallery>.zone-art .study-remove {right:4px;top:4px}
+  .focus-preview-card {min-height:112px!important}
+}
+/* One-time first launch question; no full-screen onboarding menu. */
+.ea-welcome[hidden]{display:none!important}
+.ea-welcome{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.68);display:grid;
+  place-items:center;padding:20px}
+.ea-welcome-box{width:min(410px,100%);padding:25px;background:#1d1d1d;border:1px solid #424242;border-radius:9px;box-shadow:0 18px 80px rgba(0,0,0,.4)}
+.ea-welcome-box h2{font-size:20px!important;margin:0 0 9px!important;font-weight:600!important}
+.ea-welcome-box p{color:#aaa;font-size:13px;line-height:1.6;margin:0 0 23px}
+.ea-welcome-actions{display:flex;gap:8px;flex-wrap:wrap}
+.ea-welcome-actions .btn{font-size:13px;flex:1;min-height:40px;white-space:nowrap}
+
+
+/* v9 — introductory setup: neutral editorial layout, no decorative color. */
+.ea-intro[hidden]{display:none!important}
+.ea-intro{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.84);display:grid;place-items:center;padding:18px;overflow-y:auto;overscroll-behavior:contain}
+.ea-intro-sheet{width:min(640px,100%);max-height:min(760px,calc(100dvh - 36px));overflow-y:auto;background:#191919;border:1px solid #494949;border-radius:10px;padding:clamp(20px,3.4vw,34px);color:#f3f3f3;box-shadow:0 20px 65px rgba(0,0,0,.33)}
+.ea-intro-open{overflow:hidden}
+.ea-intro h2:focus{outline:none}
+.ea-intro-step{color:#888;font-size:12px;letter-spacing:.04em;margin-bottom:13px}
+.ea-intro h2{font-family:inherit!important;font-size:clamp(21px,3vw,28px)!important;font-weight:590!important;letter-spacing:-.035em;line-height:1.22;margin:0 0 11px}
+.ea-intro-desc{color:#aaa;font-size:13px;line-height:1.7;max-width:520px;margin:0 0 22px}
+.ea-intro-sections{border-top:1px solid #363636;margin:3px 0 23px}
+.ea-intro-feature{display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px;padding:14px 1px;border-bottom:1px solid #363636;font-size:13px}
+.ea-intro-feature strong{font-weight:590;color:#f2f2f2}
+.ea-intro-feature span{color:#adadad;line-height:1.5}
+.ea-intro-options{display:grid;gap:9px;margin:0 0 20px}
+.ea-intro-options.cols3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ea-intro-options.cols2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.ea-intro-option{display:flex;flex-direction:column;gap:6px;align-items:flex-start;justify-content:flex-start;width:100%;min-height:96px;padding:14px 15px;text-align:left;border:1px solid #414141;border-radius:7px;background:#202020;color:#e5e5e5;cursor:pointer;font:inherit;transition:background .12s ease,border-color .12s ease}
+.ea-intro-option:hover{border-color:#777;background:#262626}
+.ea-intro-option[aria-pressed="true"]{border-color:#eee;background:#292929}
+.ea-intro-option[aria-pressed="true"] strong::after{content:' ✓';color:#f3f3f3;font-weight:500}
+.ea-intro-option strong{font-weight:600;font-size:13px;line-height:1.35;color:#f4f4f4}
+.ea-intro-option span{font-size:12px;line-height:1.45;color:#aaa}
+.ea-intro-footer{border-top:1px solid #383838;margin-top:22px;padding-top:20px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ea-intro-footer .btn{min-height:38px;padding:9px 15px;border-radius:6px;font-size:13px}
+.ea-intro-footer .btn.primary{background:#f5f5f5!important;color:#161616!important}
+.ea-intro-note{font-size:12px;color:#858585;line-height:1.5;margin-top:7px}
+@media(max-width:530px){.ea-intro{padding:10px}.ea-intro-sheet{max-height:calc(100dvh - 20px);padding:21px 19px}.ea-intro-feature{grid-template-columns:1fr;gap:4px}.ea-intro-options.cols3{grid-template-columns:1fr}.ea-intro-option{min-height:0}.ea-intro-footer{align-items:stretch}.ea-intro-footer .btn{flex:1}}
+
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar"><button id="backBtn" class="back hidden" onclick="goBack()">← Voltar</button><div class="brand">Evolução Art</div><div style="width:52px"></div></header>
+  <main id="app"></main>
+</div>
+<div id="overlay" class="overlay"></div>
+<dialog id="artDialog"><div class="dialog-bar"><button onclick="document.getElementById('artDialog').close()">Fechar</button></div><img id="dialogImg" alt="Obra ampliada"></dialog>
+<div id="appToast" class="app-toast"></div>
+<div id="eaWelcome" class="ea-intro" role="dialog" aria-modal="true" aria-labelledby="eaIntroTitle" aria-describedby="eaIntroDescription" hidden>
+  <div id="eaIntroBody" class="ea-intro-sheet"></div>
+</div>
+
+<script>
+const STORE_KEY='art-study-system-v3';
+const LEGACY_STORE_KEY='a'+'telie-system-v3';
+const defaultState={exercises:{drawing:[],painting:[]},foundations:[],notes:[],practices:[],focuses:[],trainingLog:[]};
+let state=load();
+let route={page:'home'};
+let practice=null;
+let pendingExerciseRef=null;
+let toastTimer=null;
+
+function load(){try{const raw=localStorage.getItem(STORE_KEY)||localStorage.getItem(LEGACY_STORE_KEY)||'{}';return {...defaultState,...JSON.parse(raw)}}catch{return structuredClone(defaultState)}}
+function save(){localStorage.setItem(STORE_KEY,JSON.stringify(state))}
+function id(prefix='id'){return prefix+'_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7)}
+function esc(v=''){return String(v).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function pct(n,d){return d?Math.min(100,Math.round(n/d*100)):0}
+function currentBackVisible(){return route.page!=='home'}
+function render(){document.getElementById('backBtn').classList.toggle('hidden',!currentBackVisible());const app=document.getElementById('app');app.classList.remove('page-enter');void app.offsetWidth;app.classList.add('page-enter');
+ if(route.page==='home')app.innerHTML=homeView();
+ if(route.page==='training')app.innerHTML=trainingView();
+ if(route.page==='exerciseList')app.innerHTML=exerciseListView(route.kind);
+ if(route.page==='exercise')app.innerHTML=exerciseView(route.kind,route.id);
+ if(route.page==='masters')app.innerHTML=mastersView();
+ if(route.page==='foundation')app.innerHTML=foundationView(route.id);
+ if(route.page==='focus')app.innerHTML=focusView();
+ if(route.page==='focusLibrary')app.innerHTML=focusLibraryView();
+ if(route.page==='newFocus')app.innerHTML=newFocusView();
+ if(route.page==='editFocus')app.innerHTML=editFocusView(route.id);
+ if(route.page==='newExercise')app.innerHTML=newExerciseView(route.kind);
+ if(route.page==='newFoundation')app.innerHTML=newFoundationView();
+ if(route.page==='editFoundation')app.innerHTML=editFoundationView(route.id);
+ if(route.page==='foundation')loadArtGrid(route.id);
+ if(route.page==='exercise')loadExerciseGallery(route.kind,route.id);
+ if(route.page==='exerciseList')loadExerciseListVisuals(route.kind);
+ if(route.page==='focus'){const f=routedFocus();if(f)loadFocusNowImage(f.id)}
+ if(route.page==='focusLibrary')loadFocusLibraryImages();
+ if(route.page==='editFocus')loadFocusEditImage(route.id);
+}
+function nav(page,extra={}){route={page,...extra};render();window.scrollTo(0,0)}
+function goBack(){
+ if(route.page==='training'||route.page==='masters'||route.page==='focus')return nav('home');
+ if(route.page==='exerciseList')return nav('training');
+ if(route.page==='exercise'||route.page==='newExercise')return nav('exerciseList',{kind:route.kind});
+ if(route.page==='foundation'||route.page==='newFoundation')return nav('masters');
+ if(route.page==='editFoundation')return nav('foundation',{id:route.id});
+ if(route.page==='focusLibrary'||route.page==='newFocus')return nav('focus');
+ if(route.page==='editFocus')return nav('focusLibrary');
+ nav('home');
+}
+function pageHead(kicker,title,text=''){return `<div class="hero"><div class="eyebrow">${esc(kicker)}</div><h1>${esc(title)}</h1>${text?`<p class="lead">${esc(text)}</p>`:''}</div>`}
+
+function homeView(){return `${pageHead('Sistema','O que você vai fazer?')}<div class="choice-grid home-grid">
+ <button class="choice" onclick="nav('training')"><span class="num">01</span><div><h2>Treino</h2><p>Desenho ou pintura. Os exercícios ficam verdes quando todas as metas são concluídas.</p></div></button>
+ <button class="choice" onclick="nav('masters')"><span class="num">02</span><div><h2>Estudo de mestres</h2><p>Fundamentos, obras do mestre, anotações e prática com referência e memória.</p></div></button>
+ <button class="choice" onclick="nav('focus')"><span class="num">03</span><div><h2>Focos</h2><p>Um princípio importante reaparece no momento certo para você levar ao desenho.</p></div></button>
+ </div>`}
+
+function trainingView(){return `${pageHead('Treino','Escolha uma área')}<div class="choice-grid">
+ <button class="choice" onclick="nav('exerciseList',{kind:'drawing'})"><span class="num">Desenho</span><div><h2>Desenho</h2><p>${state.exercises.drawing.length} exercício(s)</p></div></button>
+ <button class="choice" onclick="nav('exerciseList',{kind:'painting'})"><span class="num">Pintura</span><div><h2>Pintura</h2><p>${state.exercises.painting.length} exercício(s)</p></div></button>
+ </div>`}
+function kindLabel(k){return k==='drawing'?'Desenho':'Pintura'}
+function exCounts(ex){const ref=ex.entries.filter(x=>x.type==='ref').length,noref=ex.entries.filter(x=>x.type==='noref').length;return{ref,noref,done:ref>=ex.refTarget&&noref>=ex.noRefTarget,total:ex.refTarget+ex.noRefTarget,complete:Math.min(ref,ex.refTarget)+Math.min(noref,ex.noRefTarget)}}
+function difficultyLabel(value){return value==='easy'?'Fácil':value==='medium'?'Médio':value==='hard'?'Difícil':''}
+function difficultyChip(value){const label=difficultyLabel(value);return label?`<span class="difficulty-chip ${value}">${label}</span>`:''}
+function exerciseListView(kind){const list=state.exercises[kind];return `${pageHead('Treino',kindLabel(kind))}<div class="section-head"><div><h2>Exercícios</h2><p>Abra um exercício para ver e adicionar seus estudos.</p></div><button class="btn primary" onclick="nav('newExercise',{kind:'${kind}'})">Adicionar exercício</button></div>
+ <div class="exercise-cards">${list.length?list.map((ex,i)=>{const c=exCounts(ex);return `<div class="exercise-tile ${c.done?'done':''}" onclick="nav('exercise',{kind:'${kind}',id:'${ex.id}'})"><div class="exercise-cover" id="exerciseCover_${ex.id}"><div class="cover-empty">${ex.entries.length?'Carregando imagem…':'Sem estudos ainda'}</div></div><div class="exercise-tile-info"><div><div class="exercise-tile-title">${i+1}. ${esc(ex.title)}</div><div class="exercise-tile-meta">${difficultyChip(ex.difficulty)}<div class="exercise-tile-counts">Com ref ${c.ref}/${ex.refTarget} · Sem ref ${c.noref}/${ex.noRefTarget}</div></div></div><span class="status-chip ${c.done?'complete':''}">${c.done?'Concluído':'Abrir'}</span></div></div>`}).join(''):`<div class="empty" style="grid-column:1/-1">Nenhum exercício cadastrado.</div>`}</div>`}
+function newExerciseView(kind){return `${pageHead(kindLabel(kind),'Novo exercício')}<div class="panel" style="max-width:650px"><div class="field"><label>Nome do exercício</label><input id="exTitle" class="input"></div><div class="field"><label>Dificuldade</label><div class="difficulty-picker"><label class="difficulty-option easy"><input type="radio" name="exDifficulty" value="easy" checked><span>Fácil</span></label><label class="difficulty-option medium"><input type="radio" name="exDifficulty" value="medium"><span>Médio</span></label><label class="difficulty-option hard"><input type="radio" name="exDifficulty" value="hard"><span>Difícil</span></label></div></div><div class="counter-grid"><div class="field"><label>Quantidade com referência</label><input id="exRef" class="input" type="number" min="0" value="0"></div><div class="field"><label>Quantidade sem referência</label><input id="exNoRef" class="input" type="number" min="0" value="0"></div></div><button class="btn primary" onclick="createExercise('${kind}')">Salvar exercício</button></div>`}
+function createExercise(kind){const title=document.getElementById('exTitle').value.trim(),ref=Number(document.getElementById('exRef').value),noref=Number(document.getElementById('exNoRef').value),difficulty=document.querySelector('input[name="exDifficulty"]:checked')?.value||'easy';if(!title)return alert('Informe o nome do exercício.');state.exercises[kind].push({id:id('ex'),title,difficulty,refTarget:Math.max(0,ref),noRefTarget:Math.max(0,noref),entries:[]});save();nav('exerciseList',{kind})}
+function exerciseView(kind,exid){const ex=state.exercises[kind].find(x=>x.id===exid);if(!ex)return `<div class="empty">Exercício não encontrado.</div>`;const c=exCounts(ex);return `<div class="exercise-header"><div class="hero"><div class="eyebrow">${kindLabel(kind)}</div><h1>${esc(ex.title)}</h1></div><div class="exercise-status">${difficultyChip(ex.difficulty)}<span class="status-chip ${c.ref>=ex.refTarget?'complete':''}">${c.ref} / ${ex.refTarget} referência</span><span class="status-chip ${c.noref>=ex.noRefTarget?'complete':''}">${c.noref} / ${ex.noRefTarget} imaginação</span>${c.done?'<span class="status-chip complete">Concluído</span>':''}</div></div>
+ <div class="exercise-workspace">
+  <section class="exercise-zone" id="zone_ref" ondragenter="dragZone(event,'ref')" ondragover="dragZone(event,'ref')" ondragleave="leaveZone(event,'ref')" ondrop="dropExerciseFiles(event,'${kind}','${ex.id}','ref')">
+   <div class="zone-head"><div class="zone-title"><h2>Referência</h2><span class="zone-count">${c.ref} / ${ex.refTarget}</span></div><span class="drop-hint">arraste aqui</span></div>
+   <div id="gallery_ref" class="zone-gallery"></div>
+  </section>
+  <section class="exercise-zone" id="zone_noref" ondragenter="dragZone(event,'noref')" ondragover="dragZone(event,'noref')" ondragleave="leaveZone(event,'noref')" ondrop="dropExerciseFiles(event,'${kind}','${ex.id}','noref')">
+   <div class="zone-head"><div class="zone-title"><h2>Imaginação</h2><span class="zone-count">${c.noref} / ${ex.noRefTarget}</span></div><span class="drop-hint">arraste aqui</span></div>
+   <div id="gallery_noref" class="zone-gallery"></div>
+  </section>
+ </div>`}
+function dragZone(event,type){event.preventDefault();event.dataTransfer.dropEffect='copy';document.getElementById('zone_'+type)?.classList.add('dragging')}
+function leaveZone(event,type){const zone=document.getElementById('zone_'+type);if(!zone)return;if(event.relatedTarget&&zone.contains(event.relatedTarget))return;zone.classList.remove('dragging')}
+function showToast(message){const el=document.getElementById('appToast');if(!el)return;clearTimeout(toastTimer);el.textContent=message;el.classList.add('show');toastTimer=setTimeout(()=>el.classList.remove('show'),2200)}
+async function fileHash(file){const data=await file.arrayBuffer();const digest=await crypto.subtle.digest('SHA-256',data);return [...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,'0')).join('')}
+async function imageHash(imageId){const img=await getImage(imageId);if(!img)return null;if(img.hash)return img.hash;const hash=await fileHash(img.blob);await setImageHash(imageId,hash);return hash}
+async function isDuplicateExerciseStudy(ex,file,hash=null){hash=hash||await fileHash(file);let changed=false;for(const entry of ex.entries){if(entry.hash&&entry.hash===hash)return true;if(!entry.hash){const h=await imageHash(entry.imageId);if(h){entry.hash=h;changed=true;if(h===hash){if(changed)save();return true}}}}if(changed)save();return false}
+async function uniqueNewStudyFiles(ex,files){const accepted=[],seen=new Set();for(const file of files){const hash=await fileHash(file);if(seen.has(hash)||await isDuplicateExerciseStudy(ex,file,hash)){showToast('Essa imagem já está neste exercício.');continue}seen.add(hash);accepted.push({file,hash})}return accepted}
+async function dropExerciseFiles(event,kind,exid,type){event.preventDefault();document.getElementById('zone_'+type)?.classList.remove('dragging');const files=[...event.dataTransfer.files].filter(f=>f.type.startsWith('image/'));if(!files.length)return;const ex=state.exercises[kind].find(x=>x.id===exid);if(!ex)return;const accepted=await uniqueNewStudyFiles(ex,files);if(!accepted.length)return;if(type==='ref'){pendingExerciseRef={kind,exid,items:accepted,index:0,previewUrl:null};showReferenceRequest();return}for(const item of accepted){const imageId=await putImage(item.file,{kind:'exercise-study',hash:item.hash});ex.entries.push({id:id('entry'),type:'noref',imageId,hash:item.hash,createdAt:Date.now()})}save();render()}
+function showReferenceRequest(){if(!pendingExerciseRef)return;const overlay=document.getElementById('overlay'),item=pendingExerciseRef.items[pendingExerciseRef.index];if(!item)return closeReferenceRequest();if(pendingExerciseRef.previewUrl)URL.revokeObjectURL(pendingExerciseRef.previewUrl);pendingExerciseRef.previewUrl=URL.createObjectURL(item.file);overlay.classList.add('open');overlay.innerHTML=`<div class="reference-request"><div class="reference-request-head"><div><strong>Adicione a referência usada</strong><span style="display:block;margin-top:3px">${pendingExerciseRef.items.length>1?`${pendingExerciseRef.index+1} de ${pendingExerciseRef.items.length}`:'Seu estudo só entra depois disso'}</span></div><button class="reference-request-close" onclick="closeReferenceRequest()" aria-label="Cancelar">×</button></div><div class="reference-request-body"><div class="reference-study-preview"><img src="${pendingExerciseRef.previewUrl}" alt="Seu estudo"></div><div id="referenceDropTarget" class="reference-drop-target" ondragenter="dragReferenceTarget(event)" ondragover="dragReferenceTarget(event)" ondragleave="leaveReferenceTarget(event)" ondrop="dropPairedReference(event)"><div><strong>Referência usada</strong>Arraste a imagem de referência aqui.</div></div></div></div>`}
+function dragReferenceTarget(event){event.preventDefault();event.dataTransfer.dropEffect='copy';document.getElementById('referenceDropTarget')?.classList.add('dragging')}
+function leaveReferenceTarget(event){const el=document.getElementById('referenceDropTarget');if(!el)return;if(event.relatedTarget&&el.contains(event.relatedTarget))return;el.classList.remove('dragging')}
+async function dropPairedReference(event){event.preventDefault();document.getElementById('referenceDropTarget')?.classList.remove('dragging');if(!pendingExerciseRef)return;const reference=[...event.dataTransfer.files].find(f=>f.type.startsWith('image/'));if(!reference)return;const {kind,exid,items,index}=pendingExerciseRef,item=items[index],ex=state.exercises[kind].find(x=>x.id===exid);if(!ex)return closeReferenceRequest();if(await isDuplicateExerciseStudy(ex,item.file,item.hash)){showToast('Essa imagem já está neste exercício.');pendingExerciseRef.index++;showReferenceRequest();return}const refHash=await fileHash(reference);const imageId=await putImage(item.file,{kind:'exercise-study',hash:item.hash});const referenceImageId=await putImage(reference,{kind:'exercise-source-reference',hash:refHash});ex.entries.push({id:id('entry'),type:'ref',imageId,referenceImageId,hash:item.hash,createdAt:Date.now()});save();pendingExerciseRef.index++;if(pendingExerciseRef.index<pendingExerciseRef.items.length){showReferenceRequest()}else{closeReferenceRequest();render()}}
+function closeReferenceRequest(){const overlay=document.getElementById('overlay');if(pendingExerciseRef?.previewUrl)URL.revokeObjectURL(pendingExerciseRef.previewUrl);pendingExerciseRef=null;overlay.classList.remove('open');overlay.innerHTML=''}
+async function removeExerciseEntry(kind,exid,entryId){const ex=state.exercises[kind].find(x=>x.id===exid);const entry=ex?.entries.find(x=>x.id===entryId);if(!entry)return;ex.entries=ex.entries.filter(x=>x.id!==entryId);save();await deleteImage(entry.imageId);if(entry.referenceImageId)await deleteImage(entry.referenceImageId);render()}
+async function loadExerciseGallery(kind,exid){const ex=state.exercises[kind].find(x=>x.id===exid);if(!ex)return;for(const type of ['ref','noref']){const el=document.getElementById('gallery_'+type);if(!el)continue;const entries=ex.entries.filter(x=>x.type===type).slice().reverse();if(!entries.length){el.innerHTML=`<div class="zone-empty"><div><strong>${type==='ref'?'Referência':'Imaginação'}</strong>Arraste e solte aqui.</div></div>`;continue}const parts=[];for(const entry of entries){const img=await getImage(entry.imageId);if(!img)continue;const url=URL.createObjectURL(img.blob);let attached='';if(type==='ref'&&entry.referenceImageId){const refImg=await getImage(entry.referenceImageId);if(refImg){const refUrl=URL.createObjectURL(refImg.blob);attached=`<div class="attached-reference"><button onclick="viewArt('${entry.referenceImageId}')" title="Abrir referência"><img src="${refUrl}" alt="Referência usada"></button><span>referência usada</span></div>`}}parts.push(`<article class="zone-art"><button class="image-button" onclick="viewArt('${entry.imageId}')"><img src="${url}" alt="${esc(img.name)}"></button>${attached}<button class="study-remove" title="Remover" onclick="removeExerciseEntry('${kind}','${exid}','${entry.id}')">×</button></article>`)}el.innerHTML=parts.join('')}}
+async function loadExerciseListVisuals(kind){for(const ex of state.exercises[kind]){const holder=document.getElementById(`exerciseCover_${ex.id}`);if(!holder||!ex.entries.length)continue;const entry=ex.entries[ex.entries.length-1],img=await getImage(entry.imageId);if(!img)continue;holder.innerHTML=`<img src="${URL.createObjectURL(img.blob)}" alt="${esc(img.name)}">`}}
+function deleteExercise(kind,exid){if(!confirm('Excluir este exercício?'))return;state.exercises[kind]=state.exercises[kind].filter(x=>x.id!==exid);save();nav('exerciseList',{kind})}
+
+
+function focusHistory(f){if(!Array.isArray(f.history))f.history=[];return f.history}
+function focusInterval(f){return Number(f.intervalDays)||0}
+function focusLastRating(f){const h=focusHistory(f);return h.length?h[h.length-1].rating:null}
+function focusPriority(f,now=Date.now()){const h=focusHistory(f);if(!h.length)return 100000-(f.createdAt||0)/1e12;const due=Number(f.nextDue)||0;if(due>now)return -Infinity;const overdue=Math.max(0,(now-due)/86400000),last=focusLastRating(f)||3;return overdue*4+(6-last)*8+Math.min(12,h.length*.15)}
+function selectDueFocus(){const now=Date.now(),list=state.focuses||[];if(!list.length)return null;const fresh=list.filter(f=>!focusHistory(f).length).sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));if(fresh.length)return fresh[0];const due=list.filter(f=>(Number(f.nextDue)||0)<=now);if(!due.length)return null;return due.sort((a,b)=>focusPriority(b,now)-focusPriority(a,now))[0]}
+function routedFocus(){if(route.id){const exact=(state.focuses||[]).find(f=>f.id===route.id);if(exact)return exact}return selectDueFocus()}
+function nextFocusDue(){const reviewed=(state.focuses||[]).filter(f=>focusHistory(f).length&&Number(f.nextDue)>Date.now()).sort((a,b)=>a.nextDue-b.nextDue);return reviewed[0]||null}
+function focusView(){const f=routedFocus();if(!(state.focuses||[]).length)return `<div class="focus-page-head">${pageHead('Focos','Hoje, presta atenção nisso')}<div class="toolbar"><button class="btn" onclick="nav('focusLibrary')">Biblioteca</button><button class="btn primary" onclick="nav('newFocus')">Adicionar foco</button></div></div><div class="focus-empty"><div class="inner"><h2>Crie o primeiro foco</h2><p>Guarde um princípio visual que merece voltar à sua cabeça durante o desenho. O sistema cuida de quando ele reaparece.</p><button class="btn primary" onclick="nav('newFocus')">Adicionar foco</button></div></div>`;
+ if(!f){const next=nextFocusDue(),when=next?new Date(next.nextDue).toLocaleDateString('pt-BR',{day:'2-digit',month:'short'}):'';return `<div class="focus-page-head">${pageHead('Focos','Nada precisa voltar agora')}<div class="toolbar"><button class="btn" onclick="nav('focusLibrary')">Biblioteca</button></div></div><div class="focus-empty"><div class="inner"><h2>Por enquanto, é isso.</h2><p>${when?`O próximo princípio volta por volta de ${esc(when)}.`:'Quando algum princípio precisar ser reativado, ele aparece aqui.'}</p><button class="btn" onclick="nav('focusLibrary')">Ver biblioteca</button></div></div>`}
+ return `<div class="focus-page-head"><div class="hero"><div class="eyebrow">Focos</div><h1>Hoje, presta atenção nisso</h1></div><div class="toolbar"><button class="btn" onclick="nav('focusLibrary')">Biblioteca</button></div></div><div class="focus-now"><button class="focus-visual" id="focusVisual_${f.id}" onclick="viewArt('${f.imageId}')" aria-label="Ampliar imagem"><span class="meta">Carregando imagem…</span></button><section class="focus-copy"><div><div class="eyebrow">Princípio</div><h2>${esc(f.title)}</h2><div class="focus-concept">${esc(f.concept)}</div><div class="focus-command"><div class="eyebrow">Leve para o desenho</div><strong>${esc(f.microSkill)}</strong></div></div><div class="focus-actions">${EA.safeUrl(f.courseUrl)?`<a class="focus-deeper" href="${esc(EA.safeUrl(f.courseUrl))}" target="_blank" rel="noopener">Rever conceito no Course Vault ↗</a>`:''}<div class="focus-feedback"><p>Depois de tentar usar isso, como foi?</p><div class="focus-rating"><button onclick="rateFocus('${f.id}',1)">Muito difícil</button><button onclick="rateFocus('${f.id}',2)">Difícil</button><button onclick="rateFocus('${f.id}',3)">OK</button><button onclick="rateFocus('${f.id}',4)">Fácil</button><button onclick="rateFocus('${f.id}',5)">Automático</button></div></div></div></section></div>`}
+async function loadFocusNowImage(fid){const f=(state.focuses||[]).find(x=>x.id===fid),holder=document.getElementById(`focusVisual_${fid}`);if(!f||!holder)return;const img=await getImage(f.imageId);if(!img){holder.innerHTML='<span class="meta">Imagem não encontrada.</span>';return}holder.innerHTML=`<img src="${URL.createObjectURL(img.blob)}" alt="${esc(img.name)}">`}
+function focusLibraryView(){const list=state.focuses||[];return `${pageHead('Focos','Biblioteca','Aqui ficam todos os princípios. O que aparece para você no dia a dia continua sendo escolhido pelo sistema.')}<div class="section-head"><div><h2>${list.length} foco(s)</h2></div><button class="btn primary" onclick="nav('newFocus')">Adicionar foco</button></div><div class="focus-library">${list.length?list.map(f=>`<article class="focus-library-item"><div class="focus-library-image" id="focusLibImg_${f.id}">Carregando…</div><div class="focus-library-body"><h3>${esc(f.title)}</h3><p>${esc(f.microSkill)}</p><div class="toolbar"><button class="btn small" onclick="nav('focus',{id:'${f.id}'})">Abrir</button><button class="btn small" onclick="nav('editFocus',{id:'${f.id}'})">Editar</button></div></div></article>`).join(''):`<div class="empty" style="grid-column:1/-1">Nenhum foco cadastrado.</div>`}</div>`}
+async function loadFocusLibraryImages(){for(const f of state.focuses||[]){const holder=document.getElementById(`focusLibImg_${f.id}`);if(!holder)continue;const img=await getImage(f.imageId);if(!img)continue;holder.innerHTML=`<img src="${URL.createObjectURL(img.blob)}" alt="${esc(img.name)}">`}}
+function newFocusView(){return `${pageHead('Focos','Novo foco','Um foco é um princípio que você quer manter vivo enquanto desenha.')}<div class="panel" style="max-width:760px"><div class="field"><label>Nome do princípio</label><input id="focusTitle" class="input" placeholder="Ex.: Cabeça como volume em perspectiva"></div><div class="field"><label>Imagem que ilustra o princípio</label><input id="focusImage" class="input" type="file" accept="image/*"></div><div class="field"><label>Conceito — o que é e por que importa</label><textarea id="focusConcept" class="textarea" rows="5"></textarea></div><div class="field"><label>Micro-habilidade — o que lembrar durante o desenho</label><textarea id="focusMicroSkill" class="textarea" rows="4" placeholder="Ex.: Antes do contorno, identifique o volume principal e sua inclinação."></textarea></div><div class="field"><label>Link de aula no Course Vault (opcional)</label><input id="focusCourse" class="input" type="url" placeholder="https://..."></div><button class="btn primary" onclick="createFocus()">Salvar foco</button></div>`}
+async function createFocus(){const title=document.getElementById('focusTitle').value.trim(),concept=document.getElementById('focusConcept').value.trim(),microSkill=document.getElementById('focusMicroSkill').value.trim(),file=document.getElementById('focusImage').files[0],courseUrl=document.getElementById('focusCourse').value.trim();if(!title||!concept||!microSkill||!file)return alert('Preencha nome, imagem, conceito e micro-habilidade.');const imageId=await putImage(file,{kind:'focus'});state.focuses.push({id:id('focus'),title,concept,microSkill,courseUrl,imageId,history:[],intervalDays:0,nextDue:Date.now(),createdAt:Date.now()});save();nav('focus')}
+function editFocusView(fid){const f=(state.focuses||[]).find(x=>x.id===fid);if(!f)return `<div class="empty">Foco não encontrado.</div>`;return `${pageHead('Focos','Editar foco')}<div class="panel" style="max-width:760px"><div id="focusEditPreview" class="focus-form-preview">Carregando imagem…</div><div class="field"><label>Nome do princípio</label><input id="focusTitle" class="input" value="${esc(f.title)}"></div><div class="field"><label>Trocar imagem (opcional)</label><input id="focusImage" class="input" type="file" accept="image/*"></div><div class="field"><label>Conceito</label><textarea id="focusConcept" class="textarea" rows="5">${esc(f.concept)}</textarea></div><div class="field"><label>Micro-habilidade</label><textarea id="focusMicroSkill" class="textarea" rows="4">${esc(f.microSkill)}</textarea></div><div class="field"><label>Link de aula no Course Vault (opcional)</label><input id="focusCourse" class="input" type="url" value="${esc(f.courseUrl||'')}"></div><div class="toolbar"><button class="btn primary" onclick="saveFocus('${fid}')">Salvar</button><button class="btn" onclick="deleteFocus('${fid}')">Excluir foco</button></div></div>`}
+async function loadFocusEditImage(fid){const f=(state.focuses||[]).find(x=>x.id===fid),holder=document.getElementById('focusEditPreview');if(!f||!holder)return;const img=await getImage(f.imageId);if(img)holder.innerHTML=`<img src="${URL.createObjectURL(img.blob)}" alt="${esc(img.name)}">`}
+async function saveFocus(fid){const f=(state.focuses||[]).find(x=>x.id===fid);if(!f)return;const title=document.getElementById('focusTitle').value.trim(),concept=document.getElementById('focusConcept').value.trim(),microSkill=document.getElementById('focusMicroSkill').value.trim(),courseUrl=document.getElementById('focusCourse').value.trim(),file=document.getElementById('focusImage').files[0];if(!title||!concept||!microSkill)return alert('Preencha nome, conceito e micro-habilidade.');f.title=title;f.concept=concept;f.microSkill=microSkill;f.courseUrl=courseUrl;if(file){const old=f.imageId;f.imageId=await putImage(file,{kind:'focus'});if(old)await deleteImage(old)}save();nav('focusLibrary')}
+async function deleteFocus(fid){if(!confirm('Excluir este foco?'))return;const f=(state.focuses||[]).find(x=>x.id===fid);state.focuses=(state.focuses||[]).filter(x=>x.id!==fid);save();if(f?.imageId)await deleteImage(f.imageId);nav('focusLibrary')}
+function rateFocus(fid,rating){const f=(state.focuses||[]).find(x=>x.id===fid);if(!f)return;const h=focusHistory(f),prev=focusInterval(f);let days;if(rating===1)days=.5;else if(rating===2)days=prev?Math.max(1,Math.min(3,prev*.55)):2;else if(rating===3)days=prev?Math.max(4,prev*1.35):5;else if(rating===4)days=prev?Math.max(9,prev*1.8):10;else days=prev?Math.max(24,prev*2.25):24;h.push({rating,at:Date.now()});if(h.length>60)h.splice(0,h.length-60);f.intervalDays=days;f.nextDue=Date.now()+days*86400000;save();showToast('Registrado. O sistema ajustou quando esse foco volta.');route={page:'focus'};render()}
+
+
+function mastersView(){return `${pageHead('Estudo de mestres','Fundamentos')}<div class="section-head"><div><h2>Escolha um fundamento</h2></div><button class="btn primary" onclick="nav('newFoundation')">Adicionar fundamento</button></div><div class="foundation-grid">${state.foundations.length?state.foundations.map(f=>`<div class="card foundation clickable" onclick="nav('foundation',{id:'${f.id}'})"><div><div class="eyebrow">Fundamento</div><h3 style="margin-top:7px">${esc(f.name)}</h3></div><div class="master">${f.master?`Mestre: ${esc(f.master)}`:'Mestre não definido'}</div></div>`).join(''):`<div class="empty" style="grid-column:1/-1">Nenhum fundamento cadastrado.</div>`}</div>`}
+function newFoundationView(){return `${pageHead('Estudo de mestres','Novo fundamento')}<div class="panel" style="max-width:720px"><div class="field"><label>Nome do fundamento</label><input id="fName" class="input"></div><div class="field"><label>Nome do mestre</label><input id="fMaster" class="input"></div><div class="field"><label>Link do Course Vault</label><input id="fCourse" class="input" type="url" placeholder="https://..."></div><button class="btn primary" onclick="createFoundation()">Salvar fundamento</button></div>`}
+function createFoundation(){const name=document.getElementById('fName').value.trim();if(!name)return alert('Informe o nome do fundamento.');state.foundations.push({id:id('f'),name,master:document.getElementById('fMaster').value.trim(),courseUrl:document.getElementById('fCourse').value.trim(),artIds:[]});save();nav('masters')}
+function foundationView(fid){const f=state.foundations.find(x=>x.id===fid);if(!f)return `<div class="empty">Fundamento não encontrado.</div>`;const notes=state.notes.filter(n=>n.foundationId===fid&&n.source==='practice');const favs=notes.filter(n=>n.favorite);return `<div class="image-page-head"><div class="hero"><div class="eyebrow">Fundamento</div><h1>${esc(f.name)}</h1>${f.master?`<p class="lead">${esc(f.master)}</p>`:''}</div><div class="toolbar"><button class="btn" onclick="nav('editFoundation',{id:'${fid}'})">Editar</button><button class="btn green" onclick="startPractice('${fid}')">Prática</button></div></div>
+ <div class="foundation-layout"><div class="foundation-main">${favs.length?`<div class="favorite-bar">${favs.map(n=>favoriteInsightHtml(n)).join('')}</div>`:''}<div class="foundation-art-head"><h2>Obras${f.master?` de ${esc(f.master)}`:''}</h2><label class="btn small">Adicionar imagens<input class="hidden" type="file" multiple accept="image/*" onchange="addMasterImages(event,'${fid}')"></label></div><div id="artGrid" class="art-grid"></div></div>
+ <aside class="foundation-sidebar">${EA.safeUrl(f.courseUrl)?`<div class="foundation-info"><a class="btn small" href="${esc(EA.safeUrl(f.courseUrl))}" target="_blank" rel="noopener">Abrir no Course Vault</a></div>`:''}<div class="foundation-notes"><h3>Anotações dos estudos</h3><p class="meta" style="margin-top:7px">O histórico guarda tudo. A estrela decide o que fica em destaque no mural agora.</p><div style="margin-top:14px">${notes.length?notes.slice().reverse().map(n=>noteHtml(n)).join(''):`<div class="meta">Nenhuma anotação ainda. Faça uma prática para criar a primeira.</div>`}</div></div></aside></div>`}
+function noteLabel(n){return n.label||(n.kind==='intention'?'Antes do estudo':n.kind==='comparison'?'Depois do estudo':'Prática')}
+function favoriteInsightHtml(n){return `<div class="fav favorite-insight"><span class="fav-label">${esc(noteLabel(n))}</span>${esc(n.text)}<button class="star on" title="Remover do mural" onclick="toggleNote('${n.id}')">★</button></div>`}
+function noteHtml(n){return `<div class="note"><div class="note-top"><span class="meta">${esc(noteLabel(n))}</span><button class="star ${n.favorite?'on':''}" title="${n.favorite?'Remover destaque':'Destacar'}" onclick="toggleNote('${n.id}')">★</button></div><p>${esc(n.text)}</p></div>`}
+function toggleNote(nid){const n=state.notes.find(x=>x.id===nid);if(n)n.favorite=!n.favorite;save();render()}
+function editFoundationView(fid){const f=state.foundations.find(x=>x.id===fid);return `${pageHead('Fundamento','Editar')}<div class="panel" style="max-width:720px"><div class="field"><label>Nome do fundamento</label><input id="fName" class="input" value="${esc(f.name)}"></div><div class="field"><label>Nome do mestre</label><input id="fMaster" class="input" value="${esc(f.master)}"></div><div class="field"><label>Link do Course Vault</label><input id="fCourse" class="input" type="url" value="${esc(f.courseUrl||'')}"></div><div class="toolbar"><button class="btn primary" onclick="saveFoundation('${fid}')">Salvar</button><button class="btn" onclick="deleteFoundation('${fid}')">Excluir fundamento</button></div></div>`}
+function saveFoundation(fid){const f=state.foundations.find(x=>x.id===fid);f.name=document.getElementById('fName').value.trim();f.master=document.getElementById('fMaster').value.trim();f.courseUrl=document.getElementById('fCourse').value.trim();if(!f.name)return alert('Informe o nome do fundamento.');save();nav('foundation',{id:fid})}
+function deleteFoundation(fid){if(!confirm('Excluir este fundamento?'))return;state.foundations=state.foundations.filter(x=>x.id!==fid);state.notes=state.notes.filter(x=>x.foundationId!==fid);save();nav('masters')}
+
+const DB='a'+'telie-local-images-v3',TABLE='images';
+function openDb(){return new Promise((resolve,reject)=>{const r=indexedDB.open(DB,1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains(TABLE))r.result.createObjectStore(TABLE,{keyPath:'id'})};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+async function putImage(file,meta={}){const db=await openDb(),imageId=id('img');await new Promise((resolve,reject)=>{const tx=db.transaction(TABLE,'readwrite');tx.objectStore(TABLE).put({id:imageId,name:file.name,blob:file,...meta,createdAt:Date.now()});tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)});return imageId}
+async function setImageHash(imageId,hash){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(TABLE,'readwrite'),store=tx.objectStore(TABLE),r=store.get(imageId);r.onsuccess=()=>{if(r.result){r.result.hash=hash;store.put(r.result)}};r.onerror=()=>reject(r.error);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)})}
+async function getImage(imageId){const db=await openDb();return new Promise((resolve,reject)=>{const r=db.transaction(TABLE,'readonly').objectStore(TABLE).get(imageId);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+async function deleteImage(imageId){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(TABLE,'readwrite');tx.objectStore(TABLE).delete(imageId);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)})}
+async function addMasterImages(e,fid){const files=[...e.target.files];if(!files.length)return;const f=state.foundations.find(x=>x.id===fid);for(const file of files)f.artIds.push(await putImage(file,{kind:'master',foundationId:fid}));save();loadArtGrid(fid)}
+async function loadArtGrid(fid){const el=document.getElementById('artGrid');if(!el)return;const f=state.foundations.find(x=>x.id===fid);if(!f.artIds.length){el.innerHTML='<div class="empty" style="grid-column:1/-1">Nenhuma obra adicionada.</div>';return}const parts=[];for(const imageId of f.artIds){const img=await getImage(imageId);if(!img)continue;const url=URL.createObjectURL(img.blob);parts.push(`<div class="art"><button class="art-main" onclick="viewArt('${imageId}')"><img src="${url}" alt="${esc(img.name)}"></button><button class="x" onclick="event.stopPropagation();removeArt('${fid}','${imageId}')">×</button><div class="art-cap">${esc(img.name)}</div></div>`)}el.innerHTML=parts.join('')||'<div class="empty" style="grid-column:1/-1">Nenhuma obra adicionada.</div>'}
+async function removeArt(fid,imageId){if(!confirm('Remover esta obra?'))return;const f=state.foundations.find(x=>x.id===fid);f.artIds=f.artIds.filter(x=>x!==imageId);save();await deleteImage(imageId);loadArtGrid(fid)}
+async function viewArt(imageId){const img=await getImage(imageId);if(!img)return;document.getElementById('dialogImg').src=URL.createObjectURL(img.blob);document.getElementById('artDialog').showModal()}
+
+async function startPractice(fid){const f=state.foundations.find(x=>x.id===fid);if(!f.artIds.length)return alert('Adicione pelo menos uma obra do mestre antes de iniciar a prática.');practice={fid,imageId:f.artIds[Math.floor(Math.random()*f.artIds.length)],step:1,intention:'',refStudyId:null,noRefStudyId:null};renderPractice()}
+async function renderPractice(){const overlay=document.getElementById('overlay'),f=state.foundations.find(x=>x.id===practice.fid);overlay.classList.add('open');overlay.innerHTML=`<div class="modal"><div class="modal-head"><div><strong>${esc(f.name)}</strong><div class="meta">${esc(f.master||'')}</div></div><button class="modal-close" onclick="closePractice()">Fechar</button></div><div class="modal-body"><div class="steps">${['Anotação','Com referência','Sem referência','Comparação'].map((s,i)=>`<span class="step ${practice.step===i+1?'active':practice.step>i+1?'done':''}">${i+1}. ${s}</span>`).join('')}</div>${await practiceStep()}</div></div>`}
+async function practiceStep(){if(practice.step===1)return `<div style="max-width:720px;margin:6vh auto 0"><h2>O que você vai tentar replicar?</h2><p class="lead" style="margin:8px 0 18px">Escreva o que você percebeu antes de começar.</p><div class="field"><textarea id="practiceIntention" class="textarea" rows="7"></textarea></div><button class="btn green" onclick="practiceIntentionNext()">Continuar</button></div>`;
+ const img=await getImage(practice.imageId),url=URL.createObjectURL(img.blob);
+ if(practice.step===2)return `<div class="practice-grid"><div class="practice-visual"><img src="${url}" alt="Referência"></div><div class="practice-side"><div><h2>Com referência</h2><p class="meta" style="margin:8px 0 0">${esc(practice.intention)}</p></div><div class="upload"><input id="practiceRefFile" type="file" accept="image/*" onchange="practiceUploadRef()">${practice.refStudyId?await previewHtml(practice.refStudyId):'<div class="meta" style="margin-top:10px">Seu estudo aparecerá aqui.</div>'}</div><button class="btn green" ${practice.refStudyId?'':'disabled'} onclick="practice.step=3;renderPractice()">Continuar sem referência</button></div></div>`;
+ if(practice.step===3)return `<div class="practice-grid"><div class="no-reference"><div><strong>Referência escondida</strong><div class="meta" style="margin-top:6px">Faça a nova versão sem olhar a obra.</div></div></div><div class="practice-side"><div><h2>Sem referência</h2></div><div class="upload"><input id="practiceNoRefFile" type="file" accept="image/*" onchange="practiceUploadNoRef()">${practice.noRefStudyId?await previewHtml(practice.noRefStudyId):'<div class="meta" style="margin-top:10px">Sua versão de memória aparecerá aqui.</div>'}</div><button class="btn green" ${practice.noRefStudyId?'':'disabled'} onclick="practice.step=4;renderPractice()">Comparar</button></div></div>`;
+ const noRef=await getImage(practice.noRefStudyId),noRefUrl=noRef?URL.createObjectURL(noRef.blob):'';
+ return `<div class="compare-wall"><div class="visual-wrap"><span class="compare-label">Referência</span><div class="practice-visual"><img src="${url}" alt="Referência"></div></div><div class="visual-wrap"><span class="compare-label">Seu estudo sem referência</span><div class="practice-visual">${noRefUrl?`<img src="${noRefUrl}" alt="Estudo sem referência">`:''}</div></div></div><div style="max-width:900px;margin:0 auto"><h2>O que ficou diferente?</h2><p class="meta" style="margin:7px 0 12px">Compare olhando as duas imagens.</p><div class="field"><textarea id="practiceCompare" class="textarea" rows="5"></textarea></div><button class="btn green" onclick="finishPractice()">Salvar prática</button></div>`}
+async function previewHtml(imageId){const img=await getImage(imageId);if(!img)return'';return `<img class="preview" src="${URL.createObjectURL(img.blob)}" alt="Estudo enviado">`}
+function practiceIntentionNext(){const t=document.getElementById('practiceIntention').value.trim();if(!t)return alert('Escreva a anotação antes de continuar.');practice.intention=t;practice.step=2;renderPractice()}
+async function practiceUploadRef(){const file=document.getElementById('practiceRefFile').files[0];if(!file)return;practice.refStudyId=await putImage(file,{kind:'practice-ref',foundationId:practice.fid});renderPractice()}
+async function practiceUploadNoRef(){const file=document.getElementById('practiceNoRefFile').files[0];if(!file)return;practice.noRefStudyId=await putImage(file,{kind:'practice-noref',foundationId:practice.fid});renderPractice()}
+function closePractice(){document.getElementById('overlay').classList.remove('open');document.getElementById('overlay').innerHTML='';practice=null}
+function finishPractice(){const t=document.getElementById('practiceCompare').value.trim();if(!t)return alert('Escreva a comparação antes de salvar.');const pid=id('practice'),now=Date.now();state.practices.push({id:pid,foundationId:practice.fid,imageId:practice.imageId,refStudyId:practice.refStudyId,noRefStudyId:practice.noRefStudyId,intention:practice.intention,comparison:t,createdAt:now});state.notes.push({id:id('note'),foundationId:practice.fid,text:practice.intention,source:'practice',kind:'intention',label:'Antes do estudo',favorite:false,practiceId:pid,createdAt:now});state.notes.push({id:id('note'),foundationId:practice.fid,text:t,source:'practice',kind:'comparison',label:'Depois do estudo',favorite:false,practiceId:pid,createdAt:now+1});save();const fid=practice.fid;closePractice();route={page:'foundation',id:fid};render()}
+
+
+/* V2 — guided training + multiple focus images */
+let focusDraftFiles=[];
+let guidedSession=(()=>{try{return JSON.parse(sessionStorage.getItem('art-guided-session-v1')||'null')}catch{return null}})();
+function persistGuided(){if(guidedSession)sessionStorage.setItem('art-guided-session-v1',JSON.stringify(guidedSession));else sessionStorage.removeItem('art-guided-session-v1')}
+function ensureTrainingLog(){if(!Array.isArray(state.trainingLog))state.trainingLog=[];return state.trainingLog}
+function todayKey(ts=Date.now()){const d=new Date(ts);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function guidedDoneToday(){const key=todayKey();return ensureTrainingLog().filter(x=>todayKey(x.at)===key).length}
+function focusImageIds(f){if(!f)return[];if(!Array.isArray(f.imageIds))f.imageIds=f.imageId?[f.imageId]:[];if(f.imageIds.length&&!f.imageId)f.imageId=f.imageIds[0];return f.imageIds}
+function exerciseFocusIds(ex){if(!Array.isArray(ex.focusIds))ex.focusIds=[];return ex.focusIds}
+function allExercises(){return ['drawing','painting'].flatMap(kind=>(state.exercises[kind]||[]).map(ex=>({kind,ex})))}
+function focusNeedScore(f){const h=focusHistory(f);if(!h.length)return 92;const last=h[h.length-1].rating||3;const base={1:100,2:82,3:56,4:28,5:10}[last]||50;const due=Number(f.nextDue)||0;const overdue=due&&Date.now()>due?Math.min(30,(Date.now()-due)/86400000*5):0;return base+overdue}
+function desiredDifficultyForFocus(f){const h=focusHistory(f);const r=h.length?h[h.length-1].rating:2;if(r<=2)return'easy';if(r===3)return'medium';return'hard'}
+function recommendationForExercise(kind,ex){const linked=exerciseFocusIds(ex).map(id=>(state.focuses||[]).find(f=>f.id===id)).filter(Boolean);let score=0,reason='Mantém o treino andando';if(linked.length){const ranked=linked.map(f=>({f,need:focusNeedScore(f)})).sort((a,b)=>b.need-a.need);const top=ranked[0];score+=top.need*1.25;reason=`Ponto em foco: ${top.f.title}`;if(ex.difficulty===desiredDifficultyForFocus(top.f))score+=18}else{score+=18;reason='Exercício disponível para manter consistência'}const c=exCounts(ex);if(!c.done)score+=22;const age=ex.lastGuidedAt?Math.min(25,(Date.now()-ex.lastGuidedAt)/86400000*3):25;score+=age;const sessionSeen=new Set(guidedSession?.seen||[]);if(sessionSeen.has(ex.id))score-=80;return{kind,ex,score,reason,focus:linked.sort((a,b)=>focusNeedScore(b)-focusNeedScore(a))[0]||null}}
+function chooseRecommendedExercise(){const pool=allExercises();if(!pool.length)return null;let ranked=pool.map(({kind,ex})=>recommendationForExercise(kind,ex)).sort((a,b)=>b.score-a.score);if(guidedSession?.seen?.length&&ranked.every(r=>(guidedSession.seen||[]).includes(r.ex.id)))guidedSession.seen=[];ranked=pool.map(({kind,ex})=>recommendationForExercise(kind,ex)).sort((a,b)=>b.score-a.score);return ranked[0]||null}
+function startGuidedTraining(extra=false){if(!allExercises().length)return alert('Adicione pelo menos um exercício antes de iniciar o treino automático.');guidedSession={active:true,extra:!!extra,seen:[],current:null,reason:''};persistGuided();openNextGuidedExercise()}
+function openNextGuidedExercise(){if(!guidedSession?.active)return;const rec=chooseRecommendedExercise();if(!rec)return alert('Não encontrei exercícios para recomendar.');guidedSession.current={kind:rec.kind,id:rec.ex.id};guidedSession.reason=rec.reason;guidedSession.seen=[...(guidedSession.seen||[]),rec.ex.id];persistGuided();route={page:'exercise',kind:rec.kind,id:rec.ex.id};render();setTimeout(()=>document.querySelector('.exercise-workspace')?.scrollIntoView({behavior:'smooth',block:'start'}),120)}
+function completeGuidedExercise(){if(!guidedSession?.current)return;const {kind,id:exid}=guidedSession.current;const ex=state.exercises[kind].find(x=>x.id===exid);if(ex)ex.lastGuidedAt=Date.now();ensureTrainingLog().push({at:Date.now(),kind,exerciseId:exid});if(state.trainingLog.length>240)state.trainingLog.splice(0,state.trainingLog.length-240);save();const count=guidedDoneToday();if(!guidedSession.extra&&count>=3){guidedSession=null;persistGuided();route={page:'home'};render();window.scrollTo({top:0,behavior:'smooth'});return}openNextGuidedExercise()}
+function stopGuidedTraining(){guidedSession=null;persistGuided();nav('home')}
+function guidedBarHtml(kind,ex){if(!guidedSession?.active||guidedSession.current?.id!==ex.id)return'';return `<div class="guided-bar"><div class="guided-reason"><span class="guided-dot"></span><div><strong>Treino guiado</strong><span>${esc(guidedSession.reason||'Escolhido pelo sistema')}</span></div></div><div class="guided-actions"><button class="btn" onclick="stopGuidedTraining()">Sair</button><button class="btn green" onclick="completeGuidedExercise()">Concluir e continuar →</button></div></div>`}
+function homeView(){return `${pageHead('Sistema','O que você vai fazer?')}<div class="choice-grid home-grid"><button class="choice" onclick="nav('training')"><span class="num">01</span><div><h2>Treino</h2><p>Escolha manualmente desenho, pintura e dificuldade.</p></div></button><button class="choice" onclick="nav('masters')"><span class="num">02</span><div><h2>Estudo de mestres</h2><p>Fundamentos, obras do mestre, anotações e prática.</p></div></button><button class="choice" onclick="nav('focus')"><span class="num">03</span><div><h2>Focos</h2><p>Princípios que reaparecem conforme sua proficiência.</p></div></button></div><div class="home-train-wrap"><button class="home-train-now" onclick="startGuidedTraining(guidedDoneToday()>=3)">Treinar agora</button></div>`}
+function trainingView(){return `${pageHead('Treino','Treino')}<section class="guided-launch"><div class="guided-main"><div><div class="eyebrow">Recomendação</div><h2>Deixa o sistema escolher</h2><p>Ele prioriza os pontos mais fracos e escolhe uma dificuldade compatível com o momento.</p></div><button class="btn green" onclick="startGuidedTraining(${guidedDoneToday()>=3?'true':'false'})">Treinar agora →</button></div><aside class="guided-status"><div><div class="eyebrow">Manual</div><div class="meta">Se preferir, escolha uma área abaixo.</div></div></aside></section><div class="manual-label">Escolha manual</div><div class="choice-grid"><button class="choice" onclick="nav('exerciseList',{kind:'drawing'})"><span class="num">Desenho</span><div><h2>Desenho</h2><p>${state.exercises.drawing.length} exercício(s)</p></div></button><button class="choice" onclick="nav('exerciseList',{kind:'painting'})"><span class="num">Pintura</span><div><h2>Pintura</h2><p>${state.exercises.painting.length} exercício(s)</p></div></button></div>`}
+function focusLinkPickerHtml(selected=[]){const focuses=state.focuses||[];if(!focuses.length)return `<div class="meta">Você ainda não criou focos. Pode vincular depois.</div>`;return `<div class="focus-choice-list">${focuses.map(f=>`<label class="focus-choice-row"><input type="checkbox" name="exerciseFocus" value="${f.id}" ${selected.includes(f.id)?'checked':''}><span>${esc(f.title)}<small>${esc(f.microSkill||'')}</small></span></label>`).join('')}</div>`}
+function newExerciseView(kind){return `${pageHead(kindLabel(kind),'Novo exercício')}<div class="panel" style="max-width:700px"><div class="field"><label>Nome do exercício</label><input id="exTitle" class="input"></div><div class="field"><label>Dificuldade</label><div class="difficulty-picker"><label class="difficulty-option easy"><input type="radio" name="exDifficulty" value="easy" checked><span>Fácil</span></label><label class="difficulty-option medium"><input type="radio" name="exDifficulty" value="medium"><span>Médio</span></label><label class="difficulty-option hard"><input type="radio" name="exDifficulty" value="hard"><span>Difícil</span></label></div></div><div class="field"><label>Quais focos este exercício treina?</label>${focusLinkPickerHtml([])}</div><div class="counter-grid"><div class="field"><label>Quantidade com referência</label><input id="exRef" class="input" type="number" min="0" value="0"></div><div class="field"><label>Quantidade sem referência</label><input id="exNoRef" class="input" type="number" min="0" value="0"></div></div><button class="btn primary" onclick="createExercise('${kind}')">Salvar exercício</button></div>`}
+function createExercise(kind){const title=document.getElementById('exTitle').value.trim(),ref=Number(document.getElementById('exRef').value),noref=Number(document.getElementById('exNoRef').value),difficulty=document.querySelector('input[name="exDifficulty"]:checked')?.value||'easy',focusIds=[...document.querySelectorAll('input[name="exerciseFocus"]:checked')].map(x=>x.value);if(!title)return alert('Informe o nome do exercício.');state.exercises[kind].push({id:id('ex'),title,difficulty,focusIds,refTarget:Math.max(0,ref),noRefTarget:Math.max(0,noref),entries:[]});save();nav('exerciseList',{kind})}
+function exerciseFocusLinkerHtml(kind,ex){const focuses=state.focuses||[];if(!focuses.length)return'';return `<details class="exercise-focus-map"><summary>Focos que este exercício treina</summary><div class="focus-link-grid">${focuses.map(f=>`<button class="focus-link-toggle ${exerciseFocusIds(ex).includes(f.id)?'on':''}" onclick="toggleExerciseFocus('${kind}','${ex.id}','${f.id}')">${esc(f.title)}</button>`).join('')}</div></details>`}
+function toggleExerciseFocus(kind,exid,fid){const ex=state.exercises[kind].find(x=>x.id===exid);if(!ex)return;const ids=exerciseFocusIds(ex);ex.focusIds=ids.includes(fid)?ids.filter(x=>x!==fid):[...ids,fid];save();render()}
+function exerciseView(kind,exid){const ex=state.exercises[kind].find(x=>x.id===exid);if(!ex)return `<div class="empty">Exercício não encontrado.</div>`;const c=exCounts(ex);return `${guidedBarHtml(kind,ex)}<div class="exercise-header"><div class="hero"><div class="eyebrow">${kindLabel(kind)}</div><h1>${esc(ex.title)}</h1>${exerciseFocusLinkerHtml(kind,ex)}</div><div class="exercise-status">${difficultyChip(ex.difficulty)}<span class="status-chip ${c.ref>=ex.refTarget?'complete':''}">${c.ref} / ${ex.refTarget} referência</span><span class="status-chip ${c.noref>=ex.noRefTarget?'complete':''}">${c.noref} / ${ex.noRefTarget} imaginação</span>${c.done?'<span class="status-chip complete">Concluído</span>':''}</div></div><div class="exercise-workspace"><section class="exercise-zone" id="zone_ref" ondragenter="dragZone(event,'ref')" ondragover="dragZone(event,'ref')" ondragleave="leaveZone(event,'ref')" ondrop="dropExerciseFiles(event,'${kind}','${ex.id}','ref')"><div class="zone-head"><div class="zone-title"><h2>Referência</h2><span class="zone-count">${c.ref} / ${ex.refTarget}</span></div><span class="drop-hint">arraste aqui</span></div><div id="gallery_ref" class="zone-gallery"></div></section><section class="exercise-zone" id="zone_noref" ondragenter="dragZone(event,'noref')" ondragover="dragZone(event,'noref')" ondragleave="leaveZone(event,'noref')" ondrop="dropExerciseFiles(event,'${kind}','${ex.id}','noref')"><div class="zone-head"><div class="zone-title"><h2>Imaginação</h2><span class="zone-count">${c.noref} / ${ex.noRefTarget}</span></div><span class="drop-hint">arraste aqui</span></div><div id="gallery_noref" class="zone-gallery"></div></section></div>`}
+function openNewFocus(){focusDraftFiles=[];nav('newFocus')}
+function openEditFocus(fid){focusDraftFiles=[];nav('editFocus',{id:fid})}
+function focusEditorMediaHtml(edit=false){return `<section class="focus-editor-media"><div class="focus-dropzone" id="focusDropzone" ondragenter="focusDrag(event,true)" ondragover="focusDrag(event,true)" ondragleave="focusDrag(event,false)" ondrop="focusDrop(event)"><label><strong>Arraste imagens para cá</strong><span>ou clique para escolher várias de uma vez</span><input id="focusImage" type="file" multiple accept="image/*" onchange="queueFocusFiles(this.files)"></label></div>${edit?'<div id="focusExistingImages" class="focus-preview-grid"></div>':''}<div id="focusDraftPreview" class="focus-preview-grid"></div><div class="focus-editor-hint">As imagens ficam juntas no mesmo princípio. Você pode usar detalhe, comparação, referência do mestre ou etapas diferentes.</div></section>`}
+function newFocusView(){return `${pageHead('Focos','Novo foco','Um princípio pode ter várias imagens para reativar a mesma ideia por ângulos diferentes.')}<div class="focus-editor"><section class="focus-editor-form"><h2>Princípio</h2><div class="field"><label>Nome</label><input id="focusTitle" class="input" placeholder="Ex.: Cabeça como volume em perspectiva"></div><div class="field"><label>Conceito</label><textarea id="focusConcept" class="textarea" rows="6" placeholder="O que é e por que importa."></textarea></div><div class="field"><label>Micro-habilidade</label><textarea id="focusMicroSkill" class="textarea" rows="5" placeholder="O que exatamente você quer lembrar enquanto desenha."></textarea></div><div class="field"><label>Link no Course Vault (opcional)</label><input id="focusCourse" class="input" type="url" placeholder="https://..."></div><div class="focus-save-row"><button class="btn green" onclick="createFocus()">Salvar foco</button><button class="btn" onclick="nav('focus')">Cancelar</button></div></section>${focusEditorMediaHtml(false)}</div>`}
+function editFocusView(fid){const f=(state.focuses||[]).find(x=>x.id===fid);if(!f)return `<div class="empty">Foco não encontrado.</div>`;return `${pageHead('Focos','Editar foco')}<div class="focus-editor"><section class="focus-editor-form"><h2>Princípio</h2><div class="field"><label>Nome</label><input id="focusTitle" class="input" value="${esc(f.title)}"></div><div class="field"><label>Conceito</label><textarea id="focusConcept" class="textarea" rows="6">${esc(f.concept)}</textarea></div><div class="field"><label>Micro-habilidade</label><textarea id="focusMicroSkill" class="textarea" rows="5">${esc(f.microSkill)}</textarea></div><div class="field"><label>Link no Course Vault</label><input id="focusCourse" class="input" type="url" value="${esc(f.courseUrl||'')}"></div><div class="focus-save-row"><button class="btn green" onclick="saveFocus('${fid}')">Salvar alterações</button><button class="btn" onclick="deleteFocus('${fid}')">Excluir foco</button></div></section>${focusEditorMediaHtml(true)}</div>`}
+function focusDrag(e,on){e.preventDefault();e.stopPropagation();document.getElementById('focusDropzone')?.classList.toggle('dragging',!!on)}
+function focusDrop(e){e.preventDefault();e.stopPropagation();focusDrag(e,false);queueFocusFiles(e.dataTransfer.files)}
+function queueFocusFiles(fileList){const files=[...fileList].filter(f=>f.type.startsWith('image/'));if(!files.length)return;focusDraftFiles.push(...files);renderFocusDraftPreviews()}
+function renderFocusDraftPreviews(){const el=document.getElementById('focusDraftPreview');if(!el)return;el.innerHTML=focusDraftFiles.map((file,i)=>`<div class="focus-preview-card"><img src="${URL.createObjectURL(file)}" alt="${esc(file.name)}"><button class="x" onclick="removeDraftFocusImage(${i})">×</button><span class="focus-preview-badge">nova</span></div>`).join('')}
+function removeDraftFocusImage(i){focusDraftFiles.splice(i,1);renderFocusDraftPreviews()}
+async function createFocus(){const title=document.getElementById('focusTitle').value.trim(),concept=document.getElementById('focusConcept').value.trim(),microSkill=document.getElementById('focusMicroSkill').value.trim(),courseUrl=document.getElementById('focusCourse').value.trim();if(!title||!concept||!microSkill||!focusDraftFiles.length)return alert('Preencha nome, conceito, micro-habilidade e adicione pelo menos uma imagem.');const imageIds=[];for(const file of focusDraftFiles)imageIds.push(await putImage(file,{kind:'focus'}));state.focuses.push({id:id('focus'),title,concept,microSkill,courseUrl,imageIds,imageId:imageIds[0],history:[],intervalDays:0,nextDue:Date.now(),createdAt:Date.now()});focusDraftFiles=[];save();nav('focus')}
+async function loadFocusEditImage(fid){const f=(state.focuses||[]).find(x=>x.id===fid),holder=document.getElementById('focusExistingImages');if(!f||!holder)return;const parts=[];for(const imageId of focusImageIds(f)){const img=await getImage(imageId);if(!img)continue;parts.push(`<div class="focus-preview-card"><img src="${URL.createObjectURL(img.blob)}" alt="${esc(img.name)}"><button class="x" onclick="removeExistingFocusImage('${fid}','${imageId}')">×</button><span class="focus-preview-badge">salva</span></div>`)}holder.innerHTML=parts.join('');renderFocusDraftPreviews()}
+async function removeExistingFocusImage(fid,imageId){const f=state.focuses.find(x=>x.id===fid);if(!f)return;f.imageIds=focusImageIds(f).filter(x=>x!==imageId);f.imageId=f.imageIds[0]||null;save();await deleteImage(imageId);loadFocusEditImage(fid)}
+async function saveFocus(fid){const f=(state.focuses||[]).find(x=>x.id===fid);if(!f)return;const title=document.getElementById('focusTitle').value.trim(),concept=document.getElementById('focusConcept').value.trim(),microSkill=document.getElementById('focusMicroSkill').value.trim(),courseUrl=document.getElementById('focusCourse').value.trim();if(!title||!concept||!microSkill)return alert('Preencha nome, conceito e micro-habilidade.');const ids=focusImageIds(f);for(const file of focusDraftFiles)ids.push(await putImage(file,{kind:'focus'}));if(!ids.length)return alert('Adicione pelo menos uma imagem.');f.title=title;f.concept=concept;f.microSkill=microSkill;f.courseUrl=courseUrl;f.imageIds=ids;f.imageId=ids[0];focusDraftFiles=[];save();nav('focusLibrary')}
+async function deleteFocus(fid){if(!confirm('Excluir este foco?'))return;const f=(state.focuses||[]).find(x=>x.id===fid);state.focuses=(state.focuses||[]).filter(x=>x.id!==fid);for(const {ex} of allExercises())ex.focusIds=exerciseFocusIds(ex).filter(x=>x!==fid);save();for(const imageId of focusImageIds(f))await deleteImage(imageId);nav('focusLibrary')}
+function focusView(){const f=routedFocus();if(!(state.focuses||[]).length)return `<div class="focus-page-head">${pageHead('Focos','Hoje, presta atenção nisso')}<div class="toolbar"><button class="btn" onclick="nav('focusLibrary')">Biblioteca</button><button class="btn primary" onclick="openNewFocus()">Adicionar foco</button></div></div><div class="focus-empty"><div class="inner"><h2>Crie o primeiro foco</h2><p>Guarde um princípio visual que merece voltar à sua cabeça durante o desenho.</p><button class="btn primary" onclick="openNewFocus()">Adicionar foco</button></div></div>`;if(!f){const next=nextFocusDue(),when=next?new Date(next.nextDue).toLocaleDateString('pt-BR',{day:'2-digit',month:'short'}):'';return `<div class="focus-page-head">${pageHead('Focos','Nada precisa voltar agora')}<div class="toolbar"><button class="btn" onclick="nav('focusLibrary')">Biblioteca</button></div></div><div class="focus-empty"><div class="inner"><h2>Por enquanto, é isso.</h2><p>${when?`O próximo princípio volta por volta de ${esc(when)}.`:'Quando algum princípio precisar ser reativado, ele aparece aqui.'}</p><button class="btn" onclick="nav('focusLibrary')">Ver biblioteca</button></div></div>`}return `<div class="focus-page-head"><div class="hero"><div class="eyebrow">Focos</div><h1>Hoje, presta atenção nisso</h1></div><div class="toolbar"><button class="btn" onclick="nav('focusLibrary')">Biblioteca</button></div></div><div class="focus-now"><div class="focus-visual ${focusImageIds(f).length>1?'multi':''}" id="focusVisual_${f.id}"><span class="meta">Carregando imagens…</span></div><section class="focus-copy"><div><div class="eyebrow">Princípio</div><h2>${esc(f.title)}</h2><div class="focus-concept">${esc(f.concept)}</div><div class="focus-command"><div class="eyebrow">Leve para o desenho</div><strong>${esc(f.microSkill)}</strong></div></div><div class="focus-actions">${EA.safeUrl(f.courseUrl)?`<a class="focus-deeper" href="${esc(EA.safeUrl(f.courseUrl))}" target="_blank" rel="noopener">Rever conceito no Course Vault ↗</a>`:''}<div class="focus-feedback"><p>Depois de tentar usar isso, como foi?</p><div class="focus-rating"><button onclick="rateFocus('${f.id}',1)">Muito difícil</button><button onclick="rateFocus('${f.id}',2)">Difícil</button><button onclick="rateFocus('${f.id}',3)">OK</button><button onclick="rateFocus('${f.id}',4)">Fácil</button><button onclick="rateFocus('${f.id}',5)">Automático</button></div></div></div></section></div>`}
+async function loadFocusNowImage(fid){const f=(state.focuses||[]).find(x=>x.id===fid),holder=document.getElementById(`focusVisual_${fid}`);if(!f||!holder)return;const parts=[];for(const imageId of focusImageIds(f)){const img=await getImage(imageId);if(!img)continue;parts.push(`<button onclick="viewArt('${imageId}')" aria-label="Ampliar imagem"><img src="${URL.createObjectURL(img.blob)}" alt="${esc(img.name)}"></button>`)}holder.innerHTML=parts.join('')||'<span class="meta">Imagem não encontrada.</span>'}
+function focusLibraryView(){const list=state.focuses||[];return `${pageHead('Focos','Biblioteca','Aqui ficam todos os princípios. O sistema decide quais voltam e também usa isso para orientar o treino.')}<div class="section-head"><div><h2>${list.length} foco(s)</h2></div><button class="btn primary" onclick="openNewFocus()">Adicionar foco</button></div><div class="focus-library">${list.length?list.map(f=>`<article class="focus-library-item"><div class="focus-library-image ${focusImageIds(f).length>1?'multi':''}" id="focusLibImg_${f.id}">Carregando…</div><div class="focus-library-body"><h3>${esc(f.title)}</h3><p>${esc(f.microSkill)}</p><div class="toolbar"><button class="btn small" onclick="nav('focus',{id:'${f.id}'})">Abrir</button><button class="btn small" onclick="openEditFocus('${f.id}')">Editar</button></div></div></article>`).join(''):`<div class="empty" style="grid-column:1/-1">Nenhum foco cadastrado.</div>`}</div>`}
+async function loadFocusLibraryImages(){for(const f of state.focuses||[]){const holder=document.getElementById(`focusLibImg_${f.id}`);if(!holder)continue;const ids=focusImageIds(f),parts=[];for(const imageId of ids.slice(0,4)){const img=await getImage(imageId);if(img)parts.push(`<img src="${URL.createObjectURL(img.blob)}" alt="${esc(img.name)}">`)}if(ids.length>4)parts.push(`<div class="more-count">+${ids.length-4}</div>`);holder.innerHTML=parts.join('')||'<span>Sem imagem</span>'}}
+
+
+render();
+/* Evolução Art v5. Preserva STORE_KEY/DB originais e dados existentes. */
+const EA={
+  ratings:['','Muito difícil','Difícil','Médio','Fácil','Muito fácil'],
+  clamp:(v,lo,hi)=>Math.max(lo,Math.min(hi,v)),
+  focusById:id=>(state.focuses||[]).find(x=>x.id===id),
+  foundationById:id=>(state.foundations||[]).find(x=>x.id===id),
+  complexity:f=>EA.clamp(Number(f?.complexity)||2,1,3),
+  history:ex=>Array.isArray(ex.ratings)?ex.ratings:[],
+  ratingMean:ex=>{const a=EA.history(ex).slice(-5);if(!a.length)return 3;return a.reduce((s,x,i)=>s+x.rating*(i+1),0)/a.reduce((s,_,i)=>s+i+1,0)},
+  date:()=>todayKey(),
+  streak:()=>{const unique=new Set((state.dailyCompletions||[]).map(x=>x.day));let n=0;const d=new Date();if(!unique.has(todayKey()))d.setDate(d.getDate()-1);while(unique.has(todayKey(d.getTime()))){n++;d.setDate(d.getDate()-1)}return n},
+  didToday:()=>!!(state.dailyCompletions||[]).find(x=>x.day===EA.date()),
+  linked:ex=>exerciseFocusIds(ex).map(EA.focusById).filter(Boolean),
+  validExercises:()=>allExercises().filter(({ex})=>EA.foundationById(ex.foundationId)&&EA.linked(ex).length),
+  intensityLabels:{light:'Leve',normal:'Moderado',hard:'Intenso'},
+  intensityOffset:{light:-.55,normal:0,hard:.55},
+  sessionPanel:false,
+  focusEditingRemoved:[],
+  currentlyMuted:localStorage.getItem('ea-music-muted')==='yes',
+  audio:null, audioUrl:null
+};
+if(!Array.isArray(state.dailyCompletions))state.dailyCompletions=[];
+if(!Array.isArray(state.exerciseSessions))state.exerciseSessions=[];
+if(!Array.isArray(state.foundations))state.foundations=[];
+if(!Array.isArray(state.focuses))state.focuses=[];
+for(const f of state.foundations){if(!Array.isArray(f.focusIds))f.focusIds=[]; if(!f.complexity)f.complexity=2}
+for(const {ex} of allExercises()){if(!Array.isArray(ex.ratings))ex.ratings=[];if(!Array.isArray(ex.focusIds))ex.focusIds=[]}
+/* Migração apenas aditiva: não criar associações falsas nem excluir exercícios antigos. */
+
+EA.focusStrength=function(f){
+ const h=focusHistory(f).slice(-5);if(!h.length)return null;
+ let sum=0,total=0;h.forEach((x,i)=>{const weight=i+1;sum+=(Number(x.rating)||3)*weight;total+=weight});return sum/total;
+};
+EA.focusNeed=function(f){
+ const strength=EA.focusStrength(f);if(strength===null)return 48; // desconhecido ≠ deficiente
+ const due=(Number(f.nextDue)||0),over=due&&Date.now()>due?Math.min(12,(Date.now()-due)/86400000*2):0;
+ return (6-strength)*18+over;
+};
+EA.focusWindow=function(){
+ const now=Date.now(); const eligible=(state.focuses||[]).filter(f=>Number(f.deferUntil||0)<=now && (!focusHistory(f).length || Number(f.nextDue||0)<=now));
+ return eligible.sort((a,b)=>{
+  // revisões vencidas e introdução de novos princípios são intercaladas
+  const aa=focusHistory(a).length?EA.focusNeed(a)+20:68;
+  const bb=focusHistory(b).length?EA.focusNeed(b)+20:68;
+  return bb-aa||(a.createdAt||0)-(b.createdAt||0);
+ }).slice(0,3)
+};
+EA.mainFocus=function(){return EA.focusWindow()[0]||null};
+EA.deferFocus=function(id){const f=EA.focusById(id);if(!f)return;f.deferUntil=Date.now()+12*3600000;save();render()};
+EA.focusInterval=function(f,rating){
+ const prev=Number(f.intervalDays)||0;
+ const base={1:.5,2:2,3:5,4:10,5:24}[rating];
+ if(!prev)return base;
+ const h=focusHistory(f);const last=h.slice(-3);const sm=last.reduce((s,x,i)=>s+Number(x.rating)*(i+1),0)/last.reduce((s,_,i)=>s+i+1,0);
+ if(rating<=2)return Math.max(.5,Math.min(base,prev*.75));
+ if(rating===3)return Math.max(3,Math.min(9,prev*1.4));
+ return Math.min(120,Math.max(2,prev*(sm>=4?2:1.55)));
+};
+
+/* As avaliações de Focos continuam independentes das notas dos exercícios. */
+rateFocus=function(fid,rating){
+ const f=EA.focusById(fid);if(!f||rating<1||rating>5)return;
+ const days=EA.focusInterval(f,rating), now=Date.now();
+ focusHistory(f).push({rating,at:now,source:'manual-focus'});
+ if(f.history.length>100)f.history.splice(0,f.history.length-100);
+ f.intervalDays=days;f.nextDue=now+days*86400000;f.deferUntil=0;
+ save();showToast('Foco avaliado. Você pode continuar desenhando.');route={page:'focus'};render();
+};
+selectDueFocus=function(){return EA.mainFocus()};
+const eaOldFocusView=focusView;
+focusView=function(){let html=eaOldFocusView();const active=EA.focusWindow();if(active.length){
+ const tabs=`<div class="ea-focus-nav">${active.map((f,i)=>`<button class="${(route.id||EA.mainFocus()?.id)===f.id?'on':''}" onclick="nav('focus',{id:'${f.id}'})">${i+1}. ${esc(f.title)}</button>`).join('')}</div>`;
+ html=html.replace('<div class="focus-now">',tabs+'<div class="focus-now">');
+ html=html.replace('Depois de tentar usar isso, como foi?','Depois de tentar aplicar ao desenhar, como foi lembrar e usar esse princípio?');
+ const fid=(routedFocus()||{}).id;
+ if(fid)html=html.replace('</div></div></section></div>',`<p class="ea-review-note">Você pode avaliar agora ou deixar para depois de realmente desenhar.</p><button class="btn small" onclick="EA.deferFocus('${fid}')">Ainda não tentei · lembrar depois</button></div></div></section></div>`);
+ }
+ return html;
+};
+const eaOldHomeView=homeView;
+homeView=function(){let html=eaOldHomeView();const f=EA.mainFocus(), streak=EA.streak();
+ const snippet=f?`<div class="ea-focus-preview"><div><div class="eyebrow">FOCO DO MOMENTO</div><strong>${esc(f.title)}</strong><p>${esc(f.microSkill)} — tente levar essa ideia para o desenho.</p></div><button class="btn small" onclick="nav('focus',{id:'${f.id}'})">Ver princípio →</button></div>`:'';
+ html=html.replace('<div class="choice-grid home-grid">',snippet+'<div class="choice-grid home-grid">');
+ html+=`<div class="ea-inline-summary" style="justify-content:center"><span class="ea-flame">${streak} dia(s) em sequência</span>${EA.didToday()?'<span class="ea-chip">Rotina de hoje concluída</span>':''}</div>`;
+ return html;
+};
+
+/* Vínculos entre princípios, fundamentos e exercícios. Fundamento não possui nota de proficiência. */
+EA.focusPicker=function(selected=[],name='exerciseFocus'){
+ const list=state.focuses||[];
+ if(!list.length)return `<p class="ea-field-help">Cadastre primeiro um Foco para poder vincular esta prática.</p><button class="btn small" onclick="openNewFocus()">Criar Foco</button>`;
+ return `<div class="focus-choice-list">${list.map(f=>`<label class="focus-choice-row"><input type="checkbox" name="${name}" value="${esc(f.id)}" ${selected.includes(f.id)?'checked':''}><span>${esc(f.title)}<small>${esc(f.microSkill)}</small></span></label>`).join('')}</div>`;
+};
+EA.foundationOptions=function(selected=''){
+ if(!state.foundations.length)return `<p class="ea-field-help">Crie um fundamento para organizar os exercícios e contextualizar sua dificuldade.</p><button class="btn small" onclick="nav('newFoundation',{from:'training'})">Criar fundamento</button>`;
+ return `<select class="input" id="exFoundation">${state.foundations.map(f=>`<option value="${esc(f.id)}" ${f.id===selected?'selected':''}>${esc(f.name)} · ${['','básico','intermediário','complexo'][EA.complexity(f)]}</option>`).join('')}</select>`;
+};
+newExerciseView=function(kind){return `${pageHead(kindLabel(kind),'Novo exercício')}<div class="panel" style="max-width:740px"><div class="field"><label>Nome do exercício</label><input id="exTitle" class="input" placeholder="Ex.: Estudo de luz e sombra em esfera"></div><div class="field"><label>Fundamento (obrigatório)</label>${EA.foundationOptions()}<div class="ea-field-help">Fundamento organiza a atividade e contextualiza o nível: uma tarefa fácil de figura humana não equivale necessariamente a uma tarefa fácil de objetos.</div></div><div class="field"><label>Dificuldade deste exercício</label><div class="difficulty-picker">${[['easy','Fácil'],['medium','Médio'],['hard','Difícil']].map(([v,n])=>`<label class="difficulty-option ${v}"><input type="radio" name="exDifficulty" value="${v}" ${v==='easy'?'checked':''}><span>${n}</span></label>`).join('')}</div></div><div class="field"><label>Focos trabalhados (ao menos um)</label>${EA.focusPicker()}</div><div class="counter-grid"><div class="field"><label>Meta com referência</label><input id="exRef" class="input" type="number" min="0" value="1"></div><div class="field"><label>Meta sem referência</label><input id="exNoRef" class="input" type="number" min="0" value="0"></div></div><button class="btn primary" onclick="createExercise('${kind}')">Salvar exercício</button></div>`};
+createExercise=function(kind){
+ const title=document.getElementById('exTitle')?.value.trim(),fid=document.getElementById('exFoundation')?.value;
+ const diff=document.querySelector('input[name="exDifficulty"]:checked')?.value||'easy';
+ const links=[...document.querySelectorAll('input[name="exerciseFocus"]:checked')].map(x=>x.value);
+ if(!title)return alert('Informe o nome do exercício.');
+ if(!EA.foundationById(fid))return alert('Escolha primeiro um fundamento.');
+ if(!links.length)return alert('Vincule pelo menos um Foco a este exercício.');
+ const rt=Number(document.getElementById('exRef').value)||0, nt=Number(document.getElementById('exNoRef').value)||0;
+ state.exercises[kind].push({id:id('ex'),title,foundationId:fid,difficulty:diff,focusIds:links,refTarget:Math.max(0,rt),noRefTarget:Math.max(0,nt),entries:[],ratings:[]});save();nav('exerciseList',{kind});
+};
+const eaOldExerciseView=exerciseView;
+exerciseView=function(kind,exid){const ex=state.exercises[kind]?.find(x=>x.id===exid);if(!ex)return eaOldExerciseView(kind,exid);
+ const f=EA.foundationById(ex.foundationId);let html=eaOldExerciseView(kind,exid);const badges=`<div class="ea-foundation-tags">${f?`<span>${esc(f.name)}</span>`:'<span>Fundamento não definido</span>'}${EA.linked(ex).map(x=>`<span>${esc(x.title)}</span>`).join('')}</div>`;
+ html=html.replace('<div class="exercise-status">',badges+'<div class="exercise-status">');
+ const footer=`<div class="ea-panel" style="margin-top:20px"><h3>Registrar esta sessão</h3><p>Ao terminar, registre como foi o desafio. Isso vale para treino guiado e manual; sua nota não altera automaticamente Focos.</p><button class="btn green" onclick="EA.showRating('${kind}','${ex.id}')">Concluir atividade e avaliar</button><div id="eaExerciseRating"></div>${!f||!EA.linked(ex).length?'<p class="ea-field-help">Para participar das recomendações, esta atividade precisa de um fundamento e pelo menos um Foco.</p>':''}</div>`;
+ return html+footer;
+};
+EA.showRating=function(kind,exid){const panel=document.getElementById('eaExerciseRating');if(!panel)return;const ex=state.exercises[kind]?.find(x=>x.id===exid);if(!ex)return;
+ panel.innerHTML=`<div class="ea-rating-panel"><h3>Como foi realizar ${esc(ex.title)}?</h3><p>Considere a atividade inteira nesse nível. Isso calibra a dificuldade das recomendações, não a nota de Focos.</p><div class="ea-rating-buttons">${EA.ratings.slice(1).map((label,i)=>`<button onclick="EA.finishExercise('${kind}','${exid}',${i+1})">${esc(label)}</button>`).join('')}<button class="ea-skip" onclick="EA.finishExercise('${kind}','${exid}',null)">Não consigo avaliar</button></div></div>`;
+ panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+};
+EA.finishExercise=function(kind,exid,rating){const ex=state.exercises[kind]?.find(x=>x.id===exid);if(!ex)return;
+ const now=Date.now(), guided=!!guidedSession?.active&&guidedSession.current?.id===exid;
+ const entry={at:now,kind,exerciseId:exid,rating:Number.isInteger(rating)?rating:null,via:guided?'guided':'manual',difficulty:ex.difficulty,foundationId:ex.foundationId||null,focusIds:[...exerciseFocusIds(ex)]};
+ if(Number.isInteger(rating)){if(!Array.isArray(ex.ratings))ex.ratings=[];ex.ratings.push({rating,at:now,difficulty:ex.difficulty});if(ex.ratings.length>100)ex.ratings.splice(0,ex.ratings.length-100)}
+ state.exerciseSessions.push(entry);if(state.exerciseSessions.length>2000)state.exerciseSessions.splice(0,state.exerciseSessions.length-2000);
+ ex.lastGuidedAt=guided?now:ex.lastGuidedAt;save();
+ if(guided){EA.advanceGuided();return}
+ showToast('Sessão registrada. Avaliações de Focos permanecem independentes.');nav('exercise',{kind,id:exid});
+};
+/* Cadastro de fundamentos pode ser iniciado em Treino sem obrigar a configurar um Mestre. */
+const eaOldNewFoundationView=newFoundationView;
+newFoundationView=function(){let html=eaOldNewFoundationView();return html.replace('<button class="btn primary" onclick="createFoundation()">',`<div class="field"><label>Complexidade base do fundamento</label><select class="input" id="foundationComplexity"><option value="1">Básico — objetos e formas simples</option><option value="2" selected>Intermediário</option><option value="3">Complexo — figura humana e tarefas avançadas</option></select><div class="ea-field-help">Isso apenas contextualiza a dificuldade dos exercícios; não é uma segunda escala de proficiência.</div></div><button class="btn primary" onclick="createFoundation()">`)};
+const eaOldCreateFoundation=createFoundation;
+createFoundation=function(){const name=document.getElementById('fName')?.value.trim();if(!name)return alert('Informe o nome do fundamento.');
+ const fid=id('f');state.foundations.push({id:fid,name,master:document.getElementById('fMaster')?.value.trim()||'',courseUrl:document.getElementById('fCourse')?.value.trim()||'',artIds:[],focusIds:[],complexity:Number(document.getElementById('foundationComplexity')?.value)||2});save();if(route.from==='training')nav('training');else nav('masters');
+};
+const eaOldEditFoundationView=editFoundationView;
+editFoundationView=function(fid){let html=eaOldEditFoundationView(fid);const f=EA.foundationById(fid);if(!f)return html;
+ return html.replace('<button class="btn primary" onclick="saveFoundation(',`<div class="field"><label>Complexidade base dos exercícios deste fundamento</label><select id="foundationComplexity" class="input">${[1,2,3].map((x)=>`<option value="${x}" ${EA.complexity(f)===x?'selected':''}>${['','Básico','Intermediário','Complexo'][x]}</option>`).join('')}</select></div><button class="btn primary" onclick="saveFoundation(`);
+};
+const eaOldSaveFoundation=saveFoundation;
+saveFoundation=function(fid){const f=EA.foundationById(fid);if(f)f.complexity=Number(document.getElementById('foundationComplexity')?.value)||EA.complexity(f);eaOldSaveFoundation(fid)};
+const eaOldFoundationView=foundationView;
+foundationView=function(fid){let html=eaOldFoundationView(fid);const f=EA.foundationById(fid);if(!f)return html;
+ const linked=(f.focusIds||[]).map(EA.focusById).filter(Boolean);
+ const available=(state.focuses||[]);
+ const content=`<section class="ea-panel"><h3>Princípios relacionados</h3><p>Associe os Focos que este fundamento aborda. Eles podem ajudar o Treinar agora a sugerir estudos, sem avaliar automaticamente o Estudo de Mestres.</p><div class="ea-master-tag-list">${available.map(x=>`<button style="${(f.focusIds||[]).includes(x.id)?'background:#30543a;border-color:#6b9b79':''}" onclick="EA.toggleFoundationFocus('${fid}','${x.id}')">${(f.focusIds||[]).includes(x.id)?'✓ ':''}${esc(x.title)}</button>`).join('')||'<span class="meta">Crie Focos para associá-los aqui.</span>'}</div></section>`;
+ return html.replace('<div class="foundation-layout">',content+'<div class="foundation-layout">')
+};
+EA.toggleFoundationFocus=function(fid,focusId){const f=EA.foundationById(fid);if(!f||!EA.focusById(focusId))return;const a=f.focusIds||[];f.focusIds=a.includes(focusId)?a.filter(x=>x!==focusId):[...a,focusId];save();render()};
+/* Histórico de Mestres é independente; suas descobertas podem originar Focos. */
+const eaOldNoteHtml=noteHtml;
+noteHtml=function(n){return eaOldNoteHtml(n).replace('</div>',`<button class="ea-small-focus-link" onclick="EA.fromNote('${n.id}')">Criar Foco a partir desta ideia</button></div>`)};
+EA.fromNote=function(noteid){const note=(state.notes||[]).find(x=>x.id===noteid);if(!note)return;openNewFocus();const a=document.getElementById('focusTitle'),b=document.getElementById('focusConcept'),c=document.getElementById('focusMicroSkill');if(a)a.value='Princípio extraído do estudo';if(b)b.value=note.text;if(c)c.value=note.text;EA.focusDraftFoundation=note.foundationId;showToast('Complete o Foco e adicione imagens antes de salvar.')};
+const eaOldCreateFocus=createFocus;
+createFocus=async function(){const previous=state.focuses.length;await eaOldCreateFocus();if(state.focuses.length>previous&&EA.focusDraftFoundation){const newF=state.focuses[state.focuses.length-1],foundation=EA.foundationById(EA.focusDraftFoundation);if(foundation){foundation.focusIds=[...new Set([...(foundation.focusIds||[]),newF.id])];save()}EA.focusDraftFoundation=null}};
+/* Edição de exercícios anteriores: preservar os dados e permitir completar os vínculos sem apagar histórico. */
+EA.saveExerciseMeta=function(kind,exid){const ex=state.exercises[kind]?.find(x=>x.id===exid);if(!ex)return;
+ const fid=document.getElementById('eaExFoundation')?.value, difficulty=document.getElementById('eaExDifficulty')?.value;
+ if(EA.foundationById(fid))ex.foundationId=fid;if(['easy','medium','hard'].includes(difficulty))ex.difficulty=difficulty;
+ save();render();showToast('Configuração da atividade atualizada.')};
+const eaBaseExerciseView=exerciseView;
+exerciseView=function(kind,exid){let html=eaBaseExerciseView(kind,exid);const ex=state.exercises[kind]?.find(x=>x.id===exid);if(!ex)return html;
+ const options=state.foundations.map(f=>`<option value="${f.id}" ${f.id===ex.foundationId?'selected':''}>${esc(f.name)}</option>`).join('');
+ const editor=`<details class="ea-panel"><summary style="cursor:pointer;font-size:13px;color:#c6cfc5">Configurar fundamento e nível</summary><div class="field" style="margin-top:15px"><label>Fundamento</label><select id="eaExFoundation" class="input"><option value="">Selecione</option>${options}</select></div><div class="field"><label>Dificuldade cadastrada</label><select id="eaExDifficulty" class="input">${[['easy','Fácil'],['medium','Médio'],['hard','Difícil']].map(([k,v])=>`<option value="${k}" ${ex.difficulty===k?'selected':''}>${v}</option>`).join('')}</select></div><button class="btn small" onclick="EA.saveExerciseMeta('${kind}','${exid}')">Salvar configuração</button></details>`;
+ return html+editor;
+};
+const eaOldToggleExerciseFocus=toggleExerciseFocus;
+toggleExerciseFocus=function(kind,exid,fid){const ex=state.exercises[kind]?.find(x=>x.id===exid);if(!ex)return;const a=exerciseFocusIds(ex);if(a.length===1&&a.includes(fid))return showToast('Um exercício precisa manter ao menos um Foco vinculado.');eaOldToggleExerciseFocus(kind,exid,fid)};
+
+/* Calibração do desafio: o fundamento contextualiza a dificuldade, sem gerar outra proficiência. */
+EA.levelValue=d=>({easy:1,medium:2,hard:3})[d]||1;
+EA.challenge=function(ex){const foundation=EA.foundationById(ex.foundationId);return EA.levelValue(ex.difficulty)+(EA.complexity(foundation)-2)*.45};
+EA.target=function(ex,intensity){
+ const history=EA.history(ex);let target=.95;
+ if(history.length){const avg=EA.ratingMean(ex);target=EA.challenge(ex)+(avg-3)*.42}
+ return EA.clamp(target+(EA.intensityOffset[intensity]||0),.7,3.5)
+};
+EA.defaultIntensity=function(){
+ const completed=(state.dailyCompletions||[]);const seq=['normal','light','hard','light','normal'];
+ let selection=seq[completed.length%seq.length];
+ const r=(state.exerciseSessions||[]).slice(-5).filter(x=>x.rating!=null);
+ if(r.length>=3&&r.reduce((s,x)=>s+x.rating,0)/r.length<=2)selection='light';
+ return selection;
+};
+EA.userIntensity=null;
+EA.selectIntensity=function(value){EA.userIntensity=value;render()};
+EA.recommendation=function(kind,ex,intensity='normal',used=new Set(),chosenFoci=new Map()){
+ const linked=EA.linked(ex);if(!EA.foundationById(ex.foundationId)||!linked.length)return null;
+ const priorities=linked.map(f=>EA.focusNeed(f));
+ const best=Math.max(...priorities);
+ const untested=EA.history(ex).length===0;
+ const focusStrength=EA.focusStrength(linked.slice().sort((a,b)=>EA.focusNeed(b)-EA.focusNeed(a))[0]);
+ const focusAdjust=focusStrength===null?0:EA.clamp((focusStrength-3)*.15,-.3,.3);
+ const target=EA.target(ex,intensity)+focusAdjust,gap=Math.abs(EA.challenge(ex)-target);
+ const last=EA.history(ex).at(-1)?.at||ex.lastGuidedAt||0;
+ const elapsed=last?(Date.now()-last)/86400000:120;
+ const freshness=EA.clamp(elapsed*1.4,0,22);
+ const distinct=linked.some(f=>!chosenFoci.has(f.id));
+ const repetition=linked.reduce((s,f)=>s+(chosenFoci.get(f.id)||0),0);
+ let score=best*1.35-gap*26+freshness+(untested?12:0)+(distinct?13:0)-repetition*16;
+ if(used.has(ex.id))score-=210;
+ const focus=linked.slice().sort((a,b)=>EA.focusNeed(b)-EA.focusNeed(a))[0];
+ return {kind,ex,focus,score,reason:`${focus.title} · ${['','básico','intermediário','complexo'][EA.complexity(EA.foundationById(ex.foundationId))]} · nível ${difficultyLabel(ex.difficulty)}`};
+};
+EA.buildPlan=function(intensity='normal',amount=3){
+ const pool=EA.validExercises();if(!pool.length)return [];
+ const plan=[],used=new Set(),chosenFoci=new Map();
+ for(let i=0;i<Math.min(amount,pool.length);i++){
+  const ranked=pool.map(({kind,ex})=>EA.recommendation(kind,ex,intensity,used,chosenFoci)).filter(Boolean).sort((a,b)=>b.score-a.score);
+  const best=ranked[0];if(!best)break;
+  plan.push({kind:best.kind,id:best.ex.id,reason:best.reason,focusId:best.focus?.id||null});
+  used.add(best.ex.id);
+  for(const f of EA.linked(best.ex))chosenFoci.set(f.id,(chosenFoci.get(f.id)||0)+1);
+ }
+ return plan;
+};
+EA.lastGuidedRatings=function(){return (state.exerciseSessions||[]).filter(x=>x.via==='guided'&&x.rating!=null).slice(-4)};
+startGuidedTraining=function(extra=false){
+ const pool=EA.validExercises();
+ if(!pool.length){route={page:'eaSetup'};return render()}
+ const intensity=EA.userIntensity||EA.defaultIntensity();
+ guidedSession={active:true,extra:!!extra,seen:[],plan:EA.buildPlan(intensity,3),currentIndex:0,current:null,intensity,startedAt:Date.now()};
+ persistGuided();openNextGuidedExercise();
+};
+openNextGuidedExercise=function(){
+ if(!guidedSession?.active)return;
+ let item=guidedSession.plan?.[guidedSession.currentIndex];
+ if(!item){EA.completeDay();return}
+ let ex=state.exercises[item.kind]?.find(x=>x.id===item.id);
+ if(!ex){guidedSession.currentIndex++;return openNextGuidedExercise()}
+ guidedSession.current={kind:item.kind,id:item.id};guidedSession.reason=item.reason;
+ persistGuided();route={page:'exercise',kind:item.kind,id:item.id};render();
+ setTimeout(()=>document.querySelector('.exercise-header')?.scrollIntoView({behavior:'smooth',block:'start'}),100)
+};
+EA.advanceGuided=function(){
+ if(!guidedSession?.active)return;
+ guidedSession.currentIndex++;guidedSession.current=null;
+ persistGuided();openNextGuidedExercise();
+};
+/* Compatibilidade: conclusão agora sempre passa pela tela inline de avaliação. */
+completeGuidedExercise=function(){const c=guidedSession?.current;if(c)EA.showRating(c.kind,c.id)};
+guidedBarHtml=function(kind,ex){if(!guidedSession?.active||guidedSession.current?.id!==ex.id)return'';
+ const i=guidedSession.currentIndex||0,total=guidedSession.plan?.length||3;
+ return `<div class="guided-bar"><div class="guided-reason"><span class="guided-dot"></span><div><strong>Treino guiado · ${esc(EA.intensityLabels[guidedSession.intensity]||'Moderado')}</strong><span>${esc(guidedSession.reason||'Prática selecionada')}</span></div></div><div class="guided-actions"><button class="btn" onclick="stopGuidedTraining()">Pausar e sair</button><button class="btn green" onclick="EA.showRating('${kind}','${ex.id}')">Concluir e continuar →</button></div></div>`;
+};
+EA.completeDay=function(){
+ const old=guidedSession;if(!old)return;
+ const finished=old.plan?.length||0, extra=old.extra;
+ if(!extra&&!EA.didToday()&&finished){state.dailyCompletions.push({day:EA.date(),at:Date.now(),completed:finished,intensity:old.intensity});save()}
+ guidedSession=null;persistGuided();route={page:'eaDone',extra:!!extra,finished,intensity:old.intensity};render();window.scrollTo({top:0,behavior:'smooth'});
+};
+stopGuidedTraining=function(){guidedSession=null;persistGuided();nav('home')};
+EA.masterSuggestion=function(){
+ const s=(state.foundations||[]).filter(f=>f.master||(f.artIds||[]).length);
+ if(!s.length)return null;
+ return s.map(f=>({f,score:(f.focusIds||[]).reduce((sum,id)=>sum+EA.focusNeed(EA.focusById(id)||{history:[]}),0)+(f.master?12:0)})).sort((a,b)=>b.score-a.score)[0]?.f||null;
+};
+EA.setupView=function(){const noFocus=!state.focuses.length,noFound=!state.foundations.length,noExercise=!allExercises().length;
+ const missing=EA.validExercises().length===0?allExercises().length:allExercises().length-EA.validExercises().length;
+ return `${pageHead('Treino guiado','Preparar suas práticas')}<div class="ea-setup"><h2>Falta conectar algumas partes.</h2><p>Para recomendar atividades reais, o aplicativo precisa de Focos, fundamentos e exercícios associados. As práticas antigas permanecem disponíveis no Treino manual.</p><div class="ea-inline-actions">${noFocus?'<button class="btn green" onclick="openNewFocus()">1 · Criar Foco</button>':''}${noFound?'<button class="btn green" onclick="nav(\'newFoundation\',{from:\'training\'})">2 · Criar fundamento</button>':''}${(noExercise||missing)?'<button class="btn green" onclick="nav(\'training\')">3 · Configurar exercícios</button>':''}</div><p class="ea-field-help">${missing?`${missing} exercício(s) ainda precisam de fundamento ou Foco associado. Abra a atividade para completar os vínculos.`:'Ao cadastrar seus primeiros exercícios vinculados, a rotina poderá começar.'}</p></div>`;
+};
+EA.finishView=function(){const extra=route.extra,fd=route.finished||0, master=EA.masterSuggestion();const streak=EA.streak();
+ return `${pageHead('Treino','Sessão encerrada')}<section class="ea-finish"><div class="ea-flame">${streak} dia(s) em sequência</div><h2>${extra?'Treino extra concluído':'Treino do dia concluído'}</h2><p>${fd} atividade(s) registrada(s). As avaliações dos exercícios ajudam a calibrar as próximas recomendações; os Focos continuam sob seu controle.</p><div class="ea-inline-actions"><button class="btn green" onclick="startGuidedTraining(true)">Treinar mais →</button><button class="btn" onclick="nav('home')">Voltar ao início</button></div>${master?`<div class="ea-master-rec"><div class="eyebrow">APROFUNDAMENTO OPCIONAL</div><h3>Estudo de Mestres: ${esc(master.name)}</h3><p>${esc(master.master||'Explore as referências deste fundamento')} — você decide se quer fazer o estudo. Isso não interfere na chama diária.</p><button class="btn small" onclick="nav('foundation',{id:'${master.id}'})">Ver estudo sugerido →</button></div>`:''}</section>`;
+};
+const eaOldTrainingView=trainingView;
+trainingView=function(){let html=eaOldTrainingView();const intensity=EA.userIntensity||EA.defaultIntensity();
+ // Substituir a mega-seção antiga por um acesso discreto no topo; modo manual continua intacto.
+ const sectionStart=html.indexOf('<section class="guided-launch">'),sectionEnd=html.indexOf('</section>',sectionStart);
+ if(sectionStart>=0&&sectionEnd>sectionStart)html=html.slice(0,sectionStart)+html.slice(sectionEnd+10);
+ const controls=`<div class="ea-panel" style="max-width:690px"><h3>Rotina recomendada</h3><p>Escolha a intensidade de hoje ou deixe o sistema alternar automaticamente. Exercícios manuais permanecem logo abaixo.</p><div class="ea-intensity">${['light','normal','hard'].map(k=>`<button class="${intensity===k?'on':''}" onclick="EA.selectIntensity('${k}')">${EA.intensityLabels[k]}</button>`).join('')}<button class="${EA.userIntensity===null?'on':''}" onclick="EA.selectIntensity(null)">Automática</button></div><button class="btn green" style="margin-top:12px" onclick="startGuidedTraining(${EA.didToday()?'true':'false'})">Treinar agora →</button></div>`;
+ return html.replace('<div class="manual-label">',controls+'<div class="manual-label">');
+};
+const eaOldRender=render;
+render=function(){
+ if(route.page==='eaDone'||route.page==='eaSetup'){
+  document.getElementById('backBtn').classList.remove('hidden');document.getElementById('app').innerHTML=route.page==='eaDone'?EA.finishView():EA.setupView();return;
+ }
+ eaOldRender();
+};
+const eaOldGoBack=goBack;
+goBack=function(){if(route.page==='eaDone'||route.page==='eaSetup')return nav('home');if(route.page==='newFoundation'&&route.from==='training')return nav('training');eaOldGoBack()};
+/* Proteção contra exclusão antecipada de imagens durante edição de Focos. */
+const eaOldOpenEditFocus=openEditFocus;
+openEditFocus=function(fid){EA.focusEditingRemoved=[];eaOldOpenEditFocus(fid)};
+removeExistingFocusImage=async function(fid,imageId){
+ const f=EA.focusById(fid);if(!f||!focusImageIds(f).includes(imageId))return;
+ if(!EA.focusEditingRemoved.includes(imageId))EA.focusEditingRemoved.push(imageId);
+ await loadFocusEditImage(fid)
+};
+loadFocusEditImage=async function(fid){const f=EA.focusById(fid),holder=document.getElementById('focusExistingImages');if(!f||!holder)return;
+ const parts=[];for(const imageId of focusImageIds(f).filter(x=>!EA.focusEditingRemoved.includes(x))){const img=await getImage(imageId);if(!img)continue;
+ parts.push(`<div class="focus-preview-card"><img src="${URL.createObjectURL(img.blob)}" alt="${esc(img.name)}"><button class="x" onclick="removeExistingFocusImage('${fid}','${imageId}')">×</button><span class="focus-preview-badge">salva</span></div>`)}
+ holder.innerHTML=parts.join('');renderFocusDraftPreviews();
+};
+saveFocus=async function(fid){const f=EA.focusById(fid);if(!f)return;
+ const title=document.getElementById('focusTitle')?.value.trim(),concept=document.getElementById('focusConcept')?.value.trim(),skill=document.getElementById('focusMicroSkill')?.value.trim(),course=document.getElementById('focusCourse')?.value.trim();
+ if(!title||!concept||!skill)return alert('Preencha nome, conceito e micro-habilidade.');
+ const remaining=focusImageIds(f).filter(x=>!EA.focusEditingRemoved.includes(x));
+ if(!remaining.length&&!focusDraftFiles.length)return alert('O Foco precisa manter ao menos uma imagem.');
+ const newIds=[];try{for(const file of focusDraftFiles)newIds.push(await putImage(file,{kind:'focus'}))}catch(e){for(const k of newIds)await deleteImage(k);return alert('Não foi possível salvar as novas imagens. Nada foi removido.')}
+ const removed=EA.focusEditingRemoved.slice();f.title=title;f.concept=concept;f.microSkill=skill;f.courseUrl=course;f.imageIds=[...remaining,...newIds];f.imageId=f.imageIds[0];save();EA.focusEditingRemoved=[];focusDraftFiles=[];
+ // A exclusão só acontece APÓS persistir as alterações do registro.
+ for(const imageId of removed){try{await deleteImage(imageId)}catch(e){console.warn('Imagem antiga preservada por falha de remoção',e)}}
+ nav('focusLibrary')
+};
+
+/* O treino guiado também pode ser retomado; não perder sessão ao navegar. */
+startGuidedTraining=(function(base){return function(extra=false){
+ if(guidedSession?.active&&guidedSession.plan?.length&&!extra){return openNextGuidedExercise()}
+ base(extra)
+}})(startGuidedTraining);
+stopGuidedTraining=function(){if(guidedSession?.active){persistGuided();showToast('A rotina ficou salva nesta aba.')}nav('home')};
+
+/* Reprodução de arquivo de áudio local: um único player para todas as telas, inclusive Alt+Tab. */
+EA.audioSourceKey='ea-music-id';
+EA.installAudio=function(){
+ if(EA.audio)return;
+ const topbar=document.querySelector('.topbar');if(!topbar)return;
+ const controls=document.createElement('div');controls.className='ea-quiet-controls';controls.innerHTML=`<button id="eaMuteBtn" title="Som ligado / desligado" aria-label="Alternar som" onclick="EA.toggleMute()">${EA.currentlyMuted?'◌':'♫'}</button><div class="ea-sound-wrap"><button onclick="EA.toggleMusicChooser()" title="Escolher música" aria-label="Escolher música">⋯</button><div id="eaSoundChooser" class="ea-sound-chooser"><strong>Música do Evolução Art</strong><p>Escolha um arquivo de áudio local. Ele continuará tocando ao mudar de tela ou de janela. O navegador pode exigir seu primeiro clique para iniciar.</p><label>Escolher música <input type="file" accept="audio/*" onchange="EA.chooseMusic(this.files[0])"></label><label>Volume <input type="range" min="0" max="100" value="30" onchange="EA.changeVolume(this.value)"></label><button class="btn small" onclick="EA.stopMusic()">Remover música</button></div></div>`;
+ topbar.lastElementChild?.remove();topbar.appendChild(controls);
+ EA.audio=new Audio();EA.audio.loop=true;EA.audio.volume=Number(localStorage.getItem('ea-music-volume')||.3);EA.audio.muted=EA.currentlyMuted;
+ EA.loadMusic(true).catch(e=>console.warn('Música não carregada',e));
+ // Quando o navegador bloqueia autoplay, a primeira interação libera a tentativa.
+ document.addEventListener('pointerdown',()=>{if(EA.audio?.src&&!EA.currentlyMuted&&EA.audio.paused)EA.audio.play().catch(()=>{})},{once:true});
+};
+EA.toggleMusicChooser=function(){document.getElementById('eaSoundChooser')?.classList.toggle('open')};
+EA.chooseMusic=async function(file){if(!file)return;if(!file.type.startsWith('audio/'))return alert('Escolha um arquivo de áudio.');
+ try{const prev=localStorage.getItem(EA.audioSourceKey),newid=await putImage(file,{kind:'app-audio'});
+ localStorage.setItem(EA.audioSourceKey,newid);await EA.loadMusic(true);
+ if(prev&&prev!==newid)await deleteImage(prev);
+ document.getElementById('eaSoundChooser')?.classList.remove('open');showToast('Música salva neste navegador.');
+ }catch(e){console.error(e);alert('Não foi possível guardar a música neste navegador.')} 
+};
+EA.loadMusic=async function(start=false){const id=localStorage.getItem(EA.audioSourceKey);if(!id||!EA.audio)return;
+ const entry=await getImage(id);if(!entry?.blob)return;
+ if(EA.audioUrl)URL.revokeObjectURL(EA.audioUrl);
+ EA.audioUrl=URL.createObjectURL(entry.blob);EA.audio.src=EA.audioUrl;EA.audio.load();
+ if(start)EA.audio.play().catch(()=>showToast('Clique no ícone de som para iniciar a música.'));
+};
+EA.toggleMute=function(){EA.currentlyMuted=!EA.currentlyMuted;localStorage.setItem('ea-music-muted',EA.currentlyMuted?'yes':'no');
+ EA.audio.muted=EA.currentlyMuted;document.getElementById('eaMuteBtn').textContent=EA.currentlyMuted?'◌':'♫';
+ if(!EA.currentlyMuted&&EA.audio.src&&EA.audio.paused)EA.audio.play().catch(()=>{});
+};
+EA.changeVolume=function(val){const volume=EA.clamp(Number(val)/100,0,1);EA.audio.volume=volume;localStorage.setItem('ea-music-volume',String(volume))};
+EA.stopMusic=async function(){EA.audio.pause();EA.audio.removeAttribute('src');const old=localStorage.getItem(EA.audioSourceKey);localStorage.removeItem(EA.audioSourceKey);if(old)await deleteImage(old);document.getElementById('eaSoundChooser')?.classList.remove('open')};
+
+
+/* Avaliação voluntária do Foco durante qualquer exercício, sem interromper o roteiro. */
+EA.focusDuringExercise=function(ex){
+ const linked=EA.linked(ex);if(!linked.length)return '';
+ return `<section class="ea-panel" style="margin-top:5px"><div class="eyebrow">LEVE PARA O DESENHO</div>${linked.map(f=>`<div style="margin:10px 0 14px"><strong style="font:19px Georgia,serif">${esc(f.title)}</strong><p>${esc(f.microSkill)}</p><div class="ea-inline-actions"><button class="ea-small-focus-link" onclick="EA.showFocusRating('${f.id}')">Avaliar este Foco (opcional)</button><button class="ea-small-focus-link" onclick="EA.toggleFocusConcept('${f.id}')">Relembrar conceito</button></div><div class="ea-review-note" id="eaFocusConcept_${f.id}" hidden>${esc(f.concept)}</div><div id="eaFocusRating_${f.id}"></div></div>`).join('')}</section>`;
+};
+EA.toggleFocusConcept=function(fid){const node=document.getElementById('eaFocusConcept_'+fid);if(node)node.hidden=!node.hidden};
+EA.showFocusRating=function(fid){const f=EA.focusById(fid),holder=document.getElementById('eaFocusRating_'+fid);if(!f||!holder)return;
+ holder.innerHTML=`<div class="ea-rating-panel"><p>Depois de tentar aplicar ${esc(f.title)}, quão natural foi lembrar e usar esse princípio?</p><div class="ea-rating-buttons">${['Muito difícil','Difícil','OK','Fácil','Automático'].map((label,i)=>`<button onclick="EA.rateFocusDuringExercise('${fid}',${i+1})">${label}</button>`).join('')}<button class="ea-skip" onclick="document.getElementById('eaFocusRating_${fid}').innerHTML=''">Ainda não tentei</button></div></div>`;
+};
+EA.rateFocusDuringExercise=function(fid,rating){const f=EA.focusById(fid);if(!f)return;const c=guidedSession?.current;
+ const context=c?{kind:c.kind,exerciseId:c.id}:route.page==='exercise'?{kind:route.kind,exerciseId:route.id}:null;
+ const days=EA.focusInterval(f,rating),now=Date.now();
+ focusHistory(f).push({rating,at:now,source:'manual-focus',context});
+ if(f.history.length>100)f.history.splice(0,f.history.length-100);
+ f.intervalDays=days;f.nextDue=now+days*86400000;f.deferUntil=0;save();
+ const holder=document.getElementById('eaFocusRating_'+fid);
+ if(holder)holder.innerHTML='<p class="ea-review-note">Avaliação registrada. O exercício continua normalmente.</p>';
+};
+const eaBaseExerciseView2=exerciseView;
+exerciseView=function(kind,exid){let html=eaBaseExerciseView2(kind,exid),ex=state.exercises[kind]?.find(x=>x.id===exid);if(!ex)return html;
+ const guidance=`<div class="ea-panel" style="margin-top:14px"><div class="eyebrow">SESSÃO ATUAL</div><p>Pratique ${Number(ex.refTarget)||0} estudo(s) com referência e ${Number(ex.noRefTarget)||0} sem referência, se fizer sentido para este exercício. A galeria guarda os registros acumulados; a avaliação descreve esta sessão, não todo o histórico.</p></div>`;
+ return html.replace('<div class="exercise-workspace">',EA.focusDuringExercise(ex)+guidance+'<div class="exercise-workspace">');
+};
+/* Exercícios já vinculados devem permanecer vinculados, mesmo se um Foco for excluído. */
+const eaOldDeleteFocus=deleteFocus;
+deleteFocus=async function(fid){const linked=allExercises().filter(({ex})=>exerciseFocusIds(ex).includes(fid));
+ if(linked.length)return alert(`Este Foco está associado a ${linked.length} exercício(s). Substitua os vínculos antes de excluí-lo.`);
+ await eaOldDeleteFocus(fid)
+};
+const eaOldDeleteFoundation=deleteFoundation;
+deleteFoundation=function(fid){const used=allExercises().filter(({ex})=>ex.foundationId===fid);
+ if(used.length)return alert('Este fundamento está associado a exercícios. Reatribua as atividades antes de excluir.');
+ const f=EA.foundationById(fid);if(f?.artIds?.length||(state.notes||[]).some(n=>n.foundationId===fid))return alert('O fundamento possui obras ou anotações. Preserve esse histórico antes de excluir.');
+ eaOldDeleteFoundation(fid)
+};
+/* Focos sem prática vinculada são permitidos provisoriamente durante o cadastro inicial, mas não criam recomendações fictícias. */
+const eaOldFocusLibraryView=focusLibraryView;
+focusLibraryView=function(){let html=eaOldFocusLibraryView();for(const f of state.focuses||[]){const linked=allExercises().filter(({ex})=>exerciseFocusIds(ex).includes(f.id)).length;
+ const marker=`<span class="ea-linked-status ${linked?'':'unlinked'}">${linked?`${linked} exercício(s) vinculado(s)`:'Pendente: vincular um exercício'}</span>`;
+ html=html.replace(`<h3>${esc(f.title)}</h3>`,`<h3>${esc(f.title)}</h3>${marker}`)}return html;
+};
+/* Oferecer o estudo como aprofundamento opcional durante o guia também, sem entrar na contagem da chama. */
+const eaOldGuidedBarHtml=guidedBarHtml;
+guidedBarHtml=function(kind,ex){const html=eaOldGuidedBarHtml(kind,ex),foundation=EA.foundationById(ex.foundationId);
+ if(!html||!foundation?.master)return html;
+ return html+`<div class="ea-review-note" style="margin-bottom:12px">Aprofundamento relacionado (opcional): <button class="ea-small-focus-link" onclick="nav('foundation',{id:'${foundation.id}'})">Estudar ${esc(foundation.master)}</button> — você pode voltar ao treino guiado depois.</div>`;
+};
+const eaOldHomeView2=homeView;
+homeView=function(){let html=eaOldHomeView2().replace('Princípios que reaparecem conforme sua proficiência.','Princípios que você aprende a aplicar naturalmente.');if(guidedSession?.active&&guidedSession.current){html=html.replace('>Treinar agora</button>','>Continuar treino</button>')};return html};
+// Compatibilidade: importar com cautela dias completos de sessões guiadas da versão anterior.
+guidedDoneToday=function(){return EA.didToday()?3:0};
+if(!(state.dailyCompletions||[]).length&&(state.trainingLog||[]).length){
+ const groups={};for(const x of state.trainingLog){const key=todayKey(x.at);groups[key]=(groups[key]||0)+1}
+ const recovered=Object.entries(groups).filter(([_,count])=>count>=3).map(([day,count])=>({day,at:Date.parse(day+'T12:00:00'),completed:3,intensity:'normal',legacy:true}));
+ if(recovered.length){state.dailyCompletions=recovered;save()}
+}
+
+
+/* Correções v6: limiar de desafio, manutenção, 3 atividades reais, mestre opcional e links seguros.
+   Nenhuma pontuação de fundamento é criada; as notas de Focos continuam independentes. */
+EA.safeUrl=function(value){
+ if(typeof value!=='string'||!value.trim())return '';
+ try{const url=new URL(value.trim());return ['https:','http:'].includes(url.protocol)?url.href:''}catch{return ''}
+};
+EA.validCourseUrl=function(value){return !value||!!EA.safeUrl(value)};
+const eaV5CreateFocus=createFocus;
+createFocus=async function(){
+ const url=document.getElementById('focusCourse')?.value.trim()||'';
+ if(!EA.validCourseUrl(url))return alert('Use um link http:// ou https:// para o Course Vault.');
+ return eaV5CreateFocus();
+};
+const eaV5SaveFocus=saveFocus;
+saveFocus=async function(fid){
+ const url=document.getElementById('focusCourse')?.value.trim()||'';
+ if(!EA.validCourseUrl(url))return alert('Use um link http:// ou https:// para o Course Vault.');
+ return eaV5SaveFocus(fid)
+};
+const eaV5CreateFoundation=createFoundation;
+createFoundation=function(){
+ const url=document.getElementById('fCourse')?.value.trim()||'';
+ if(!EA.validCourseUrl(url))return alert('Use um link http:// ou https:// para o Course Vault.');
+ return eaV5CreateFoundation();
+};
+const eaV5SaveFoundation=saveFoundation;
+saveFoundation=function(fid){
+ const url=document.getElementById('fCourse')?.value.trim()||'';
+ if(!EA.validCourseUrl(url))return alert('Use um link http:// ou https:// para o Course Vault.');
+ return eaV5SaveFoundation(fid);
+};
+
+// Calibração por Foco + fundamento: dados dos exercícios equivalentes informam o desafio ideal.
+// A complexidade do fundamento nunca desaparece inteiramente da comparação.
+EA.validExercises=function(){
+ const foundations=new Set((state.foundations||[]).map(f=>f.id));
+ const focuses=new Set((state.focuses||[]).map(f=>f.id));
+ return allExercises().filter(({ex})=>foundations.has(ex.foundationId)&&exerciseFocusIds(ex).some(id=>focuses.has(id)));
+};
+EA.recommendationContext=function(){
+ const groups=new Map(), all=EA.validExercises();let count=0;
+ const focusMap=new Map((state.focuses||[]).map(f=>[f.id,f]));
+ const foundationMap=new Map((state.foundations||[]).map(f=>[f.id,f]));
+ for(const {ex} of all){
+  const f=foundationMap.get(ex.foundationId),levelBias=(EA.complexity(f)-2)*.45;
+  count+=EA.history(ex).length;
+  for(const focus of exerciseFocusIds(ex).map(id=>focusMap.get(id)).filter(Boolean)){
+   const key=ex.foundationId+'|'+focus.id;
+   if(!groups.has(key))groups.set(key,[]);
+   const bucket=groups.get(key);
+   for(const item of EA.history(ex).slice(-8)){
+    const rating=Number(item.rating);
+    if(!(rating>=1&&rating<=5))continue;
+    const challenge=EA.levelValue(item.difficulty||ex.difficulty)+levelBias;
+    bucket.push({at:Number(item.at)||0,challenge,rating});
+   }
+  }
+ }
+ for(const [key,samples] of groups)groups.set(key,samples.sort((a,b)=>b.at-a.at).slice(0,24));
+ const sessions=(state.exerciseSessions||[]).length;
+ return {groups,focusMap,foundationMap,round:Math.floor(Math.max(count,sessions)/3)};
+};
+EA.idealChallenge=function(ex,focus,intensity,ctx){
+ const base=1.65;
+ const samples=ctx.groups.get(ex.foundationId+'|'+focus.id)||[];
+ let target=base;
+ if(samples.length){
+  let sum=0,weight=0;
+  samples.forEach((s,i)=>{const w=1/(1+i*.18);sum+=(s.challenge+(s.rating-3)*.44)*w;weight+=w});
+  const learned=sum/weight;
+  // Mesmo quando há histórico, reserva-se alguma influência ao desafio absoluto.
+  target=.83*learned+.17*base;
+ }
+ const focusStrength=EA.focusStrength(focus);
+ const attentionAdjust=focusStrength===null?0:EA.clamp((focusStrength-3)*.06,-.12,.12);
+ return EA.clamp(target+attentionAdjust+(EA.intensityOffset[intensity]||0),.65,3.5);
+};
+EA.recommendation=function(kind,ex,intensity='normal',used=new Set(),chosenFoci=new Map(),ctx=null){
+ ctx=ctx||EA.recommendationContext();
+ const foundation=ctx.foundationMap.get(ex.foundationId);
+ const linked=exerciseFocusIds(ex).map(id=>ctx.focusMap.get(id)).filter(Boolean);
+ if(!foundation||!linked.length)return null;
+ const challenge=EA.levelValue(ex.difficulty)+(EA.complexity(foundation)-2)*.45;
+ const focusOptions=linked.map(f=>({f,need:EA.focusNeed(f),target:EA.idealChallenge(ex,f,intensity,ctx)}));
+ focusOptions.sort((a,b)=>b.need-a.need);
+ const lead=focusOptions[0];
+ const gap=Math.abs(challenge-lead.target);
+ const last=EA.history(ex).at(-1)?.at||ex.lastGuidedAt||0;
+ const elapsed=last?Math.max(0,(Date.now()-last)/86400000):120;
+ const freshness=EA.clamp(elapsed*.65,0,13);
+ const untested=EA.history(ex).length===0;
+ const distinct=linked.some(f=>!chosenFoci.has(f.id));
+ const repetition=linked.reduce((n,f)=>n+(chosenFoci.get(f.id)||0),0);
+ const score=lead.need*1.25-gap*45+freshness+(untested?3:0)+(distinct?9:0)-repetition*13-(used.has(ex.id)?150:0);
+ return {kind,ex,focus:lead.f,score,gap,target:lead.target,
+  maintenance:EA.focusStrength(lead.f)!==null&&EA.focusStrength(lead.f)>=4,
+  linked,reason:`${lead.f.title} · ${['','básico','intermediário','complexo'][EA.complexity(foundation)]} · nível ${difficultyLabel(ex.difficulty)}`};
+};
+EA.buildPlan=function(intensity='normal',amount=3,options={}){
+ const pool=EA.validExercises(),plan=[],used=new Set(),chosenFoci=new Map();
+ if(!pool.length)return plan;
+ const ctx=EA.recommendationContext();
+ const base=pool.map(({kind,ex})=>EA.recommendation(kind,ex,intensity,new Set(),new Map(),ctx)).filter(Boolean);
+ const required=Math.max(1,Math.floor(amount));
+ const maintenanceWindow=ctx.round>0&&ctx.round%4===3;
+ for(let i=0;i<required;i++){
+  if(used.size>=base.length)used.clear();
+  const preferredMaintenance=maintenanceWindow&&i===required-1&&base.some(r=>r.maintenance&&!used.has(r.ex.id));
+  let best=null,bestScore=-Infinity;
+  for(const r of base){
+   if(preferredMaintenance&&(!r.maintenance||used.has(r.ex.id)))continue;
+   const linked=r.linked;
+   const repetition=linked.reduce((n,f)=>n+(chosenFoci.get(f.id)||0),0);
+   const lostDistinct=linked.every(f=>chosenFoci.has(f.id))?9:0;
+   const score=r.score-(used.has(r.ex.id)?150:0)-repetition*13-lostDistinct;
+   // Em manutenção, selecionar a prática menos recente em vez de só perseguir pontuação.
+   const last=EA.history(r.ex).at(-1)?.at||0;
+   const ranked=preferredMaintenance? -Math.min(Date.now(),last)/1e10+score*.001:score;
+   if(ranked>bestScore){bestScore=ranked;best=r}
+  }
+  if(!best)break;
+  plan.push({kind:best.kind,id:best.ex.id,reason:best.reason,focusId:best.focus?.id||null});
+  used.add(best.ex.id);
+  for(const f of best.linked)chosenFoci.set(f.id,(chosenFoci.get(f.id)||0)+1);
+ }
+ const master=EA.masterSuggestion();
+ if(master&&plan.length>=3&&options.includeMaster!==false&&(options.includeMaster===true||
+   (intensity==='light'&&ctx.round%3===2))){
+  plan[2]={kind:'master',id:master.id,reason:'Aprofundamento opcional · '+master.name,
+   fallback:plan[2]};
+ }
+ return plan;
+};
+
+EA.masterSuggestion=function(){
+ const eligible=(state.foundations||[]).filter(f=>f.master||(f.artIds||[]).length);
+ if(!eligible.length)return null;
+ const pool=EA.validExercises();
+ const ranked=eligible.map(f=>{
+  const linked=new Set(f.focusIds||[]);
+  for(const {ex} of pool)if(ex.foundationId===f.id)for(const fid of exerciseFocusIds(ex))linked.add(fid);
+  const needs=[...linked].map(id=>EA.focusById(id)).filter(Boolean).map(x=>EA.focusNeed(x));
+  return {f,score:needs.length?Math.max(...needs)+Math.min(20,needs.length*2):0};
+ }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);
+ return ranked[0]?.f||null;
+};
+const eaV5FoundationViewV6=foundationView;
+foundationView=function(fid){
+ const html=eaV5FoundationViewV6(fid);
+ const current=guidedSession?.current;
+ if(current?.kind!=='master'||current.id!==fid)return html;
+ return `<div class="ea-panel" style="margin-bottom:14px"><div class="eyebrow">ETAPA OPCIONAL DO TREINO GUIADO</div>
+ <p>Você pode investigar livremente e registrar anotações. Quando tiver feito o estudo, marque a conclusão ou troque por outro exercício.</p>
+ <div class="ea-inline-actions"><button class="btn green" onclick="EA.completeMasterStep()">Concluí o estudo · continuar →</button>
+ <button class="btn" onclick="EA.swapMasterForExercise()">Preferir exercício</button></div></div>`+html;
+};
+
+/* Sessões guiadas são contabilizadas por atividades realmente registradas.
+   Se faltar exercício, substituir por outro; não transformar ausência em conclusão. */
+EA.ensureGuided=function(){
+ if(!guidedSession?.active)return null;
+ if(!guidedSession.sessionId){guidedSession.sessionId=id('guide');guidedSession.startedAt=Date.now()}
+ if(!Number.isInteger(guidedSession.completedCount))guidedSession.completedCount=0;
+ if(!Array.isArray(guidedSession.plan))guidedSession.plan=[];
+ return guidedSession;
+};
+EA.replaceMissingItem=function(){
+ const s=EA.ensureGuided();if(!s)return null;
+ const current=s.plan[s.currentIndex];
+ if(current?.kind==='master'&&EA.foundationById(current.id))return current;
+ if(current?.kind!=='master'&&state.exercises[current?.kind]?.some(x=>x.id===current.id))return current;
+ const replacement=EA.buildPlan(s.intensity,3,{includeMaster:false});
+ const earlier=new Set(s.plan.slice(0,s.currentIndex).filter(x=>x.kind!=='master').map(x=>x.kind+'|'+x.id));
+ const next=replacement.find(x=>!earlier.has(x.kind+'|'+x.id))||replacement[0];
+ if(!next)return null;
+ s.plan[s.currentIndex]=next;persistGuided();return next;
+};
+EA.masterGuidedView=function(fid){
+ const f=EA.foundationById(fid);if(!f)return EA.setupView();
+ return `${pageHead('Treino guiado','Aprofundamento opcional')}<section class="ea-panel" style="max-width:750px">
+ <div class="eyebrow">ESTUDO DE MESTRES</div><h2>${esc(f.name)}</h2>
+ <p>O sistema relacionou este estudo aos princípios da rotina. Você decide o que investigar e registra suas próprias descobertas. Não existe nota de proficiência aqui.</p>
+ ${f.master?`<p><strong>Artista:</strong> ${esc(f.master)}</p>`:''}
+ <div class="ea-inline-actions"><button class="btn green" onclick="nav('foundation',{id:'${f.id}'})">Abrir estudo sugerido →</button>
+ <button class="btn" onclick="EA.swapMasterForExercise()">Prefiro outro exercício</button></div>
+ <p class="ea-review-note">Depois de realmente realizar o estudo, você pode registrá-lo como concluído. Pular esta sugestão não conta como conclusão.</p>
+ <button class="btn" onclick="EA.completeMasterStep()">Concluí este estudo · continuar →</button>
+ </section>`;
+};
+EA.swapMasterForExercise=function(){
+ const s=EA.ensureGuided(),item=s?.plan[s.currentIndex];if(item?.kind!=='master')return;
+ const fallback=item.fallback;
+ const alternative=fallback&&state.exercises[fallback.kind]?.some(x=>x.id===fallback.id)?fallback:
+  EA.buildPlan(s.intensity,3,{includeMaster:false})[0];
+ if(!alternative){route={page:'eaSetup'};render();return}
+ s.plan[s.currentIndex]=alternative;persistGuided();openNextGuidedExercise();
+};
+EA.completeMasterStep=function(){
+ const s=EA.ensureGuided(),item=s?.plan[s.currentIndex];if(item?.kind!=='master'||!EA.foundationById(item.id))return;
+ if(!Array.isArray(state.guidedStudies))state.guidedStudies=[];
+ state.guidedStudies.push({at:Date.now(),foundationId:item.id,sessionId:s.sessionId,via:'guided'});
+ s.completedCount++;s.currentIndex++;s.current=null;
+ save();persistGuided();openNextGuidedExercise();
+};
+const eaV5StartGuided=startGuidedTraining;
+startGuidedTraining=function(extra=false){
+ if(guidedSession?.active&&!extra){EA.ensureGuided();return openNextGuidedExercise()}
+ eaV5StartGuided(extra);
+ if(guidedSession?.active){EA.ensureGuided();persistGuided()}
+};
+openNextGuidedExercise=function(){
+ const s=EA.ensureGuided();if(!s)return;
+ if(s.currentIndex>=s.plan.length){EA.completeDay();return}
+ const item=EA.replaceMissingItem();
+ if(!item){s.current=null;persistGuided();route={page:'eaSetup'};render();return}
+ if(item.kind==='master'){
+  s.current={kind:'master',id:item.id};s.reason=item.reason;persistGuided();
+  route={page:'eaMaster',id:item.id};render();return;
+ }
+ s.current={kind:item.kind,id:item.id};s.reason=item.reason;
+ persistGuided();route={page:'exercise',kind:item.kind,id:item.id};render();
+ setTimeout(()=>document.querySelector('.exercise-header')?.scrollIntoView({behavior:'smooth',block:'start'}),100);
+};
+EA.advanceGuided=function(){
+ const s=EA.ensureGuided();if(!s||!s.current||s.current.kind==='master')return;
+ const log=state.exerciseSessions?.at(-1);
+ if(!log||log.via!=='guided'||log.exerciseId!==s.current.id||log.kind!==s.current.kind||log.at<s.startedAt)return;
+ // Associar explicitamente o log à sessão para não confundir atividades de dias diferentes.
+ log.sessionId=s.sessionId;s.completedCount++;
+ s.currentIndex++;s.current=null;
+ save();persistGuided();openNextGuidedExercise();
+};
+EA.completeDay=function(){
+ const s=EA.ensureGuided();if(!s)return;
+ const completed=s.completedCount;
+ const guidedLogs=(state.exerciseSessions||[]).filter(x=>x.sessionId===s.sessionId&&x.via==='guided').length;
+ const studies=(state.guidedStudies||[]).filter(x=>x.sessionId===s.sessionId).length;
+ const verified=completed===guidedLogs+studies&&completed>=3;
+ if(!verified){
+  if(EA.validExercises().length){
+   const replacement=EA.buildPlan(s.intensity,3,{includeMaster:false})[0];
+   if(replacement){s.plan.push(replacement);persistGuided();openNextGuidedExercise();return}
+  }
+  persistGuided();route={page:'eaSetup'};render();return;
+ }
+ if(!s.extra&&!EA.didToday()){
+  state.dailyCompletions.push({day:EA.date(),at:Date.now(),completed,exerciseCount:guidedLogs,
+   studyCount:studies,intensity:s.intensity,sessionId:s.sessionId});save();
+ }
+ guidedSession=null;persistGuided();route={page:'eaDone',extra:!!s.extra,finished:completed,intensity:s.intensity};render();
+ window.scrollTo({top:0,behavior:'smooth'});
+};
+const eaV5Render=render;
+render=function(){
+ if(route.page==='eaMaster'){
+  document.getElementById('backBtn').classList.remove('hidden');
+  document.getElementById('app').innerHTML=EA.masterGuidedView(route.id);return;
+ }
+ eaV5Render();
+};
+const eaV5GoBack=goBack;
+goBack=function(){if(route.page==='eaMaster')return nav('home');eaV5GoBack()};
+const eaV5SetupView=EA.setupView;
+EA.setupView=function(){
+ let html=eaV5SetupView();
+ if(guidedSession?.active&&guidedSession.completedCount>0)
+  html=html.replace('Falta conectar algumas partes.','Conclua o cadastro para continuar sua rotina.');
+ return html;
+};
+
+
+// v7 visual-only enhancement: a small thumbnail for the principle already highlighted on the home.
+const eaMinimalRender=render;
+render=function(){
+ eaMinimalRender();
+ if(route.page!=='home')return;
+ const f=EA.mainFocus?.();
+ const holder=document.querySelector('.ea-focus-preview');
+ if(!f||!holder)return;
+ const imageId=(Array.isArray(f.imageIds)&&f.imageIds.length?f.imageIds[0]:f.imageId);
+ if(!imageId)return;
+ const thumb=document.createElement('div');thumb.className='ea-focus-thumb';thumb.style.display='none';
+ holder.insertBefore(thumb,holder.firstChild);
+ Promise.resolve().then(()=>getImage(imageId)).then(record=>{
+  if(!record?.blob||!holder.isConnected)return;
+  const img=document.createElement('img');img.alt='Referência visual do Foco';
+  const url=URL.createObjectURL(record.blob);
+  img.onload=()=>URL.revokeObjectURL(url);
+  img.onerror=()=>{URL.revokeObjectURL(url);thumb.remove()};
+  img.src=url;thumb.appendChild(img);thumb.style.display='grid';
+ }).catch(()=>thumb.remove());
+};
+
+/* v9 — introduction and clear separation between challenge preference and daily intensity.
+   No exercise ratings or existing study data are migrated or reinterpreted. */
+EA.introStorageKey='ea-introduction-v9';
+EA.preferencesKey='ea-training-preferences-v9';
+EA.readPreferences=function(){
+ let values={};try{values=JSON.parse(localStorage.getItem(EA.preferencesKey)||'{}')||{}}catch{}
+ return {
+  difficulty:['accessible','middle','challenging'].includes(values.difficulty)?values.difficulty:'middle',
+  intensity:[null,'light','normal','hard'].includes(values.intensity)?values.intensity:null
+ };
+};
+EA.trainingPreferences=EA.readPreferences();
+EA.userIntensity=EA.trainingPreferences.intensity;
+EA.difficultyOffset={accessible:-.37,middle:0,challenging:.37};
+EA.storeTrainingPreferences=function(difficulty,intensity){
+ EA.trainingPreferences={difficulty,intensity};
+ try{localStorage.setItem(EA.preferencesKey,JSON.stringify(EA.trainingPreferences))}catch{}
+};
+// The initial preference influences recommendations; accumulated exercise history
+// progressively outweighs this self-selected starting point.
+const eaV8IdealChallenge=EA.idealChallenge;
+EA.idealChallenge=function(ex,focus,intensity,ctx){
+ const original=eaV8IdealChallenge(ex,focus,intensity,ctx);
+ const count=(ctx?.groups?.get(ex.foundationId+'|'+focus.id)||[]).length;
+ const factor=Math.max(.15,1/(1+count/5));
+ const bias=(EA.difficultyOffset[EA.trainingPreferences.difficulty]||0)*factor;
+ return EA.clamp(original+bias,.65,3.5);
+};
+const eaV8SelectIntensity=EA.selectIntensity;
+EA.selectIntensity=function(intensity){
+ if(![null,'light','normal','hard'].includes(intensity))return;
+ EA.userIntensity=intensity;
+ EA.storeTrainingPreferences(EA.trainingPreferences.difficulty,intensity);
+ eaV8SelectIntensity(intensity);
+};
+const eaV8TrainingViewV9=trainingView;
+trainingView=function(){
+ let html=eaV8TrainingViewV9();
+ const diffLabels={accessible:'Acessível',middle:'Intermediária',challenging:'Exigente'};
+ const current=diffLabels[EA.trainingPreferences.difficulty]||'Intermediária';
+ const extra=`<div class="ea-intro-note" style="margin:10px 0 19px"><button class="btn small" type="button" onclick="EA.openIntro(true)">Apresentação e preferências</button><span style="margin-left:10px">Dificuldade inicial: ${esc(current)}</span></div>`;
+ return html.replace('<div class="manual-label">',extra+'<div class="manual-label">');
+};
+EA.introState={step:0,difficulty:EA.trainingPreferences.difficulty,intensity:EA.trainingPreferences.intensity};
+EA.introFocusReturn=null;
+EA.introOptions=function(group,choices,selected){
+ return `<div class="ea-intro-options ${choices.length===3?'cols3':'cols2'}" aria-label="${group==='difficulty'?'Dificuldade inicial':'Intensidade da rotina'}">${choices.map(([value,label,description])=>`<button type="button" class="ea-intro-option" data-intro-choice="${value===null?'auto':value}" aria-pressed="${String(value===selected)}" onclick="EA.setIntroChoice('${group}',${value===null?'null':"'"+value+"'"})"><strong>${label}</strong><span>${description}</span></button>`).join('')}</div>`;
+};
+EA.renderIntro=function(){
+ const target=document.getElementById('eaIntroBody');if(!target)return;
+ const s=EA.introState;
+ let main='';
+ if(s.step===0){
+  main=`<div class="ea-intro-step">01 / 03 · Apresentação</div><h2 id="eaIntroTitle" tabindex="-1">Como funciona o Evolução Art</h2>
+   <p class="ea-intro-desc" id="eaIntroDescription">Um lugar para estudar desenho e pintura. Você pode escolher o que fazer ou seguir uma rotina recomendada.</p>
+   <div class="ea-intro-sections">
+    <div class="ea-intro-feature"><strong>Focos</strong><span>Princípios para levar aos desenhos. Depois de tentar aplicá-los, você avalia a facilidade de lembrar e usar cada um.</span></div>
+    <div class="ea-intro-feature"><strong>Treino</strong><span>Exercícios de desenho e pintura, com referências, dificuldade e histórico de prática. Também funciona manualmente.</span></div>
+    <div class="ea-intro-feature"><strong>Estudo de Mestres</strong><span>Investigue obras, compare resultados e guarde descobertas. Os estudos são livres e opcionais.</span></div>
+    <div class="ea-intro-feature"><strong>Treinar agora</strong><span>Usa as avaliações de Focos e exercícios para recomendar uma sequência curta, sem impedir suas escolhas.</span></div>
+   </div>`;
+ }else if(s.step===1){
+  main=`<div class="ea-intro-step">02 / 03 · Preferências</div><h2 id="eaIntroTitle" tabindex="-1">Dificuldade inicial dos exercícios</h2>
+   <p class="ea-intro-desc" id="eaIntroDescription">Escolha o desafio com que prefere começar. É apenas um ponto de partida: o histórico das práticas ajustará as próximas recomendações.</p>
+   ${EA.introOptions('difficulty',[
+    ['accessible','Mais acessível','Começar por desafios mais simples.'],
+    ['middle','Intermediária','Começar por um nível intermediário.'],
+    ['challenging','Mais exigente','Começar por desafios mais complexos.']
+   ],s.difficulty)}
+   <p class="ea-intro-note">Esta escolha não é uma nota sobre sua habilidade. Você pode alterá-la depois.</p>`;
+ }else{
+  main=`<div class="ea-intro-step">03 / 03 · Preferências</div><h2 id="eaIntroTitle" tabindex="-1">Intensidade da rotina</h2>
+   <p class="ea-intro-desc" id="eaIntroDescription">Defina o esforço desejado para os dias de treino. A rotina principal continua com três atividades; a intensidade muda a exigência dos desafios.</p>
+   ${EA.introOptions('intensity',[
+    [null,'Automática','O sistema alterna dias leves e mais exigentes.'],
+    ['light','Leve','Práticas menos exigentes no dia.'],
+    ['normal','Moderada','Desafios próximos da dificuldade habitual.'],
+    ['hard','Intensa','Desafios mais exigentes no dia.']
+   ],s.intensity)}
+   <p class="ea-intro-note">Você ainda poderá escolher outra intensidade antes de iniciar qualquer treino.</p>`;
+ }
+ const previous=s.step?'<button type="button" class="btn" onclick="EA.introBack()">Voltar</button>':'<span></span>';
+ const proceed=s.step<2?'<button type="button" class="btn primary" onclick="EA.introNext()">Continuar →</button>':
+  '<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end"><button type="button" class="btn" onclick="EA.introFinish(false)">Entrar no app</button><button type="button" class="btn primary" onclick="EA.introFinish(true)">Começar rotina →</button></div>';
+ target.innerHTML=main+`<div class="ea-intro-footer">${previous}${proceed}</div>`;
+ target.querySelector('h2')?.focus({preventScroll:true});
+};
+EA.setIntroChoice=function(group,value){
+ if(group==='difficulty'&&['accessible','middle','challenging'].includes(value))EA.introState.difficulty=value;
+ if(group==='intensity'&&[null,'light','normal','hard'].includes(value))EA.introState.intensity=value;
+ const selected=EA.introState[group];
+ const choices=document.querySelectorAll('#eaIntroBody .ea-intro-option');
+ choices.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.introChoice===(selected===null?'auto':selected))));
+};
+EA.introNext=function(){if(EA.introState.step>=2)return;EA.introState.step++;EA.renderIntro()};
+EA.introBack=function(){if(EA.introState.step<=0)return;EA.introState.step--;EA.renderIntro()};
+EA.openIntro=function(force=false){
+ if(!force){try{if(localStorage.getItem(EA.introStorageKey)==='done')return}catch{}}
+ EA.introFocusReturn=document.activeElement;
+ EA.introState={step:0,difficulty:EA.trainingPreferences.difficulty,intensity:EA.trainingPreferences.intensity};
+ const modal=document.getElementById('eaWelcome');if(!modal)return;
+ modal.hidden=false;document.body.classList.add('ea-intro-open');document.querySelector('.shell').inert=true;EA.renderIntro();
+};
+EA.introFinish=function(begin){
+ const s=EA.introState;
+ EA.storeTrainingPreferences(s.difficulty,s.intensity);
+ EA.userIntensity=s.intensity;
+ try{localStorage.setItem(EA.introStorageKey,'done')}catch{}
+ const modal=document.getElementById('eaWelcome');if(modal)modal.hidden=true;
+ document.body.classList.remove('ea-intro-open');document.querySelector('.shell').inert=false;
+ render();
+ if(begin)startGuidedTraining(EA.didToday());
+ else if(EA.introFocusReturn?.isConnected)EA.introFocusReturn.focus({preventScroll:true});
+ else document.querySelector('.home-train-now')?.focus({preventScroll:true});
+};
+EA.installAudio();
+render();
+EA.openIntro();
+
+</script>
+</body>
+</html>
