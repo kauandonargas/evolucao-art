@@ -659,6 +659,60 @@ textarea:focus-visible,select:focus-visible {outline:2px solid #f4f4f4!important
 @media(max-width:980px){.ea-home-content{max-width:520px;margin-top:24px}}
 @media(max-width:530px){.ea-home-banner{height:165px;border-radius:0}.ea-home-content{margin-top:20px;padding:0 14px}.ea-home-banner-actions{right:10px;bottom:10px}.ea-home-content .choice{min-height:75px}}
 
+/* v11 home refinements: quieter cover controls and centered navigation */
+.ea-home-content{display:grid;gap:18px}
+.home-center-grid{max-width:820px;margin:0 auto;width:100%}
+.home-subtle-actions{display:flex;justify-content:center;margin-top:-4px}
+.linklike{appearance:none;border:none;background:none;color:#8c8c8c;font:inherit;font-size:12px;line-height:1.4;padding:6px 8px;cursor:pointer;border-radius:8px}
+.linklike:hover,.linklike:focus-visible{color:#f0f0f0;background:rgba(255,255,255,.04)}
+.ea-home-banner{position:relative;width:100%;height:clamp(170px,28vw,250px);border:1px solid rgba(255,255,255,.08);background:#111;overflow:hidden;border-radius:14px;isolation:isolate;margin:0 auto}
+.ea-home-banner.has-image{background:#171717}
+.ea-home-banner-media,.ea-home-banner-empty{position:absolute;inset:0}
+.ea-home-banner-empty{display:grid;place-items:center;color:#8a8a8a;font-size:13px;letter-spacing:.01em}
+.ea-home-banner img{width:100%;height:100%;object-fit:cover;object-position:50% var(--banner-pos,50%);display:block;filter:saturate(.96)}
+.ea-home-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,.08), rgba(0,0,0,.18));pointer-events:none}
+.ea-home-banner-toolbar{position:absolute;right:12px;top:12px;display:flex;gap:8px;align-items:center;z-index:2;opacity:0;transform:translateY(-4px);transition:opacity .18s ease, transform .18s ease;pointer-events:none}
+.ea-home-banner:hover .ea-home-banner-toolbar,.ea-home-banner:focus-within .ea-home-banner-toolbar,.ea-home-banner.menu-open .ea-home-banner-toolbar{opacity:1;transform:none;pointer-events:auto}
+.ea-banner-iconbtn{display:inline-flex;align-items:center;justify-content:center;min-width:32px;height:32px;padding:0 10px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(14,14,14,.5);backdrop-filter:blur(10px);color:#fafafa;font-size:12px;cursor:pointer}
+.ea-banner-iconbtn:hover,.ea-banner-iconbtn:focus-visible{background:rgba(14,14,14,.82);border-color:rgba(255,255,255,.36)}
+.ea-banner-pop{position:absolute;right:12px;top:50px;z-index:3;min-width:220px;background:rgba(20,20,20,.96);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:8px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.ea-banner-pop[hidden]{display:none!important}
+.ea-banner-pop .menuitem{display:flex;width:100%;text-align:left;align-items:center;justify-content:space-between;gap:14px;border:none;background:none;color:#efefef;padding:9px 10px;border-radius:8px;font:inherit;font-size:13px;cursor:pointer}
+.ea-banner-pop .menuitem small{color:#8f8f8f;font-size:11px}
+.ea-banner-pop .menuitem:hover,.ea-banner-pop .menuitem:focus-visible{background:rgba(255,255,255,.05)}
+.ea-banner-pop .menu-sep{height:1px;background:rgba(255,255,255,.08);margin:6px 2px}
+.ea-banner-pop label.menuitem input{display:none}
+.ea-banner-adjust{padding:10px}
+.ea-banner-adjust label{display:flex;justify-content:space-between;gap:12px;color:#d5d5d5;font-size:12px;margin-bottom:8px}
+.ea-banner-adjust input[type=range]{width:100%}
+.ea-banner-adjust .hint{margin:8px 0 0;color:#8d8d8d;font-size:11px;line-height:1.45}
+@media (max-width:620px){
+ .ea-home-content{gap:14px}
+ .ea-home-banner{height:160px;border-radius:12px}
+ .ea-home-banner-toolbar{opacity:1;transform:none;pointer-events:auto}
+ .ea-banner-pop{right:10px;left:10px;top:auto;bottom:10px;min-width:0}
+}
+
+
+/* v11: keep the secondary menu visually subordinate to the artwork. */
+.ea-home-content .home-center-grid{order:2;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.ea-home-content .home-subtle-actions{order:3}
+.ea-home-content .home-center-grid .choice{min-height:94px;padding:16px 12px;border-radius:10px;box-shadow:none;transform:none}
+.ea-home-content .home-center-grid .choice h3{font:500 15px/1.4 ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;margin:0;color:#e9e9e9}
+.ea-home-content .home-center-grid .choice p{font-size:11px;line-height:1.5;margin-top:4px;color:#878787}
+.ea-home-content .home-center-grid .choice .num{display:none}
+.ea-home-content .home-center-grid .choice:hover{border-color:#525252;background:#222}
+.ea-home-content .ea-home-banner{order:1}
+.ea-home-banner:focus-within .ea-home-banner-toolbar{opacity:1;transform:none;pointer-events:auto}
+.ea-home-banner img {object-position:center var(--banner-pos,50%)}
+.ea-home-banner .ea-banner-pop{box-sizing:border-box}
+.ea-home-banner .ea-banner-pop label.menuitem{cursor:pointer}
+@media(max-width:680px){
+ .ea-home-content .home-center-grid{grid-template-columns:1fr;max-width:520px}
+ .ea-home-content .home-center-grid .choice{min-height:64px;padding:10px 14px}
+ .ea-home-content .home-center-grid .choice p{margin-top:2px}
+}
+
 </style>
 </head>
 <body>
@@ -1760,10 +1814,131 @@ render=function(){
  else EA.bannerLoadToken++;
 };
 
+/* v11 — edição discreta de capa e opções centrais; não modifica exercícios, Focos ou dados. */
+EA.homeBannerPosKey='ea-home-banner-pos-y-v1';
+EA.bannerMenuOpen=false;
+EA.bannerAdjustOpen=false;
+EA.getHomeBannerPos=function(){
+ let pos;try{const raw=localStorage.getItem(EA.homeBannerPosKey);pos=raw===null?50:Number(raw)}catch{pos=50}
+ return Number.isFinite(pos)?Math.max(0,Math.min(100,pos)):50;
+};
+EA.setHomeBannerPos=function(value){
+ const pos=Math.max(0,Math.min(100,Number(value)||0));
+ try{localStorage.setItem(EA.homeBannerPosKey,String(pos))}catch{}
+ const image=document.querySelector('#eaHomeBannerPicture img');
+ if(image)image.style.objectPosition=`center ${pos}%`;
+ const output=document.getElementById('eaBannerPosValue');
+ if(output)output.textContent=`${Math.round(pos)}%`;
+};
+EA.toggleBannerMenu=function(force){
+ EA.bannerMenuOpen=typeof force==='boolean'?force:!EA.bannerMenuOpen;
+ if(!EA.bannerMenuOpen)EA.bannerAdjustOpen=false;
+ const banner=document.getElementById('eaHomeBanner');
+ const menu=document.getElementById('eaBannerMenu');
+ if(banner){banner.classList.toggle('menu-open',EA.bannerMenuOpen)}
+ if(menu){menu.hidden=!EA.bannerMenuOpen;menu.innerHTML=EA.bannerMenuInner()}
+ const control=document.getElementById('eaBannerMenuButton');
+ if(control)control.setAttribute('aria-expanded',String(EA.bannerMenuOpen));
+};
+EA.toggleBannerAdjust=function(){
+ EA.bannerAdjustOpen=!EA.bannerAdjustOpen;
+ EA.toggleBannerMenu(true);
+ requestAnimationFrame(()=>document.getElementById('eaBannerPosSlider')?.focus({preventScroll:true}));
+};
+EA.bannerMenuInner=function(){
+ const hasBanner=!!localStorage.getItem(EA.homeBannerKey);
+ if(EA.bannerAdjustOpen&&hasBanner){const pos=EA.getHomeBannerPos();return `<div class="ea-banner-adjust">
+   <label for="eaBannerPosSlider"><span>Enquadramento</span><strong id="eaBannerPosValue">${Math.round(pos)}%</strong></label>
+   <input id="eaBannerPosSlider" type="range" min="0" max="100" value="${pos}" oninput="EA.setHomeBannerPos(this.value)">
+   <p class="hint">Mova o corte da imagem para cima ou para baixo.</p>
+   <button type="button" class="menuitem" onclick="EA.bannerAdjustOpen=false;EA.toggleBannerMenu(true)">Voltar</button></div>`}
+ return `<label class="menuitem">${hasBanner?'Trocar capa':'Escolher capa'}<small>JPG, PNG ou WebP</small>
+     <input type="file" accept="image/*" onchange="EA.onBannerFile(this.files[0]);this.value=''"/></label>
+     ${hasBanner?`<button type="button" class="menuitem" onclick="EA.toggleBannerAdjust()">Ajustar enquadramento<small>Reposicionar</small></button>
+     <div class="menu-sep"></div><button type="button" class="menuitem" onclick="EA.toggleBannerMenu(false);EA.removeHomeBanner()">Remover capa</button>`:''}`;
+};
+EA.homeBannerHtml=function(){
+ const hasBanner=!!localStorage.getItem(EA.homeBannerKey);
+ return `<section class="ea-home-banner ${hasBanner?'has-image':''}" id="eaHomeBanner" aria-label="Capa da página inicial">
+   <div id="eaHomeBannerPicture" class="${hasBanner?'ea-home-banner-media':'ea-home-banner-empty'}">${hasBanner?'':'Sua capa, se quiser.'}</div>
+   <div class="ea-home-banner-toolbar"><button id="eaBannerMenuButton" type="button" class="ea-banner-iconbtn"
+     title="Personalizar capa" aria-label="Personalizar capa" aria-haspopup="menu" aria-expanded="false" onclick="EA.toggleBannerMenu()">${hasBanner?'Editar capa':'Adicionar capa'}</button></div>
+   <div class="ea-banner-pop" id="eaBannerMenu" ${EA.bannerMenuOpen?'':'hidden'}>${EA.bannerMenuInner()}</div>
+ </section>`;
+};
+const eaV10ShowBanner=EA.showHomeBanner;
+EA.showHomeBanner=async function(){
+ await eaV10ShowBanner();
+ const img=document.querySelector('#eaHomeBannerPicture img');
+ if(img)img.style.objectPosition=`center ${EA.getHomeBannerPos()}%`;
+};
+const eaV10SetBanner=EA.setHomeBanner;
+EA.onBannerFile=async function(file){
+ if(!file)return;
+ const old=localStorage.getItem(EA.homeBannerKey);
+ EA.toggleBannerMenu(false);
+ await eaV10SetBanner(file);
+ const next=localStorage.getItem(EA.homeBannerKey);
+ if(next!==old){try{localStorage.setItem(EA.homeBannerPosKey,'50')}catch{}EA.setHomeBannerPos(50)}
+};
+const eaV10RemoveBanner=EA.removeHomeBanner;
+EA.removeHomeBanner=async function(){
+ EA.toggleBannerMenu(false);
+ await eaV10RemoveBanner();
+ try{localStorage.removeItem(EA.homeBannerPosKey)}catch{}
+};
+// Preserve all original views; only replace the final home view.
+homeView=function(){
+ return `${EA.homeBannerHtml()}<div class="ea-home-content">
+   <div class="choice-grid home-grid home-center-grid">
+     <button class="choice" onclick="nav('training')"><div><h3>Treino</h3><p>Desenho e pintura</p></div></button>
+     <button class="choice" onclick="nav('masters')"><div><h3>Estudo de Mestres</h3><p>Observar, comparar e registrar</p></div></button>
+     <button class="choice" onclick="nav('focus')"><div><h3>Focos</h3><p>Princípios para incorporar</p></div></button>
+   </div>
+   <div class="home-subtle-actions"><button type="button" class="linklike" onclick="EA.openSettings()">Preferências e rotina</button></div>
+ </div>`;
+};
+// Settings are explicitly opened by the user; onboarding still runs only on first launch.
+EA.settingsOnly=false;
+EA.openSettings=function(){
+ EA.settingsOnly=true;
+ EA.openIntro(true);
+ EA.introState.step=1;
+ EA.renderIntro();
+};
+const eaV9RenderIntro=EA.renderIntro;
+EA.renderIntro=function(){
+ eaV9RenderIntro();
+ if(!EA.settingsOnly||EA.introState.step!==2)return;
+ const target=document.getElementById('eaIntroBody');if(!target)return;
+ const begin=target.querySelector('button[onclick="EA.introFinish(true)"]');if(begin)begin.remove();
+ const leave=target.querySelector('button[onclick="EA.introFinish(false)"]');
+ if(leave){leave.textContent='Salvar preferências';leave.classList.add('primary')}
+};
+const eaV9IntroFinish=EA.introFinish;
+EA.introFinish=function(begin){
+ const settingsOnly=EA.settingsOnly;
+ EA.settingsOnly=false;
+ eaV9IntroFinish(settingsOnly?false:begin);
+};
+const eaV9TrainingView=trainingView;
+trainingView=function(){
+ return eaV9TrainingView().replace('onclick="EA.openIntro(true)"','onclick="EA.openSettings()"');
+};
+// Close the editing menu when clicking elsewhere, without changing the other pages.
+document.addEventListener('pointerdown',event=>{
+ if(!EA.bannerMenuOpen||route.page!=='home')return;
+ if(!document.getElementById('eaHomeBanner')?.contains(event.target))EA.toggleBannerMenu(false);
+});
+document.addEventListener('keydown',event=>{
+ if(event.key==='Escape'&&EA.bannerMenuOpen){EA.toggleBannerMenu(false);document.getElementById('eaBannerMenuButton')?.focus()}
+});
+
 EA.installAudio();
 render();
 EA.openIntro();
 
 </script>
 </body>
+</html>
 </html>

@@ -66,3 +66,18 @@ test('v10 banner exists and stays isolated to the home view', () => {
  assert.ok(html.includes("if(html.startsWith(heading))html=html.slice(heading.length)"));
  assert.ok(html.includes("if(route.page==='home')void EA.showHomeBanner()"));
 });
+
+test('v11 cover crop, discreet actions and home navigation', () => {
+ const html=fs.readFileSync(path.join(__dirname,'../renderer/index.html'),'utf8');
+ for(const token of [
+  'EA.getHomeBannerPos=function','EA.setHomeBannerPos=function','EA.toggleBannerMenu=function',
+  'EA.bannerMenuInner=function','EA.openSettings=function','home-center-grid',
+  'EA.homeBannerPosKey','Preferências e rotina','Ajustar enquadramento'
+ ]) assert.ok(html.includes(token),token);
+ assert.ok(html.includes("EA.bannerMenuOpen=false"));
+ assert.ok(html.includes("if(!EA.settingsOnly||EA.introState.step!==2)return"));
+});
+test('v11 retains training, focuses and masters instead of replacing legacy logic', () => {
+ const html=fs.readFileSync(path.join(__dirname,'../renderer/index.html'),'utf8');
+ for(const token of ['function trainingView()','function exerciseView(','function focusView()','function mastersView()','function newExerciseView']) assert.ok(html.includes(token),token);
+});
