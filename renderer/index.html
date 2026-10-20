@@ -636,6 +636,29 @@ textarea:focus-visible,select:focus-visible {outline:2px solid #f4f4f4!important
 .ea-intro-note{font-size:12px;color:#858585;line-height:1.5;margin-top:7px}
 @media(max-width:530px){.ea-intro{padding:10px}.ea-intro-sheet{max-height:calc(100dvh - 20px);padding:21px 19px}.ea-intro-feature{grid-template-columns:1fr;gap:4px}.ea-intro-options.cols3{grid-template-columns:1fr}.ea-intro-option{min-height:0}.ea-intro-footer{align-items:stretch}.ea-intro-footer .btn{flex:1}}
 
+
+/* Home cover: a single personal artwork, in a restrained Notion-style banner. */
+#app:has(.ea-home-banner) { width:100%; }
+.ea-home-banner {position:relative;width:100%;height:clamp(165px,24vw,280px);background:#202020;overflow:hidden;border-radius:5px;isolation:isolate;margin:0 auto}
+.ea-home-banner.has-image {background:#171717}
+.ea-home-banner img {width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.ea-home-banner-actions {position:absolute;right:14px;bottom:12px;display:flex;gap:7px;align-items:center;z-index:2}
+.ea-home-banner-action {display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:32px;padding:6px 12px;border:1px solid rgba(255,255,255,.38);border-radius:5px;background:rgba(20,20,20,.8);backdrop-filter:blur(6px);color:#fff;font-size:12px;font-weight:500;cursor:pointer}
+.ea-home-banner-action:hover {background:rgba(16,16,16,.96);border-color:rgba(255,255,255,.65)}
+.ea-home-banner-action:focus-visible {outline:2px solid white;outline-offset:2px}
+.ea-home-banner input[type=file] {display:none}
+.ea-home-banner-empty {position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#777;font-size:13px;pointer-events:none}
+.ea-home-content {max-width:900px;margin:36px auto 0;display:flex;flex-direction:column;gap:0;padding:0 12px}
+.ea-home-content .home-grid {order:1}
+.ea-home-content .home-train-wrap {order:2;margin:18px auto 0}
+.ea-home-content .ea-focus-preview {order:3;margin:27px 0 0;width:100%}
+.ea-home-content .ea-inline-summary {order:4;margin:16px 0 0!important}
+.ea-home-content .choice {min-height:95px;padding:15px 17px;text-align:center;align-items:center;justify-content:center}
+.ea-home-content .choice h2 {font-size:16px!important}
+.ea-home-content .choice p {font-size:11px;text-align:center}
+@media(max-width:980px){.ea-home-content{max-width:520px;margin-top:24px}}
+@media(max-width:530px){.ea-home-banner{height:165px;border-radius:0}.ea-home-content{margin-top:20px;padding:0 14px}.ea-home-banner-actions{right:10px;bottom:10px}.ea-home-content .choice{min-height:75px}}
+
 </style>
 </head>
 <body>
@@ -1673,6 +1696,70 @@ EA.introFinish=function(begin){
  else if(EA.introFocusReturn?.isConnected)EA.introFocusReturn.focus({preventScroll:true});
  else document.querySelector('.home-train-now')?.focus({preventScroll:true});
 };
+
+/* v10 - capa personalizável apenas na home. Não altera práticas, Focos ou dados existentes. */
+EA.homeBannerKey='ea-home-banner-id-v1';
+EA.bannerLoadToken=0;
+EA.homeBannerHtml=function(){
+ const hasBanner=Boolean(localStorage.getItem(EA.homeBannerKey));
+ return `<section class="ea-home-banner ${hasBanner?'has-image':''}" id="eaHomeBanner" aria-label="Capa da página inicial">
+  <div id="eaHomeBannerPicture" class="ea-home-banner-empty">${hasBanner?'':'Sua imagem de capa'}</div>
+  <div class="ea-home-banner-actions">
+   <label class="ea-home-banner-action" title="Selecionar imagem de capa">${hasBanner?'Trocar capa':'Adicionar capa'}<input type="file" accept="image/*" onchange="EA.setHomeBanner(this.files[0])"></label>
+   ${hasBanner?'<button type="button" class="ea-home-banner-action" onclick="EA.removeHomeBanner()">Remover</button>':''}
+  </div>
+ </section>`;
+};
+EA.showHomeBanner=async function(){
+ const current=localStorage.getItem(EA.homeBannerKey),token=++EA.bannerLoadToken;
+ if(!current)return;
+ try{
+  const image=await getImage(current);
+  const holder=document.getElementById('eaHomeBannerPicture');
+  if(token!==EA.bannerLoadToken||!holder?.isConnected||route.page!=='home'||localStorage.getItem(EA.homeBannerKey)!==current)return;
+  if(!image?.blob){holder.textContent='Imagem indisponível · troque a capa';return}
+  const url=URL.createObjectURL(image.blob),img=document.createElement('img');
+  img.alt='Imagem escolhida para a capa do Evolução Art';
+  img.onload=()=>URL.revokeObjectURL(url);
+  img.onerror=()=>{URL.revokeObjectURL(url);holder.textContent='Não foi possível exibir a capa'};
+  holder.replaceChildren(img);img.src=url;
+ }catch(e){console.warn('Falha ao carregar a capa',e)}
+};
+EA.setHomeBanner=async function(file){
+ if(!file)return;
+ if(!file.type.startsWith('image/'))return alert('Escolha um arquivo de imagem.');
+ const previous=localStorage.getItem(EA.homeBannerKey);
+ let next=null;
+ try{
+  next=await putImage(file,{kind:'home-banner'});
+  localStorage.setItem(EA.homeBannerKey,next);
+ }catch(e){
+  if(next){try{await deleteImage(next)}catch{}}
+  return alert('Não foi possível salvar a capa. A imagem anterior foi preservada.');
+ }
+ render();
+ if(previous&&previous!==next){try{await deleteImage(previous)}catch(e){console.warn('Falha ao remover capa anterior',e)}}
+};
+EA.removeHomeBanner=async function(){
+ const previous=localStorage.getItem(EA.homeBannerKey);if(!previous)return;
+ try{localStorage.removeItem(EA.homeBannerKey)}catch{return alert('Não foi possível remover a capa.')}
+ render();
+ try{await deleteImage(previous)}catch(e){console.warn('A imagem removida ficou no armazenamento',e)}
+};
+const eaV9HomeBeforeBanner=homeView;
+homeView=function(){
+ let html=eaV9HomeBeforeBanner();
+ const heading=pageHead('Sistema','O que você vai fazer?');
+ if(html.startsWith(heading))html=html.slice(heading.length);
+ return EA.homeBannerHtml()+`<div class="ea-home-content">${html}</div>`;
+};
+const eaV9RenderBeforeBanner=render;
+render=function(){
+ eaV9RenderBeforeBanner();
+ if(route.page==='home')void EA.showHomeBanner();
+ else EA.bannerLoadToken++;
+};
+
 EA.installAudio();
 render();
 EA.openIntro();

@@ -59,3 +59,10 @@ test('electron settings preserve profile and security', () => {
  assert.ok(m.includes('contextIsolation: true'));
  assert.ok(m.includes('sandbox: true'));
 });
+
+test('v10 banner exists and stays isolated to the home view', () => {
+ const html=fs.readFileSync(path.join(__dirname,'../renderer/index.html'),'utf8');
+ for (const symbol of ['EA.homeBannerHtml','EA.showHomeBanner','EA.setHomeBanner','EA.removeHomeBanner','ea-home-banner-id-v1']) assert.ok(html.includes(symbol), symbol);
+ assert.ok(html.includes("if(html.startsWith(heading))html=html.slice(heading.length)"));
+ assert.ok(html.includes("if(route.page==='home')void EA.showHomeBanner()"));
+});
