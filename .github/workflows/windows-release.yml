@@ -41,6 +41,13 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git tag $version
           git push origin $version
+      - name: Preparar uma única Release no GitHub
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $version = "v0.1.${{ github.run_number }}"
+          gh release create $version --title "Evolução Art $version" --notes "Instalador Windows e atualização automática." --verify-tag
       - name: Gerar instalador NSIS e publicar atualização
         run: npx electron-builder --win nsis --x64 --publish always
         env:
