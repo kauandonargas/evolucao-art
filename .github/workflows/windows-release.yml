@@ -33,16 +33,25 @@ jobs:
         run: npm run check
       - name: Definir versão nova e crescente
         run: node scripts/set-ci-version.cjs
+      - name: Criar tag Git para a versão
+        shell: pwsh
+        run: |
+          $version = "v0.1.${{ github.run_number }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag $version
+          git push origin $version
       - name: Gerar instalador NSIS e publicar atualização
         run: npx electron-builder --win nsis --x64 --publish always
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
       - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
         with:
           name: Evolucao-Art-Windows-${{ github.run_number }}
           path: |
             dist/*.exe
             dist/*.yml
             dist/*.blockmap
-          if-no-files-found: error
+          if-no-files-found: warn
