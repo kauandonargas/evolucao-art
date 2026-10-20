@@ -1,0 +1,38 @@
+{
+  "schema": "evolucao-art.import/v1",
+  "packageId": "exemplo-luz-sombra-v1",
+  "name": "Exemplo didático de luz e sombra",
+  "foundations": [
+    {
+      "key": "luz",
+      "name": "Luz e sombra",
+      "complexity": 2,
+      "focusKeys": [
+        "separacao-luz-sombra"
+      ]
+    }
+  ],
+  "focuses": [
+    {
+      "key": "separacao-luz-sombra",
+      "title": "Separação de luz e sombra",
+      "concept": "Distinguir as grandes massas de luz e sombra.",
+      "microSkill": "Antes de detalhar, identifique a separação entre luz e sombra."
+    }
+  ],
+  "exercises": [
+    {
+      "key": "esferas-facil",
+      "title": "Esferas — separação de luz e sombra",
+      "area": "drawing",
+      "foundationKey": "luz",
+      "focusKeys": [
+        "separacao-luz-sombra"
+      ],
+      "difficulty": "easy",
+      "withReference": 3,
+      "withoutReference": 1,
+      "instructions": "Desenhe esferas e separe luz e sombra antes das transições."
+    }
+  ]
+}
