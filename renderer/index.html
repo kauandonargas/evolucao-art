@@ -902,6 +902,9 @@ textarea:focus-visible,select:focus-visible {outline:2px solid #f4f4f4!important
 .ea-v15-figure .ea-v15-image-actions [data-v15-delete]:hover{background:#62312f}
 .ea-v17-undo{border:1px solid #6b5c3b;border-radius:6px;background:#242016;color:#e8d2a4;padding:7px 11px;font-size:12px;cursor:pointer}
 .ea-v17-undo[hidden]{display:none!important}
+.ea-v15-figure[data-v15-align=center]{margin-left:auto;margin-right:auto}
+.ea-v15-figure[data-v15-align=right]{margin-left:auto;margin-right:0}
+.ea-v15-figure[data-v15-align=left]{margin-left:0;margin-right:auto}
 /* END EA_IMAGE_ACTIONS_v17 */
 </style>
 </head>
@@ -2971,8 +2974,8 @@ EA.v15BlockHtml=function(block,editing){
  if(block.type!=='image')return '';
  const key=editing?(block.localKey||(block.localKey=EA.v15Key())):'';
  const img=block.imageId?`data-v14-image="${esc(block.imageId)}"`:block.file?`data-v15-file="${esc(key)}"`:'';
- const width=EA.v15Pct(block.widthPct);
- return `<figure class="ea-v15-figure" style="width:${width}%" ${editing?`contenteditable="false" draggable="true" tabindex="0" data-v15-key="${esc(key)}"`:''} ${block.imageId?`data-v15-image-id="${esc(block.imageId)}"`:''} ${editing&&block.file?`data-v15-local="${esc(key)}"`:''} data-v15-width="${width}">
+ const width=EA.v15Pct(block.widthPct),align=['left','center','right'].includes(block.align)?block.align:'left';
+ return `<figure class="ea-v15-figure" style="width:${width}%" data-v15-align="${align}" ${editing?`contenteditable="false" draggable="true" tabindex="0" data-v15-key="${esc(key)}"`:''} ${block.imageId?`data-v15-image-id="${esc(block.imageId)}"`:''} ${editing&&block.file?`data-v15-local="${esc(key)}"`:''} data-v15-width="${width}">
  <img ${img} alt="Imagem do Foco" loading="lazy">
  ${editing?`<div class="ea-v15-image-actions"><button type="button" title="Arraste a imagem para movê-la" aria-label="Mover imagem">Arrastar</button><button type="button" data-v15-delete title="Remover imagem" aria-label="Remover imagem">Remover</button></div><span class="ea-v15-resize" data-v15-resize title="Arraste para redimensionar" role="button" aria-label="Redimensionar imagem"></span>`:''}
  </figure>`;
@@ -3117,7 +3120,7 @@ EA.v15Collect=function(){
   if(node.nodeType!==1)continue;
   if(node.matches('figure[data-v15-key]')){
    const imageId=node.dataset.v15ImageId||undefined,localKey=node.dataset.v15Local||undefined;
-   if(imageId||localKey)blocks.push({type:'image',imageId,localKey,widthPct:EA.v15Pct(node.dataset.v15Width)});
+   if(imageId||localKey)blocks.push({type:'image',imageId,localKey,widthPct:EA.v15Pct(node.dataset.v15Width),align:node.dataset.v15Align||'left'});
    continue;
   }
   const text=node.innerText?.trim()||node.textContent?.trim()||'';
@@ -3140,7 +3143,7 @@ EA.v14SavePage=async function(){
    if(block.type==='text'){blocks.push({type:'text',...(block.role?{role:block.role}:{}),text:block.text});continue}
    let imageId=block.imageId;
    if(block.localKey){const file=EA.v15Files.get(block.localKey);if(!file)throw new Error('Imagem temporária não encontrada');imageId=await putImage(file,{kind:'focus'});uploaded.push(imageId)}
-   if(imageId)blocks.push({type:'image',imageId,widthPct:EA.v15Pct(block.widthPct)});
+   if(imageId)blocks.push({type:'image',imageId,widthPct:EA.v15Pct(block.widthPct),align:['left','center','right'].includes(block.align)?block.align:'left'});
   }
   f.title=title;f.concept=collected.concept;f.microSkill=collected.microSkill;
   f.pageBlocks=blocks;f.imageIds=blocks.filter(b=>b.type==='image').map(b=>b.imageId);f.imageId=f.imageIds[0]||null;
@@ -3335,7 +3338,7 @@ render=function(){
    '<button type="button" data-v17-image="up" title="Mover imagem para cima" aria-label="Mover imagem para cima">↑</button>'+
    '<button type="button" data-v17-image="down" title="Mover imagem para baixo" aria-label="Mover imagem para baixo">↓</button>'+
    '<button type="button" data-v17-image="smaller" title="Diminuir imagem" aria-label="Diminuir imagem">−</button>'+
-   '<button type="button" data-v17-image="larger" title="Aumentar imagem" aria-label="Aumentar imagem">+</button>');
+   '<button type="button" data-v17-image="larger" title="Aumentar imagem" aria-label="Aumentar imagem">+</button>'+'<button type="button" data-v17-image="left" title="Alinhar à esquerda" aria-label="Alinhar à esquerda">Esq.</button>'+'<button type="button" data-v17-image="center" title="Centralizar imagem" aria-label="Centralizar imagem">Centro</button>'+'<button type="button" data-v17-image="right" title="Alinhar à direita" aria-label="Alinhar à direita">Dir.</button>');
   return html.replace('>Remover</button>','>Excluir</button>');
  };
  const originalEditor=EA.v14FocusEditor;
@@ -3370,6 +3373,7 @@ render=function(){
   }
   if(operation==='up'&&figure.previousElementSibling)figure.previousElementSibling.before(figure);
   if(operation==='down'&&figure.nextElementSibling)figure.nextElementSibling.after(figure);
+  if(['left','center','right'].includes(operation))figure.dataset.v15Align=operation;
   if(operation==='smaller'||operation==='larger'){
    const n=EA.v15Pct(Number(figure.dataset.v15Width||100)+(operation==='larger'?15:-15));
    figure.dataset.v15Width=n;figure.style.width=n+'%';
