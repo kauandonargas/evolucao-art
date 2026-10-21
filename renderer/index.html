@@ -3004,8 +3004,9 @@ EA.v15InsertFigure=function(fig,range){
    try{prefix.setEnd(range.startContainer,range.startOffset)}catch{prefix.collapse(false)}
    const at=prefix.toString().length;
    const whole=p.textContent||'',before=whole.slice(0,at),after=whole.slice(at);
-   if(before){p.textContent=before;p.after(fig)}else p.before(fig);
-   const tail=EA.v15MakeParagraph(after);fig.after(tail);EA.v15PlaceCaret(tail);return;
+   const role=p.dataset.v15Role||'';
+   if(before){p.textContent=before;p.after(fig)}else{p.before(fig);p.remove()}
+   const tail=EA.v15MakeParagraph(after);if(!before&&role)tail.dataset.v15Role=role;fig.after(tail);EA.v15PlaceCaret(tail);return;
   }
   const figParent=(node.nodeType===1?node:node.parentElement)?.closest('figure');
   if(figParent&&root.contains(figParent)){figParent.after(fig);const tail=EA.v15MakeParagraph();fig.after(tail);EA.v15PlaceCaret(tail);return}
