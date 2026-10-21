@@ -895,6 +895,14 @@ textarea:focus-visible,select:focus-visible {outline:2px solid #f4f4f4!important
 .ea-v16-note-edit-image{position:relative;min-width:0}.ea-v16-note-edit-image img{width:100%;max-height:240px;object-fit:contain;border-radius:7px;background:#101010}.ea-v16-note-edit-image button{position:absolute;bottom:7px;right:7px;border:1px solid #666;background:#161616;color:#fff;border-radius:5px;padding:5px 8px;cursor:pointer;font-size:11px}
 @media(max-width:650px){.ea-v16-rename-small{opacity:1}.ea-v16-paste-hint{font-size:10px}.ea-v16-note-thumbs,.ea-v16-note-edit-images{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* END EA_EDIT_ANYWHERE_v16 */
+/* BEGIN EA_IMAGE_ACTIONS_v17 */
+.ea-v15-figure .ea-v15-image-actions{position:relative;top:auto;right:auto;max-width:100%;width:max-content;flex-wrap:wrap;margin:8px 0 4px;box-sizing:border-box;gap:3px}
+.ea-v15-figure .ea-v15-image-actions button{min-width:30px;min-height:32px;padding:6px 9px}
+.ea-v15-figure .ea-v15-image-actions [data-v15-delete]{color:#f2b2ae}
+.ea-v15-figure .ea-v15-image-actions [data-v15-delete]:hover{background:#62312f}
+.ea-v17-undo{border:1px solid #6b5c3b;border-radius:6px;background:#242016;color:#e8d2a4;padding:7px 11px;font-size:12px;cursor:pointer}
+.ea-v17-undo[hidden]{display:none!important}
+/* END EA_IMAGE_ACTIONS_v17 */
 </style>
 </head>
 <body>
@@ -3315,6 +3323,64 @@ render=function(){
  eaV16OldRender();void EA.v16HydrateNoteImages();
 };
 /* END EA_EDIT_ANYWHERE_v16 */
+/* BEGIN EA_IMAGE_ACTIONS_v17 */
+// Keep the existing focus editor and its storage model; expose only contextual image controls.
+(function(){
+ const originalBlockHtml=EA.v15BlockHtml;
+ EA.v15BlockHtml=function(block,editing){
+  let html=originalBlockHtml(block,editing);
+  if(!editing||block.type!=='image')return html;
+  html=html.replace('<div class="ea-v15-image-actions">',
+   '<div class="ea-v15-image-actions" role="group" aria-label="Opções da imagem">'+
+   '<button type="button" data-v17-image="up" title="Mover imagem para cima" aria-label="Mover imagem para cima">↑</button>'+
+   '<button type="button" data-v17-image="down" title="Mover imagem para baixo" aria-label="Mover imagem para baixo">↓</button>'+
+   '<button type="button" data-v17-image="smaller" title="Diminuir imagem" aria-label="Diminuir imagem">−</button>'+
+   '<button type="button" data-v17-image="larger" title="Aumentar imagem" aria-label="Aumentar imagem">+</button>');
+  return html.replace('>Remover</button>','>Excluir</button>');
+ };
+ const originalEditor=EA.v14FocusEditor;
+ EA.v14FocusEditor=function(){
+  return originalEditor().replace('<div class="ea-v15-writing-tools">',
+   '<div class="ea-v15-writing-tools"><button type="button" id="eaV17Undo" class="ea-v17-undo" hidden onclick="EA.v17UndoImage()">Desfazer exclusão</button>');
+ };
+ EA.v17UndoImage=function(){
+  const saved=EA.v17RemovedImage;
+  if(!saved||!saved.marker.isConnected)return;
+  saved.marker.replaceWith(saved.figure);
+  EA.v17RemovedImage=null;
+  document.getElementById('eaV17Undo')?.setAttribute('hidden','');
+  const root=EA.v15Editor();root?.querySelectorAll('.ea-v15-selected').forEach(el=>el.classList.remove('ea-v15-selected'));
+  saved.figure.classList.add('ea-v15-selected');saved.figure.focus();
+ };
+ const originalClick=EA.v15CanvasClick;
+ EA.v15CanvasClick=function(event){
+  const action=event.target.closest?.('[data-v17-image],[data-v15-delete]');
+  if(!action)return originalClick(event);
+  const root=EA.v15Editor(),figure=action.closest('figure[data-v15-key]');
+  if(!root||!figure||!root.contains(figure))return;
+  event.preventDefault();event.stopPropagation();
+  const operation=action.dataset.v17Image;
+  if(action.hasAttribute('data-v15-delete')){
+   // Remove only from the current draft. Saving commits the new image list.
+   const marker=document.createComment('image removed');
+   figure.before(marker);figure.remove();
+   EA.v17RemovedImage={marker,figure};
+   document.getElementById('eaV17Undo')?.removeAttribute('hidden');
+   return;
+  }
+  if(operation==='up'&&figure.previousElementSibling)figure.previousElementSibling.before(figure);
+  if(operation==='down'&&figure.nextElementSibling)figure.nextElementSibling.after(figure);
+  if(operation==='smaller'||operation==='larger'){
+   const n=EA.v15Pct(Number(figure.dataset.v15Width||100)+(operation==='larger'?15:-15));
+   figure.dataset.v15Width=n;figure.style.width=n+'%';
+  }
+  root.querySelectorAll('.ea-v15-selected').forEach(el=>el.classList.remove('ea-v15-selected'));
+  figure.classList.add('ea-v15-selected');figure.focus();
+ };
+ const originalStart=EA.v14StartEdit;
+ EA.v14StartEdit=function(id){EA.v17RemovedImage=null;return originalStart(id)};
+})();
+/* END EA_IMAGE_ACTIONS_v17 */
 </script>
 </body>
 </html>
