@@ -877,6 +877,24 @@ textarea:focus-visible,select:focus-visible {outline:2px solid #f4f4f4!important
 .ea-v15-drop-zone{outline:1px dashed #aa945c;outline-offset:10px}
 @media(max-width:600px){.ea-v15-editor{padding:0 4px}.ea-v15-writing-tools{align-items:flex-start;flex-direction:column;gap:9px}.ea-v15-canvas{font-size:16px;min-height:180px}.ea-v15-figure{min-width:80px}.ea-v15-resize,.ea-v15-image-actions{display:flex}.ea-v15-page-title{margin-bottom:18px}}
 /* END EA_FOCUS_CANVAS_v15 */
+/* BEGIN EA_EDIT_ANYWHERE_v16 */
+.ea-v16-title-input{width:100%;border:0!important;border-bottom:1px solid transparent!important;background:transparent!important;font-size:clamp(29px,4vw,49px)!important;font-weight:650!important;line-height:1.17!important;padding:6px 0!important;letter-spacing:-.03em;color:#f2f2f2!important}
+.ea-v16-title-input:hover,.ea-v16-title-input:focus{border-bottom-color:#74644c!important;outline:0!important}
+.ea-v16-editable-heading{cursor:text}.ea-v16-editable-heading:hover{text-decoration:underline;text-decoration-color:#645740;text-decoration-thickness:1px;text-underline-offset:8px}
+.ea-v16-rename-small{border:0;background:transparent;color:#a8a8a8;font-size:11px;padding:9px;cursor:pointer;opacity:0;transition:opacity .15s;flex-shrink:0}
+.ea-v13-category-summary:hover .ea-v16-rename-small,.ea-v16-rename-small:focus-visible{opacity:1}.ea-v16-rename-small:hover{color:white}
+.ea-v16-rename-field{display:block;width:100%;border:1px solid #525252;border-radius:6px;background:#151515;color:#f0f0f0;padding:12px;font:inherit;font-size:18px;margin:8px 0 18px}
+.ea-v16-field-label{font-size:12px;color:#aaa;display:block;margin:14px 0 7px}
+.ea-v16-paste-hint{font-size:11px;color:#777;user-select:none}
+.ea-v13-artwork-wall{outline:1px solid transparent;outline-offset:5px;min-height:35px;transition:outline-color .1s}
+.ea-v13-artwork-wall:focus-visible,.ea-v13-artwork-wall.ea-v16-drag-over{outline-color:#9b814f}
+.ea-v16-upload{display:inline-block;margin:12px 0;color:#c8c8c8;font-size:12px;cursor:pointer}
+.ea-v16-note-thumbs,.ea-v16-note-edit-images{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0}
+.ea-v16-note-thumbs:empty,.ea-v16-note-edit-images:empty{display:none}
+.ea-v16-note-image img{width:100%;max-height:180px;object-fit:contain;display:block;border-radius:7px;background:#131313}
+.ea-v16-note-edit-image{position:relative;min-width:0}.ea-v16-note-edit-image img{width:100%;max-height:240px;object-fit:contain;border-radius:7px;background:#101010}.ea-v16-note-edit-image button{position:absolute;bottom:7px;right:7px;border:1px solid #666;background:#161616;color:#fff;border-radius:5px;padding:5px 8px;cursor:pointer;font-size:11px}
+@media(max-width:650px){.ea-v16-rename-small{opacity:1}.ea-v16-paste-hint{font-size:10px}.ea-v16-note-thumbs,.ea-v16-note-edit-images{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* END EA_EDIT_ANYWHERE_v16 */
 </style>
 </head>
 <body>
@@ -3128,6 +3146,175 @@ EA.v14CancelEdit=function(){EA.v15DisposePreviews();EA.v15Files.clear();EA.v15La
 const eaV15PriorNav=nav;
 nav=function(page,extra={}){if(EA.v14PageEditing&&(page!=='focus'||extra.id!==EA.v14Draft?.id)){EA.v15DisposePreviews();EA.v15Files.clear();EA.v15LastRange=null}return eaV15PriorNav(page,extra)};
 /* END EA_FOCUS_CANVAS_v15 */
+/* BEGIN EA_EDIT_ANYWHERE_v16 */
+// Reuse the existing storage and image database; never reset imported records.
+EA.v16NoteDraft=null;
+EA.v16NoteObjectUrls=[];
+EA.v16ImageObjectUrls=[];
+EA.v16ClipboardImages=function(transfer){
+ const files=[...(transfer?.files||[])].filter(f=>f.type?.startsWith('image/'));
+ if(files.length)return files;
+ return [...(transfer?.items||[])].filter(i=>i.kind==='file'&&i.type?.startsWith('image/')).map(i=>i.getAsFile()).filter(Boolean);
+};
+EA.v16ShowError=function(message){if(typeof showToast==='function')showToast(message);else alert(message)};
+// Fundamentals are named by the user, so provide a direct, unobtrusive rename action.
+EA.v16RenameFoundation=function(fid){
+ const f=state.foundations.find(x=>x.id===fid);if(!f)return;
+ EA.v13Modal(`<h2>Nome do fundamento</h2><input class="ea-v16-rename-field" id="eaV16FoundationName" maxlength="180" value="${esc(f.name)}" aria-label="Nome do fundamento"><div class="ea-v13-modal-actions"><button class="ea-v13-modal-secondary" onclick="EA.v13ModalClose()">Cancelar</button><button class="ea-v13-modal-primary" onclick="EA.v16SaveFoundationName('${fid}')">Salvar</button></div>`);
+ const input=document.getElementById('eaV16FoundationName');input?.focus();input?.select();input?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();EA.v16SaveFoundationName(fid)}});
+};
+EA.v16SaveFoundationName=function(fid){
+ const f=state.foundations.find(x=>x.id===fid),name=document.getElementById('eaV16FoundationName')?.value.trim();
+ if(!f||!name)return EA.v16ShowError('Escreva um nome para o fundamento.');
+ const old=f.name;f.name=name;
+ try{save();EA.v13ModalClose();render()}catch(e){f.name=old;EA.v16ShowError('Não foi possível salvar o título.')}
+};
+const eaV16OldMasterArea=EA.v13MasterAreaView;
+EA.v13MasterAreaView=function(kind){
+ const shell=document.createElement('template');shell.innerHTML=eaV16OldMasterArea(kind);
+ const foundations=state.foundations.filter(f=>EA.v13Area(f,kind));
+ [...shell.content.querySelectorAll('.ea-v13-master-category')].forEach((category,index)=>{
+  const f=foundations[index];if(!f)return;
+  const summary=category.querySelector('.ea-v13-category-summary');
+  const title=summary?.querySelector('.ea-v13-cat-title');
+  if(title){title.title='Duplo clique para mudar o título';title.setAttribute('ondblclick',`event.preventDefault();event.stopPropagation();EA.v16RenameFoundation('${f.id}')`)}
+  if(summary){const rename=document.createElement('button');rename.type='button';rename.className='ea-v16-rename-small';rename.textContent='Editar nome';rename.setAttribute('aria-label','Editar nome de '+f.name);rename.setAttribute('onclick',`event.preventDefault();event.stopPropagation();EA.v16RenameFoundation('${f.id}')`);summary.insertBefore(rename,summary.querySelector('.ea-v13-chevron'))}
+  const wall=category.querySelector('.ea-v13-artwork-wall');
+  if(wall){wall.tabIndex=0;wall.setAttribute('aria-label',`Mural de ${f.name}: clique aqui e cole imagens com Ctrl+V`);wall.setAttribute('title','Clique para colar imagens (Ctrl+V) ou arraste-as aqui');wall.setAttribute('onpaste',`EA.v16MasterPaste(event,'${f.id}','${kind}')`);wall.setAttribute('ondragover','event.preventDefault();this.classList.add("ea-v16-drag-over")');wall.setAttribute('ondragleave','this.classList.remove("ea-v16-drag-over")');wall.setAttribute('ondrop',`EA.v16MasterDrop(event,'${f.id}','${kind}')`)}
+  const tools=category.querySelector('.ea-v13-gallery-tools');
+  if(tools){const hint=document.createElement('span');hint.className='ea-v16-paste-hint';hint.textContent='Clique no mural e cole uma imagem (Ctrl+V)';tools.append(hint);const add=document.createElement('button');add.type='button';add.className='ea-v13-link';add.textContent='+ Anotação';add.setAttribute('onclick',`EA.v16EditNote(null,'${f.id}')`);tools.append(add)}
+ });
+ return shell.innerHTML;
+};
+EA.v16MasterPaste=function(event,fid,kind){
+ const files=EA.v16ClipboardImages(event.clipboardData);if(!files.length)return;
+ event.preventDefault();event.stopPropagation();void EA.v13AddMasterWorks(files,fid,kind).catch(e=>{console.error(e);EA.v16ShowError('Não foi possível colar a imagem.')});
+};
+EA.v16MasterDrop=function(event,fid,kind){
+ event.preventDefault();event.stopPropagation();event.currentTarget?.classList.remove('ea-v16-drag-over');
+ const files=EA.v16ClipboardImages(event.dataTransfer);if(!files.length)return;
+ void EA.v13AddMasterWorks(files,fid,kind).catch(e=>{console.error(e);EA.v16ShowError('Não foi possível adicionar a imagem.')});
+};
+// The same clipboard behavior applies when recording exercises; the original
+// reference/imaginação flow (including reference confirmation) remains intact.
+const eaV16OldExerciseView=exerciseView;
+exerciseView=function(kind,exid){
+ const shell=document.createElement('template');shell.innerHTML=eaV16OldExerciseView(kind,exid);
+ for(const mode of ['ref','noref']){
+  const zone=shell.content.querySelector('#zone_'+mode);if(!zone)continue;
+  zone.tabIndex=0;zone.setAttribute('title','Clique e cole uma imagem com Ctrl+V');
+  zone.setAttribute('onpaste',`EA.v16PasteExercise(event,'${kind}','${exid}','${mode}')`);
+ }
+ return shell.innerHTML;
+};
+EA.v16PasteExercise=function(event,kind,exid,mode){
+ const files=EA.v16ClipboardImages(event.clipboardData);if(!files.length)return;
+ event.preventDefault();event.stopPropagation();
+ void dropExerciseFiles({preventDefault(){},dataTransfer:{files}},kind,exid,mode).catch(e=>{console.error(e);EA.v16ShowError('Não foi possível colar a imagem no exercício.')});
+};
+// Paste into the sole expanded mural without forcing a click on an empty thumbnail.
+document.addEventListener('paste',event=>{
+ if(route.page!=='masterArea'||event.defaultPrevented||event.target?.closest?.('input,textarea,[contenteditable="true"]'))return;
+ const files=EA.v16ClipboardImages(event.clipboardData);if(!files.length)return;
+ const opened=[...document.querySelectorAll('.ea-v13-master-category[open]')];if(opened.length!==1)return;
+ const target=opened[0].querySelector('.ea-v13-artwork-wall');if(!target)return;
+ const fid=state.foundations.filter(f=>EA.v13Area(f,route.kind))[[...document.querySelectorAll('.ea-v13-master-category')].indexOf(opened[0])]?.id;
+ if(fid)EA.v16MasterPaste(event,fid,route.kind);
+});
+// The Foco's title must be as editable as its paragraphs; emphasize the existing input.
+const eaV16OldFocusEditor=EA.v14FocusEditor;
+EA.v14FocusEditor=function(){const html=eaV16OldFocusEditor();return html.replace('class="ea-v15-page-title" id="eaV15Title"','class="ea-v15-page-title ea-v16-title-input" id="eaV15Title" title="Clique e altere o título do princípio"')};
+const eaV16OldFocusReader=EA.v14FocusReader;
+EA.v14FocusReader=function(f){
+ const html=eaV16OldFocusReader(f);
+ return html.replace(`<h1>${esc(f.title)}</h1>`,`<h1 class="ea-v16-editable-heading" title="Duplo clique para editar o título" ondblclick="EA.v16EditFocusTitle('${f.id}')">${esc(f.title)}</h1>`);
+};
+EA.v16EditFocusTitle=function(fid){EA.v14StartEdit(fid);const field=document.getElementById('eaV15Title');field?.focus();field?.select()};
+// Master-study notes support normal text selection, clipboard paste, and image attachments.
+EA.v16NoteThumbs=function(n){return (n.imageIds||[]).map(imageId=>`<span class="ea-v16-note-image"><img alt="Imagem da anotação" data-ea-v16-image="${esc(imageId)}"></span>`).join('')};
+const eaV16OldInsightCard=EA.v13InsightCard;
+EA.v13InsightCard=function(n){const html=eaV16OldInsightCard(n);return (n.imageIds||[]).length?html.replace('</article>',`<div class="ea-v16-note-thumbs">${EA.v16NoteThumbs(n)}</div></article>`):html};
+const eaV16OldBank=EA.v13NotesBank;
+EA.v13NotesBank=function(kind){
+ const shell=document.createElement('template');shell.innerHTML=eaV16OldBank(kind);
+ const notes=state.notes.filter(n=>{const f=state.foundations.find(x=>x.id===n.foundationId);return f&&EA.v13Area(f,kind)}).slice().reverse();
+ [...shell.content.querySelectorAll('.ea-v13-bank-note')].forEach((card,i)=>{
+  if(notes[i]?.imageIds?.length){const block=document.createElement('div');block.className='ea-v16-note-thumbs';block.innerHTML=EA.v16NoteThumbs(notes[i]);card.querySelector('p')?.after(block)}
+ });
+ return shell.innerHTML;
+};
+EA.v16ClearNoteUrls=function(){for(const u of EA.v16NoteObjectUrls)URL.revokeObjectURL(u);EA.v16NoteObjectUrls=[]};
+EA.v16NoteImagePreview=function(){
+ const d=EA.v16NoteDraft,holder=document.getElementById('eaV16NoteImages');if(!d||!holder)return;
+ EA.v16ClearNoteUrls();holder.innerHTML='';
+ d.images.forEach((item,i)=>{
+  const tile=document.createElement('div');tile.className='ea-v16-note-edit-image';
+  const img=document.createElement('img');img.alt='Imagem adicionada à anotação';
+  if(item.file){const url=URL.createObjectURL(item.file);EA.v16NoteObjectUrls.push(url);img.src=url}
+  else if(item.imageId){void getImage(item.imageId).then(info=>{if(info&&img.isConnected){const url=URL.createObjectURL(info.blob);EA.v16NoteObjectUrls.push(url);img.src=url}})}
+  const remove=document.createElement('button');remove.textContent='Remover';remove.type='button';remove.onclick=()=>{d.images.splice(i,1);EA.v16NoteImagePreview()};
+  tile.append(img,remove);holder.append(tile);
+ });
+};
+EA.v16EditNote=function(nid,fid){
+ const n=nid?state.notes.find(x=>x.id===nid):null;
+ if(nid&&!n)return;
+ const foundationId=n?.foundationId||fid;
+ if(!state.foundations.some(f=>f.id===foundationId))return;
+ EA.v16ClearNoteUrls();EA.v16NoteDraft={id:n?.id||null,foundationId,images:(n?.imageIds||[]).map(imageId=>({imageId}))};
+ EA.v13Modal(`<h2>${n?'Editar anotação':'Nova anotação'}</h2><label class="ea-v16-field-label" for="eaV16NoteTitle">Título</label><input class="ea-v16-rename-field" id="eaV16NoteTitle" placeholder="Ex.: Descoberta sobre os planos" maxlength="180" value="${esc(n?.label||'Descoberta')}"><label class="ea-v16-field-label" for="eaV16NoteText">Texto — você pode copiar e colar normalmente</label><textarea id="eaV16NoteText" class="ea-v13-modal-textarea" placeholder="Escreva ou cole suas observações" onpaste="EA.v16PasteNote(event)">${esc(n?.text||'')}</textarea><div id="eaV16NoteImages" class="ea-v16-note-edit-images"></div><label class="ea-v16-upload">+ Adicionar imagens (ou cole com Ctrl+V no texto)<input type="file" multiple accept="image/*" hidden onchange="EA.v16AddNoteFiles(this.files);this.value=''"></label><div class="ea-v13-modal-actions"><button class="ea-v13-modal-secondary" onclick="EA.v16CloseNote()">Cancelar</button><button class="ea-v13-modal-primary" onclick="EA.v16SaveNote()">Salvar</button></div>`);
+ EA.v16NoteImagePreview();document.getElementById('eaV16NoteText')?.focus();
+};
+EA.v16AddNoteFiles=function(files){
+ const draft=EA.v16NoteDraft;if(!draft)return;
+ const valid=[...files].filter(f=>f.type?.startsWith('image/'));
+ if(draft.images.length+valid.length>40)return EA.v16ShowError('Limite de 40 imagens por anotação.');
+ for(const file of valid)draft.images.push({file});
+ EA.v16NoteImagePreview();
+};
+EA.v16PasteNote=function(event){const files=EA.v16ClipboardImages(event.clipboardData);if(!files.length)return;event.preventDefault();EA.v16AddNoteFiles(files)};
+EA.v16CloseNote=function(){EA.v16NoteDraft=null;EA.v16ClearNoteUrls();EA.v13ModalClose()};
+EA.v16SavingNote=false;
+EA.v16SaveNote=async function(){
+ if(EA.v16SavingNote)return;
+ const draft=EA.v16NoteDraft;if(!draft)return;
+ const label=document.getElementById('eaV16NoteTitle')?.value.trim(),text=document.getElementById('eaV16NoteText')?.value.trim();
+ if(!label||(!text&&!draft.images.length))return EA.v16ShowError('Informe um título e pelo menos um texto ou imagem.');
+ EA.v16SavingNote=true;const inserted=[];
+ try{
+  const imageIds=[];
+  for(const item of draft.images){if(item.imageId)imageIds.push(item.imageId);else if(item.file){const imageId=await putImage(item.file,{kind:'master-note',foundationId:draft.foundationId});inserted.push(imageId);imageIds.push(imageId)}}
+  const n=draft.id?state.notes.find(x=>x.id===draft.id):null;
+  if(draft.id&&!n)throw new Error('Anotação não encontrada');
+  if(n){const before={label:n.label,text:n.text,imageIds:n.imageIds};Object.assign(n,{label,text:text||'',imageIds});try{save()}catch(e){Object.assign(n,before);throw e}}
+  else {const fresh={id:id('note'),foundationId:draft.foundationId,text:text||'',source:'manual',kind:'insight',label,favorite:true,imageIds,createdAt:Date.now()};state.notes.push(fresh);try{save()}catch(e){state.notes.pop();throw e}}
+  EA.v16CloseNote();render();
+ }catch(e){for(const imageId of inserted)try{await deleteImage(imageId)}catch{};console.error('Falha ao salvar anotação',e);EA.v16ShowError('Não foi possível salvar a anotação. A edição permanece aberta.')}finally{EA.v16SavingNote=false}
+};
+EA.v13EditInsight=function(nid){EA.v16EditNote(nid)};
+EA.v13InsightOptions=function(nid){
+ const n=state.notes.find(x=>x.id===nid);if(!n)return;
+ EA.v13Modal(`<h2>${esc(n.label||'Descoberta')}</h2><div class="ea-v13-modal-text">${esc(n.text)}</div><div class="ea-v16-note-thumbs">${EA.v16NoteThumbs(n)}</div><div class="ea-v13-modal-actions"><button class="ea-v13-modal-secondary" onclick="EA.v13ModalClose()">Voltar</button><button class="ea-v13-modal-secondary" onclick="EA.v16CopyNote('${nid}')">Copiar texto</button><button class="ea-v13-modal-primary" onclick="EA.v16EditNote('${nid}')">Editar</button></div>`);
+ void EA.v16HydrateNoteImages();
+};
+EA.v16CopyNote=async function(nid){
+ const n=state.notes.find(x=>x.id===nid);if(!n)return;
+ try{await navigator.clipboard.writeText(n.text);EA.v16ShowError('Texto copiado.')}catch(e){
+  const t=document.createElement('textarea');t.value=n.text;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();const ok=document.execCommand('copy');t.remove();EA.v16ShowError(ok?'Texto copiado.':'Selecione o texto e use Ctrl+C.')
+ }
+};
+EA.v16HydrateNoteImages=async function(){
+ for(const img of document.querySelectorAll('img[data-ea-v16-image]')){
+  const item=await getImage(img.dataset.eaV16Image).catch(()=>null);if(!item||!img.isConnected)continue;
+  const url=URL.createObjectURL(item.blob);EA.v16ImageObjectUrls.push(url);img.src=url;
+ }
+};
+const eaV16OldRender=render;
+render=function(){
+ for(const url of EA.v16ImageObjectUrls)URL.revokeObjectURL(url);EA.v16ImageObjectUrls=[];
+ eaV16OldRender();void EA.v16HydrateNoteImages();
+};
+/* END EA_EDIT_ANYWHERE_v16 */
 </script>
 </body>
 </html>
