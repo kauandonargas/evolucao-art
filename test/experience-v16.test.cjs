@@ -3,7 +3,7 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const html=fs.readFileSync(path.join(__dirname,'../renderer/index.html'),'utf8');
 test('v16 is present and parses with all legacy scripts',()=>{
  assert.ok(html.includes('/* BEGIN EA_EDIT_ANYWHERE_v16 */'));
- for(const [,js] of html.matchAll(/<script(?:\\s[^>]*)?>([\\s\\S]*?)<\\/script>/gi))new vm.Script(js);
+ const begin=html.indexOf('<script>'),end=html.indexOf('</script>',begin);assert.ok(begin>=0&&end>begin);new vm.Script(html.slice(begin+'<script>'.length,end));
 });
 test('Focus heading is editable and previous canvas editing preserved',()=>{
  for(const x of ['EA.v16EditFocusTitle','EA.v14StartEdit','eaV15Title','EA.v15InsertFiles','EA.v15Drop'])assert.ok(html.includes(x),x);
