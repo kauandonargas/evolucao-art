@@ -801,6 +801,44 @@ textarea:focus-visible,select:focus-visible {outline:2px solid #f4f4f4!important
 
 .ea-v13-category-summary>span:first-child,.ea-v13-level-summary>span:first-child{min-width:0;flex:1}.ea-v13-summary-right{flex-shrink:0;max-width:96px}.ea-v13-exercise-browser .ea-v13-subtitle{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ea-v13-level-preview{white-space:normal;max-width:70px;text-align:right}
 
+/* BEGIN EA_FOCUS_PAGES_STYLE_v14 */
+/* The home launch is visually after the three main choices, even with legacy grid order rules. */
+.ea-ui4-home .ea-home-banner{order:0!important}
+.ea-ui4-home .home-center-grid{order:1!important}
+.ea-ui4-home .ea-ui4-launch{order:2!important;margin-top:8px}
+/* Content-first notebook reading, with tools revealed only in edit mode. */
+.ea-v14-reader,.ea-v14-editor{max-width:820px;margin:12px auto 90px;padding:0 14px}
+.ea-v14-reader-toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;min-height:38px;margin-bottom:64px}
+.ea-v14-reader h1{font:500 clamp(34px,5vw,60px)/1.16 Inter,system-ui,sans-serif;letter-spacing:-.04em;margin:0 0 42px;overflow-wrap:anywhere}
+.ea-v14-reader-lead{font:400 clamp(18px,2.3vw,24px)/1.8 Inter,system-ui,sans-serif;white-space:pre-wrap;color:#dedede;overflow-wrap:anywhere}
+.ea-v14-reader-principle{font:400 17px/1.8 Inter,system-ui,sans-serif;color:#d7c7a8;border-left:2px solid #aa8c4a;padding:6px 0 6px 22px;margin:45px 0 50px;white-space:pre-wrap}
+.ea-v14-reader-body{display:grid;gap:38px;max-width:790px}
+.ea-v14-page-paragraph{font:400 17px/1.85 Inter,system-ui,sans-serif;color:#dadada;white-space:pre-wrap;overflow-wrap:anywhere}
+.ea-v14-page-figure{margin:0}.ea-v14-page-figure img{display:block;max-width:100%;max-height:760px;width:auto;height:auto;border-radius:10px;background:#1b1b1b}
+.ea-v14-page-figure img:not([src]){min-height:0;background:none}
+.ea-v14-reader-source{border-top:1px solid #303030;padding-top:24px;margin-top:50px}.ea-v14-reader-source a{color:#aaa;font-size:13px}
+.ea-v14-editor .ea-v14-reader-toolbar{margin-bottom:40px}
+.ea-v14-edit-title{display:block;width:100%;border:0;border-bottom:1px solid #454545;border-radius:0;background:none;outline:0;padding:7px 0 18px;margin-bottom:42px;color:#f0f0f0;font:500 clamp(30px,4.8vw,51px)/1.24 Inter,system-ui,sans-serif;letter-spacing:-.035em}
+.ea-v14-edit-title:focus{border-color:#b79a60}
+.ea-v14-field-label{display:block;color:#9e9e9e;font-size:12px;margin:0 0 12px}
+.ea-v14-textarea{display:block;width:100%;min-height:110px;padding:16px 18px;resize:vertical;border:1px solid #383838;border-radius:9px;color:#e7e7e7;background:#1b1b1b;font:400 16px/1.72 Inter,system-ui,sans-serif;margin:0 0 34px;outline:none}
+.ea-v14-textarea:focus{border-color:#a68d57;background:#202020}
+.ea-v14-lead-input{min-height:200px;font-size:18px}
+.ea-v14-editor-separator{border-top:1px solid #303030;margin:44px 0 28px}
+.ea-v14-editor-blocks{display:grid;gap:16px}
+.ea-v14-edit-block{display:flex;align-items:flex-start;gap:12px}.ea-v14-edit-block-content{flex:1;min-width:0}
+.ea-v14-body-input{min-height:150px;margin:0}.ea-v14-block-controls{display:flex;flex-direction:column;gap:6px}
+.ea-v14-block-controls button{width:32px;height:32px;background:transparent;border:1px solid #363636;color:#aaa;border-radius:6px;cursor:pointer}
+.ea-v14-block-controls button:hover:not(:disabled){background:#2c2c2c;color:#fff}.ea-v14-block-controls button:disabled{opacity:.2;cursor:default}
+.ea-v14-image-preview{position:relative;display:grid;gap:8px}.ea-v14-image-preview img{max-height:450px;max-width:100%;height:auto;width:auto;object-fit:contain;border-radius:8px}.ea-v14-image-preview span{font-size:11px;color:#888;overflow-wrap:anywhere}
+.ea-v14-add-controls{display:flex;gap:12px;flex-wrap:wrap;margin:25px 0 0}.ea-v14-add{display:inline-flex;align-items:center;justify-content:center;border:1px dashed #515151;background:none;border-radius:8px;color:#bcbcbc;padding:13px 19px;cursor:pointer;font:400 13px Inter,system-ui,sans-serif}
+.ea-v14-add:hover,.ea-v14-add:focus-within{border-color:#b59a5f;color:white}
+.ea-v14-save{display:inline-flex;align-items:center;justify-content:center;background:#e9e9e9;color:#191919;border:0;padding:12px 19px;border-radius:7px;font:500 13px Inter,system-ui,sans-serif;cursor:pointer}
+.ea-v14-save:hover{background:#fff}
+.ea-v14-editor-bottom{display:flex;align-items:center;gap:18px;justify-content:flex-end;border-top:1px solid #333;margin-top:44px;padding-top:22px}
+.ea-v14-new-title{font:500 29px Inter,system-ui,sans-serif;margin:0 0 42px}
+@media(max-width:580px){.ea-v14-reader,.ea-v14-editor{padding:0 4px}.ea-v14-reader-toolbar{margin-bottom:33px}.ea-v14-reader h1{margin-bottom:27px}.ea-v14-reader-principle{margin:28px 0 35px}.ea-v14-reader-body{gap:26px}.ea-v14-editor .ea-v14-reader-toolbar{margin-bottom:28px}.ea-v14-edit-title{margin-bottom:31px}.ea-v14-add{flex:1}.ea-v14-block-controls button{width:29px;height:29px}}
+/* END EA_FOCUS_PAGES_STYLE_v14 */
 </style>
 </head>
 <body>
@@ -2712,6 +2750,133 @@ finishPractice=function(){const back=EA.v13.masterBackArea;eaV13PriorFinishPract
 render();
 /* END EA_EXPERIENCE_v13 */
 
+/* BEGIN EA_FOCUS_PAGES_v14
+   Foco = a thought page with optional illustration blocks.
+   The selected focus card and its voluntary rating remain unchanged.
+   Existing title, concept, microSkill, imageIds and histories are preserved.
+*/
+EA.v14PageEditing=false;
+EA.v14Draft=null;
+EA.v14PageBlocks=function(f){
+ const blocks=Array.isArray(f?.pageBlocks)?f.pageBlocks.filter(b=>b&&['text','image'].includes(b.type)).map(b=>({...b})):[];
+ const known=new Set(blocks.filter(b=>b.type==='image').map(b=>b.imageId));
+ for(const imageId of focusImageIds(f))if(!known.has(imageId))blocks.push({type:'image',imageId});
+ return blocks;
+};
+EA.v14PageBody=function(f){
+ const blocks=EA.v14PageBlocks(f).filter(b=>b.type==='image'||String(b.text||'').trim());
+ return blocks.map((b,i)=>b.type==='text'
+   ? `<section class="ea-v14-page-paragraph">${esc(b.text||'')}</section>`
+   : `<figure class="ea-v14-page-figure"><img data-v14-image="${esc(b.imageId)}" alt="Ilustração do princípio" loading="lazy"></figure>`).join('');
+};
+EA.v14LoadBlockImages=async function(){
+ for(const el of [...document.querySelectorAll('img[data-v14-image]')]){
+  const imageId=el.dataset.v14Image;
+  try{const img=await getImage(imageId);if(img&&el.isConnected){el.src=URL.createObjectURL(img.blob);el.alt=img.name||'Imagem do princípio'}}catch(error){console.warn('Não foi possível carregar imagem do Foco',error)}
+ }
+};
+EA.v14FillFocusNewImages=function(){
+ for(const el of [...document.querySelectorAll('img[data-v14-file]')]){
+  const item=EA.v14Draft?.blocks[Number(el.dataset.v14File)];
+  if(item?.file&&el.isConnected)el.src=URL.createObjectURL(item.file);
+ }
+};
+EA.v14FocusReader=function(f){
+ const lead=String(f.concept||'').trim(),instruction=String(f.microSkill||'').trim();
+ return `<article class="ea-v14-reader">
+  <div class="ea-v14-reader-toolbar"><button class="ea-v13-link" type="button" onclick="EA.showFocusCard()">← Voltar à carta</button><button type="button" class="ea-v13-link" onclick="EA.v14StartEdit('${f.id}')">Editar página</button></div>
+  <h1>${esc(f.title)}</h1>
+  ${lead?`<section class="ea-v14-reader-lead">${esc(lead)}</section>`:''}
+  ${instruction?`<aside class="ea-v14-reader-principle">${esc(instruction)}</aside>`:''}
+  <div class="ea-v14-reader-body">${EA.v14PageBody(f)}</div>
+  ${EA.safeUrl(f.courseUrl)?`<p class="ea-v14-reader-source"><a href="${esc(EA.safeUrl(f.courseUrl))}" target="_blank" rel="noopener">Material complementar ↗</a></p>`:''}
+ </article>`;
+};
+EA.v14StartEdit=function(fid){
+ const f=EA.focusById(fid);if(!f)return;
+ EA.v14Draft={id:fid,title:f.title||'',concept:f.concept||'',microSkill:f.microSkill||'',blocks:EA.v14PageBlocks(f)};
+ EA.focusDetailOpen=true;EA.v14PageEditing=true;route={page:'focus',id:fid};render();window.scrollTo(0,0);
+};
+EA.v14DraftField=function(field,value){if(EA.v14Draft&&['title','concept','microSkill'].includes(field))EA.v14Draft[field]=value};
+EA.v14BlockText=function(i,value){const block=EA.v14Draft?.blocks[i];if(block?.type==='text')block.text=value};
+EA.v14AddText=function(){if(!EA.v14Draft)return;EA.v14Draft.blocks.push({type:'text',text:''});render();const i=EA.v14Draft.blocks.length-1;document.querySelector(`[data-v14-editor-text="${i}"]`)?.focus()};
+EA.v14AddImages=function(files){if(!EA.v14Draft)return;const imgs=[...files].filter(f=>f.type.startsWith('image/'));if(!imgs.length)return;
+ EA.v14Draft.blocks.push(...imgs.map(file=>({type:'image',file})));render();
+};
+EA.v14MoveBlock=function(index,step){const arr=EA.v14Draft?.blocks;if(!arr)return;const other=index+step;if(other<0||other>=arr.length)return;[arr[index],arr[other]]=[arr[other],arr[index]];render()};
+EA.v14RemoveBlock=function(index){if(!EA.v14Draft)return;EA.v14Draft.blocks.splice(index,1);render()};
+EA.v14CancelEdit=function(){EA.v14Draft=null;EA.v14PageEditing=false;EA.focusDetailOpen=true;render()};
+EA.v14FocusEditor=function(){
+ const d=EA.v14Draft;if(!d)return '<div class="ea-v13-empty">Foco não encontrado.</div>';
+ const blocks=d.blocks.map((b,i)=>`<div class="ea-v14-edit-block"><div class="ea-v14-edit-block-content">
+  ${b.type==='text'?`<textarea aria-label="Parágrafo ${i+1}" data-v14-editor-text="${i}" class="ea-v14-textarea ea-v14-body-input" placeholder="Escreva suas ideias aqui..." oninput="EA.v14BlockText(${i},this.value)">${esc(b.text||'')}</textarea>`:
+   `<div class="ea-v14-image-preview"><img ${b.imageId?`data-v14-image="${esc(b.imageId)}"`:`data-v14-file="${i}"`} alt="Imagem adicionada à página"><span>${b.file?esc(b.file.name):'Imagem da página'}</span></div>`}
+ </div><div class="ea-v14-block-controls"><button type="button" title="Mover para cima" aria-label="Mover bloco para cima" onclick="EA.v14MoveBlock(${i},-1)" ${i===0?'disabled':''}>↑</button><button type="button" title="Mover para baixo" aria-label="Mover bloco para baixo" onclick="EA.v14MoveBlock(${i},1)" ${i===d.blocks.length-1?'disabled':''}>↓</button><button type="button" title="Remover bloco" aria-label="Remover bloco" onclick="EA.v14RemoveBlock(${i})">×</button></div></div>`).join('');
+ return `<article class="ea-v14-editor">
+  <div class="ea-v14-reader-toolbar"><button type="button" class="ea-v13-link" onclick="EA.v14CancelEdit()">← Cancelar</button><button type="button" class="ea-v14-save" onclick="EA.v14SavePage()">Salvar página</button></div>
+  <input class="ea-v14-edit-title" aria-label="Título do Foco" maxlength="180" placeholder="Nome do princípio" value="${esc(d.title)}" oninput="EA.v14DraftField('title',this.value)">
+  <label class="ea-v14-field-label" for="eaV14Concept">Conceito e explicação</label>
+  <textarea id="eaV14Concept" class="ea-v14-textarea ea-v14-lead-input" placeholder="Explique este princípio com suas palavras..." oninput="EA.v14DraftField('concept',this.value)">${esc(d.concept)}</textarea>
+  <label class="ea-v14-field-label" for="eaV14Skill">O que quero lembrar ao desenhar</label>
+  <textarea id="eaV14Skill" class="ea-v14-textarea" placeholder="Uma instrução curta para levar à prática..." oninput="EA.v14DraftField('microSkill',this.value)">${esc(d.microSkill)}</textarea>
+  <div class="ea-v14-editor-separator"></div><div class="ea-v14-editor-blocks">${blocks}</div>
+  <div class="ea-v14-add-controls"><button type="button" class="ea-v14-add" onclick="EA.v14AddText()">+ Parágrafo</button><label class="ea-v14-add">+ Imagens<input type="file" accept="image/*" multiple onchange="EA.v14AddImages(this.files);this.value=''" hidden></label></div>
+  <div class="ea-v14-editor-bottom"><button type="button" class="ea-v14-save" onclick="EA.v14SavePage()">Salvar página</button></div>
+ </article>`;
+};
+EA.v14Saving=false;
+EA.v14SavePage=async function(){
+ if(EA.v14Saving)return;
+ const d=EA.v14Draft;if(!d)return;const f=EA.focusById(d.id);if(!f)return;
+ if(!d.title.trim())return alert('Escreva um título para o Foco.');
+ EA.v14Saving=true;
+ const uploaded=[];const snapshot={title:f.title,concept:f.concept,microSkill:f.microSkill,pageBlocks:f.pageBlocks,imageIds:f.imageIds,imageId:f.imageId};
+ try{
+  const blocks=[];
+  for(const b of d.blocks){
+   if(b.type==='text'){if(b.text?.trim())blocks.push({type:'text',text:String(b.text).trim()})}
+   else if(b.type==='image'){
+    let imageId=b.imageId;
+    if(b.file){imageId=await putImage(b.file,{kind:'focus'});uploaded.push(imageId)}
+    if(imageId)blocks.push({type:'image',imageId});
+   }
+  }
+  f.title=d.title.trim();f.concept=d.concept.trim();f.microSkill=d.microSkill.trim();
+  f.pageBlocks=blocks;f.imageIds=blocks.filter(b=>b.type==='image').map(b=>b.imageId);f.imageId=f.imageIds[0]||null;
+  save();
+  EA.v14Draft=null;EA.v14PageEditing=false;EA.focusDetailOpen=true;render();
+ }catch(error){
+  Object.assign(f,snapshot);
+  for(const imageId of uploaded){try{await deleteImage(imageId)}catch{}}
+  console.error('Falha ao salvar a página do Foco',error);
+  alert('Não foi possível salvar a página. As alterações continuam abertas para você tentar novamente.');
+ }finally{EA.v14Saving=false}
+};
+// Keep legacy library edit actions compatible with the same page editor.
+openEditFocus=function(fid){EA.v14StartEdit(fid)};
+// New Focos need only a title; images and extended paragraphs are optional.
+newFocusView=function(){return `<section class="ea-v14-editor"><h1 class="ea-v14-new-title">Novo Foco</h1><label class="ea-v14-field-label" for="focusTitle">Nome do princípio</label><input class="ea-v14-edit-title" id="focusTitle" placeholder="Ex.: Separação de luz e sombra"><label class="ea-v14-field-label" for="focusConcept">Conceito</label><textarea class="ea-v14-textarea" id="focusConcept" placeholder="O que é este princípio?"></textarea><label class="ea-v14-field-label" for="focusMicroSkill">O que lembrar durante a prática</label><textarea class="ea-v14-textarea" id="focusMicroSkill" placeholder="Uma instrução curta..."></textarea><div class="ea-v14-editor-bottom"><button type="button" class="ea-v14-save" onclick="createFocus()">Criar Foco</button><button type="button" class="ea-v13-link" onclick="nav('focusLibrary')">Cancelar</button></div></section>`};
+createFocus=async function(){
+ const title=document.getElementById('focusTitle')?.value.trim(),concept=document.getElementById('focusConcept')?.value.trim()||'',microSkill=document.getElementById('focusMicroSkill')?.value.trim()||'';
+ if(!title)return alert('Escreva o título do Foco.');
+ const f={id:id('focus'),title,concept,microSkill,courseUrl:'',pageBlocks:[],imageIds:[],imageId:null,history:[],intervalDays:0,nextDue:Date.now(),createdAt:Date.now()};
+ state.focuses.push(f);try{save()}catch(error){state.focuses.pop();return alert('Não foi possível salvar o Foco.')}
+ nav('focus',{id:f.id});EA.v14StartEdit(f.id);
+};
+const eaV14PriorFocus=focusView;
+focusView=function(){
+ const f=routedFocus();if(!f)return eaV14PriorFocus();
+ if(EA.v14PageEditing&&EA.v14Draft?.id===f.id)return EA.v14FocusEditor();
+ if(EA.focusDetailOpen)return EA.v14FocusReader(f);
+ return eaV14PriorFocus();
+};
+const eaV14PriorRender=render;
+render=function(){eaV14PriorRender();if(route.page==='focus'&&(EA.focusDetailOpen||EA.v14PageEditing)){void EA.v14LoadBlockImages();EA.v14FillFocusNewImages()}};
+const eaV14PriorNav=nav;
+nav=function(page,extra={}){if(page!=='focus'||route.id!==extra.id){EA.v14Draft=null;EA.v14PageEditing=false}return eaV14PriorNav(page,extra)};
+const eaV14PriorBack=goBack;
+goBack=function(){if(route.page==='focus'&&EA.v14PageEditing)return EA.v14CancelEdit();if(route.page==='focus'&&EA.focusDetailOpen)return EA.showFocusCard();return eaV14PriorBack()};
+/* END EA_FOCUS_PAGES_v14 */
 </script>
 </body>
 </html>
